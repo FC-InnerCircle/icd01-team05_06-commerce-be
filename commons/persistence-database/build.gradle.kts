@@ -1,6 +1,10 @@
+plugins {
+    kotlin("plugin.jpa") version "1.7.20"
+}
+
 dependencies {
     implementation(project(":commons:model"))
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    api("org.springframework.boot:spring-boot-starter-data-jpa")
 
     // Persistence
     runtimeOnly("com.h2database:h2")
