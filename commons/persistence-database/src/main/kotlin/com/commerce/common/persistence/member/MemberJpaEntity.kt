@@ -1,15 +1,34 @@
 package com.commerce.common.persistence.member
 
+import com.commerce.common.model.member.Member
 import jakarta.persistence.*
 
 @Entity
 @Table
 class MemberJpaEntity(
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long = 0,
 
-    @field:Id
-    @field:GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    @Column(nullable = false)
+    var name: String,
 
-    @field:Column(nullable = false)
-    val name: String? = null
-)
+    @Column(nullable = false)
+    var email: String,
+
+    @Column(nullable = false)
+    var password: String,
+
+    @Column(nullable = false)
+    var phone: String,
+) {
+    companion object {
+        fun from(member: Member) = MemberJpaEntity(
+            id = member.id,
+            name = member.name,
+            email = member.email,
+            password = member.password,
+            phone = member.phone
+        )
+    }
+}

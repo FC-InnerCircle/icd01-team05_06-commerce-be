@@ -1,8 +1,8 @@
 package com.commerce.service.auth.application.usecase
 
-import com.commerce.common.model.member.Member
+import com.commerce.service.auth.application.usecase.command.SignUpCommand
 
 interface AuthUseCase {
 
-    fun findMember(id: Long): Member?
+    fun signUp(command: SignUpCommand)
 }

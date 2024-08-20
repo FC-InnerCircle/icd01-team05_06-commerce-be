@@ -1,7 +1,6 @@
-package com.commerce.common.model.member
+package com.commerce.service.auth.application.usecase.command
 
-class Member(
-    val id: Long = 0,
+data class SignUpCommand(
     val email: String,
     val password: String,
     val name: String,

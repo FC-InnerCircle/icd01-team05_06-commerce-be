@@ -1,7 +1,9 @@
 package com.commerce.service.auth.controller
 
 import com.commerce.service.auth.application.usecase.AuthUseCase
-import org.springframework.web.bind.annotation.GetMapping
+import com.commerce.service.auth.controller.request.SignUpRequest
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -9,8 +11,8 @@ class AuthController(
     private val authUseCase: AuthUseCase
 ) {
 
-    @GetMapping("/auth/hello")
-    fun hello(): String {
-        return authUseCase.findMember(1).toString()
+    @PostMapping("/sign-up")
+    fun hello(@RequestBody request: SignUpRequest) {
+        authUseCase.signUp(request.toCommand())
     }
 }

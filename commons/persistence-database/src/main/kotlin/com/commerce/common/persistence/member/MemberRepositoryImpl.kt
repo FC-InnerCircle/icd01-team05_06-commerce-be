@@ -9,15 +9,7 @@ class MemberRepositoryImpl(
     private val memberJpaRepository: MemberJpaRepository
 ) : MemberRepository {
 
-    override fun findById(id: Long): Member? {
-
-        val optionalMember = memberJpaRepository.findById(id)
-        if (optionalMember.isPresent) {
-            return Member(
-                id = optionalMember.get().id,
-                name = optionalMember.get().name
-            )
-        }
-        return null
+    override fun save(member: Member) {
+        memberJpaRepository.save(MemberJpaEntity.from(member))
     }
 }
