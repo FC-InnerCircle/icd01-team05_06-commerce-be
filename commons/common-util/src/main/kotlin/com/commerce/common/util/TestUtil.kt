@@ -1,4 +1,4 @@
-package com.commerce.util
+package com.commerce.common.util
 
 class TestUtil {
 
