@@ -3,12 +3,15 @@ package com.commerce.service.auth.config
 import com.commerce.common.model.member.Member
 import com.commerce.common.model.member.MemberRepository
 import com.commerce.service.auth.controller.common.BaseResponse
+import com.commerce.service.auth.controller.common.ErrorResponse
 import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
+import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -18,6 +21,7 @@ import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.logout.LogoutFilter
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
 import org.springframework.security.web.csrf.*
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 import org.springframework.util.StringUtils
 import org.springframework.web.filter.OncePerRequestFilter
 import java.util.function.Supplier
@@ -54,6 +58,29 @@ class SecurityConfig {
                     response.characterEncoding = Charsets.UTF_8.name()
                     response.writer.write(objectMapper.writeValueAsString(BaseResponse.success()))
                 }
+            }
+            .authorizeHttpRequests {
+                it
+                    .requestMatchers(
+                        AntPathRequestMatcher("/login", HttpMethod.POST.name()),
+                        AntPathRequestMatcher("/sign-up", HttpMethod.POST.name()),
+                    ).permitAll()
+                    .anyRequest().authenticated()
+            }
+            .exceptionHandling {
+                it
+                    .authenticationEntryPoint { _, response, _ ->
+                        response.status = HttpStatus.FORBIDDEN.value()
+                        response.contentType = MediaType.APPLICATION_JSON_VALUE
+                        response.characterEncoding = Charsets.UTF_8.name()
+                        response.writer.write(objectMapper.writeValueAsString(ErrorResponse("권한이 없습니다.")))
+                    }
+                    .accessDeniedHandler { _, response, _ ->
+                        response.status = HttpStatus.FORBIDDEN.value()
+                        response.contentType = MediaType.APPLICATION_JSON_VALUE
+                        response.characterEncoding = Charsets.UTF_8.name()
+                        response.writer.write(objectMapper.writeValueAsString(ErrorResponse("권한이 없습니다.")))
+                    }
             }
             .addFilterBefore(jwtAuthenticationFilter, LogoutFilter::class.java)
             .addFilterAfter(CsrfCookieFilter(), BasicAuthenticationFilter::class.java)

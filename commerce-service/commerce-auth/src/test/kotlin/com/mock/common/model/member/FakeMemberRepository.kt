@@ -30,4 +30,8 @@ class FakeMemberRepository : MemberRepository {
     override fun findByEmail(email: String): Member? {
         return data.find { it.email == email }
     }
+
+    override fun findById(id: Long): Member? {
+        return data.find { it.id == id }
+    }
 }

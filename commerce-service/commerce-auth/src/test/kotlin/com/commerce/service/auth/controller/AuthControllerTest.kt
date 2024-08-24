@@ -1,7 +1,10 @@
 package com.commerce.service.auth.controller
 
+import com.commerce.common.model.member.MemberRepository
 import com.commerce.common.util.ObjectMapperConfig
 import com.commerce.service.auth.application.usecase.AuthUseCase
+import com.commerce.service.auth.application.usecase.TokenUseCase
+import com.commerce.service.auth.config.JwtAuthenticationFilter
 import com.commerce.service.auth.config.SecurityConfig
 import com.commerce.service.auth.controller.request.SignUpRequest
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -26,16 +29,23 @@ import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 
-@Import(ObjectMapperConfig::class)
+@Import(ObjectMapperConfig::class, JwtAuthenticationFilter::class)
 @ExtendWith(MockitoExtension::class)
 @ContextConfiguration(classes = [SecurityConfig::class])
 @WebMvcTest(controllers = [AuthController::class])
 @ComponentScan(basePackages = ["com.commerce.service.auth.controller"])
 class AuthControllerTest(
     @Autowired
-    private val objectMapper: ObjectMapper
+    private val objectMapper: ObjectMapper,
+    @Autowired
+    private val jwtAuthenticationFilter: JwtAuthenticationFilter,
 ) {
     private lateinit var mockMvc: MockMvc
+
+    @MockBean
+    private lateinit var tokenUseCase: TokenUseCase
+    @MockBean
+    private lateinit var memberRepository: MemberRepository
 
     @MockBean
     private lateinit var authUseCase: AuthUseCase
