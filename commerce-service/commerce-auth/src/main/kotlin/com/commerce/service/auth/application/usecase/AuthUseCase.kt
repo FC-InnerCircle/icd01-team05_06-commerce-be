@@ -13,6 +13,8 @@ interface AuthUseCase {
 
     fun signUp(command: SignUpCommand)
 
+    fun refresh(refreshToken: String): String
+
     fun update(member: Member, command: UpdateCommand): LoginMemberInfoDto
 
     fun withdrawal(member: Member)

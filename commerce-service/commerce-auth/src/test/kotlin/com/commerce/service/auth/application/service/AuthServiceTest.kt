@@ -205,6 +205,64 @@ class AuthServiceTest {
     }
 
     @Test
+    fun `토큰이 만료된 경우 재로그인 필요 에러를 던진다`() {
+        val refreshToken = "invalid token"
+
+        assertThatThrownBy {
+            authService.refresh(refreshToken)
+        }
+            .isInstanceOf(AuthException::class.java)
+            .hasMessage("권한이 만료되었습니다.\n다시 로그인해 주세요.")
+    }
+
+    @Test
+    fun `토큰이 정상이지만 Member가 없으면 재로그인 필요 에러를 던진다`() {
+        val refreshToken = tokenUseCase.createToken(1, TokenType.REFRESH_TOKEN)
+
+        assertThatThrownBy {
+            authService.refresh(refreshToken)
+        }
+            .isInstanceOf(AuthException::class.java)
+            .hasMessage("권한이 만료되었습니다.\n다시 로그인해 주세요.")
+    }
+
+    @Test
+    fun `토큰이 정상이지만 Member 테이블 내 컬럼과 값이 다르면 재로그인 필요 에러를 던진다`() {
+        val refreshToken = tokenUseCase.createToken(1, TokenType.REFRESH_TOKEN)
+        memberRepository.save(Member(
+            id = 1,
+            email = "jerome.boyd@example.com",
+            password = "viverra",
+            name = "Krista Wall",
+            phone = "(352) 893-0816",
+            refreshToken = "other token"
+        ))
+
+        assertThatThrownBy {
+            authService.refresh(refreshToken)
+        }
+            .isInstanceOf(AuthException::class.java)
+            .hasMessage("권한이 만료되었습니다.\n다시 로그인해 주세요.")
+    }
+
+    @Test
+    fun `토큰이 정상이고 Member 테이블 내 컬럼과 값이 일치하면 재발급한다`() {
+        val refreshToken = tokenUseCase.createToken(1, TokenType.REFRESH_TOKEN)
+        memberRepository.save(Member(
+            id = 1,
+            email = "jerome.boyd@example.com",
+            password = "viverra",
+            name = "Krista Wall",
+            phone = "(352) 893-0816",
+            refreshToken = refreshToken
+        ))
+
+        val result = authService.refresh(refreshToken)
+
+        assertThat(tokenUseCase.getTokenSubject(result, TokenType.ACCESS_TOKEN)).isEqualTo("1")
+    }
+
+    @Test
     fun `정보 수정 시 비밀번호를 입력하지 않으면 회원의 기본 정보만 변경된다`() {
         val member = memberRepository.save(Member(
             id = 1,
