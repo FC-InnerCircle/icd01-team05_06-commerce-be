@@ -12,4 +12,8 @@ class MemberRepositoryImpl(
     override fun save(member: Member) {
         memberJpaRepository.save(MemberJpaEntity.from(member))
     }
+
+    override fun findByEmail(email: String): Member? {
+        return memberJpaRepository.findByEmail(email)
+    }
 }

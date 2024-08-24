@@ -14,11 +14,17 @@ class AuthService(
 
     @Transactional
     override fun signUp(command: SignUpCommand) {
-        memberRepository.save(Member(
-            email = command.email,
-            password = command.password,
-            name = command.name,
-            phone = command.phone
-        ))
+        memberRepository.findByEmail(command.email)?.let {
+            throw IllegalArgumentException("중복된 이메일입니다.")
+        }
+
+        memberRepository.save(
+            Member(
+                email = command.email,
+                password = command.password,
+                name = command.name,
+                phone = command.phone
+            )
+        )
     }
 }
