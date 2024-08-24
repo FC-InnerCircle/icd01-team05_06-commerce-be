@@ -21,4 +21,8 @@ class MemberRepositoryImpl(
     override fun findById(id: Long): Member? {
         return memberJpaRepository.findByIdOrNull(id)?.toModel()
     }
+
+    override fun deleteById(id: Long) {
+        return memberJpaRepository.deleteById(id)
+    }
 }

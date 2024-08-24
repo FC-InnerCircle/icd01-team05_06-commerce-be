@@ -202,4 +202,19 @@ class AuthServiceTest {
         val member = memberRepository.findByEmail("jerome.boyd@example.com")
         assertThat(passwordEncoder.matches("phasellus", member!!.password)).isTrue()
     }
+
+    @Test
+    fun `회원탈퇴를 하면 다시 회원 조회를 할 수 없다`() {
+        val member = memberRepository.save(Member(
+            id = 1,
+            email = "jerome.boyd@example.com",
+            password = "phasellus",
+            name = "Cameron Mayo",
+            phone = "(737) 231-4205"
+        ))
+
+        authService.withdrawal(member)
+
+        assertThat(memberRepository.findById(1)).isNull()
+    }
 }

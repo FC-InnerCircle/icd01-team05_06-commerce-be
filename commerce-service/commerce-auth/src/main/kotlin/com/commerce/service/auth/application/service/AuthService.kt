@@ -62,4 +62,8 @@ class AuthService(
             )
         )
     }
+
+    override fun withdrawal(member: Member) {
+        memberRepository.deleteById(member.id)
+    }
 }

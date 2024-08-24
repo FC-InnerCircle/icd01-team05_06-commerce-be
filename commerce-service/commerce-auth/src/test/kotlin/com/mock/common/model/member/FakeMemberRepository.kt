@@ -34,4 +34,8 @@ class FakeMemberRepository : MemberRepository {
     override fun findById(id: Long): Member? {
         return data.find { it.id == id }
     }
+
+    override fun deleteById(id: Long) {
+        data = data.filter { it.id != id }.toMutableList()
+    }
 }
