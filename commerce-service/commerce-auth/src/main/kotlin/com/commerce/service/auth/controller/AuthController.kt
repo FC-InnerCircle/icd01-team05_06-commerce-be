@@ -1,6 +1,7 @@
 package com.commerce.service.auth.controller
 
 import com.commerce.service.auth.application.usecase.AuthUseCase
+import com.commerce.service.auth.application.usecase.dto.LoginInfoDto
 import com.commerce.service.auth.controller.common.BaseResponse
 import com.commerce.service.auth.controller.request.SignInRequest
 import com.commerce.service.auth.controller.request.SignUpRequest
@@ -14,9 +15,8 @@ class AuthController(
 ) {
 
     @PostMapping("/login")
-    fun login(@RequestBody request: SignInRequest): BaseResponse {
-        authUseCase.login(request.toCommand())
-        return BaseResponse.success()
+    fun login(@RequestBody request: SignInRequest): LoginInfoDto {
+        return authUseCase.login(request.toCommand())
     }
 
     @PostMapping("/sign-up")

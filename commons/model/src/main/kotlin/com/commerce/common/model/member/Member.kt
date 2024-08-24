@@ -9,13 +9,15 @@ class Member(
     val name: String,
     val phone: String,
     val lastLoginDate: LocalDateTime? = null,
+    val refreshToken: String? = null,
 ) {
-    fun login() = Member(
+    fun login(refreshToken: String) = Member(
         id = id,
         email = email,
         password = password,
         name = name,
         phone = phone,
         lastLoginDate = LocalDateTime.now(),
+        refreshToken = refreshToken,
     )
 }

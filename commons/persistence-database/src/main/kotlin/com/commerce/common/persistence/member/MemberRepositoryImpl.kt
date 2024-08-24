@@ -9,8 +9,8 @@ class MemberRepositoryImpl(
     private val memberJpaRepository: MemberJpaRepository
 ) : MemberRepository {
 
-    override fun save(member: Member) {
-        memberJpaRepository.save(MemberJpaEntity.from(member))
+    override fun save(member: Member): Member {
+        return memberJpaRepository.save(MemberJpaEntity.from(member)).toModel()
     }
 
     override fun findByEmail(email: String): Member? {

@@ -25,7 +25,20 @@ class MemberJpaEntity(
 
     @Column
     var lastLoginDate: LocalDateTime?,
+
+    @Column
+    var refreshToken: String?,
 ) {
+    fun toModel(): Member = Member(
+        id = id,
+        email = email,
+        password = password,
+        name = name,
+        phone = phone,
+        lastLoginDate = lastLoginDate,
+        refreshToken = refreshToken,
+    )
+
     companion object {
         fun from(member: Member) = MemberJpaEntity(
             id = member.id,
@@ -33,7 +46,8 @@ class MemberJpaEntity(
             email = member.email,
             password = member.password,
             phone = member.phone,
-            lastLoginDate = member.lastLoginDate
+            lastLoginDate = member.lastLoginDate,
+            refreshToken = member.refreshToken,
         )
     }
 }
