@@ -12,7 +12,7 @@ class AuthController(
 ) {
 
     @PostMapping("/sign-up")
-    fun hello(@RequestBody request: SignUpRequest) {
+    fun signUp(@RequestBody request: SignUpRequest) {
         authUseCase.signUp(request.toCommand())
     }
 }
