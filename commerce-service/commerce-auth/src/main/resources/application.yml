@@ -9,7 +9,9 @@ spring:
 
 logging:
   level:
-    org.hibernate.SQL: debug
+    org.hibernate:
+      SQL: debug
+      orm.jdbc.bind: trace
 
 jwt:
   access-token-key: 9878ec0666bf45a8a60c747a8f8f57069878ec0666bf45a8a60c747a8f8f5706
