@@ -2,6 +2,7 @@ package com.commerce.common.persistence.member
 
 import com.commerce.common.model.member.Member
 import jakarta.persistence.*
+import java.time.LocalDateTime
 
 @Entity
 @Table
@@ -21,6 +22,9 @@ class MemberJpaEntity(
 
     @Column(nullable = false)
     var phone: String,
+
+    @Column
+    var lastLoginDate: LocalDateTime?,
 ) {
     companion object {
         fun from(member: Member) = MemberJpaEntity(
@@ -28,7 +32,8 @@ class MemberJpaEntity(
             name = member.name,
             email = member.email,
             password = member.password,
-            phone = member.phone
+            phone = member.phone,
+            lastLoginDate = member.lastLoginDate
         )
     }
 }
