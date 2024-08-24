@@ -4,6 +4,7 @@ import com.commerce.common.model.member.Member
 import com.commerce.service.auth.application.usecase.TokenUseCase
 import com.commerce.service.auth.application.usecase.command.SignInCommand
 import com.commerce.service.auth.application.usecase.command.SignUpCommand
+import com.commerce.service.auth.application.usecase.command.UpdateCommand
 import com.commerce.service.auth.application.usecase.exception.AuthException
 import com.mock.common.model.member.FakeMemberRepository
 import com.mock.config.FakePasswordEncoder
@@ -201,6 +202,54 @@ class AuthServiceTest {
 
         val member = memberRepository.findByEmail("jerome.boyd@example.com")
         assertThat(passwordEncoder.matches("phasellus", member!!.password)).isTrue()
+    }
+
+    @Test
+    fun `정보 수정 시 비밀번호를 입력하지 않으면 회원의 기본 정보만 변경된다`() {
+        val member = memberRepository.save(Member(
+            id = 1,
+            email = "jerome.boyd@example.com",
+            password = passwordEncoder.encode("phasellus"),
+            name = "Cameron Mayo",
+            phone = "(737) 231-4205"
+        ))
+
+        val command = UpdateCommand(
+            password = null,
+            name = "After Name",
+            phone = "123-4567"
+        )
+
+        authService.update(member, command)
+
+        val newMember = memberRepository.findById(1)!!
+        assertThat(newMember.password).isEqualTo(passwordEncoder.encode("phasellus"))
+        assertThat(newMember.name).isEqualTo("After Name")
+        assertThat(newMember.phone).isEqualTo("123-4567")
+    }
+
+    @Test
+    fun `정보 수정 시 비밀번호를 입력하면 회원의 비밀번호와 기본 정보가 변경된다`() {
+        val member = memberRepository.save(Member(
+            id = 1,
+            email = "jerome.boyd@example.com",
+            password = passwordEncoder.encode("phasellus"),
+            name = "Cameron Mayo",
+            phone = "(737) 231-4205"
+        ))
+
+        val command = UpdateCommand(
+            password = "After Password",
+            name = "After Name",
+            phone = "123-4567"
+        )
+
+        authService.update(member, command)
+
+        val newMember = memberRepository.findById(1)!!
+        assertThat(newMember.password).isEqualTo(passwordEncoder.encode("After Password"))
+        assertThat(newMember.name).isEqualTo("After Name")
+        assertThat(newMember.phone).isEqualTo("123-4567")
     }
 
     @Test

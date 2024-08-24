@@ -6,6 +6,7 @@ import com.commerce.service.auth.application.usecase.AuthUseCase
 import com.commerce.service.auth.application.usecase.TokenUseCase
 import com.commerce.service.auth.application.usecase.command.SignInCommand
 import com.commerce.service.auth.application.usecase.command.SignUpCommand
+import com.commerce.service.auth.application.usecase.command.UpdateCommand
 import com.commerce.service.auth.application.usecase.dto.LoginInfoDto
 import com.commerce.service.auth.application.usecase.dto.LoginMemberInfoDto
 import com.commerce.service.auth.application.usecase.dto.LoginTokenInfoDto
@@ -60,6 +61,22 @@ class AuthService(
                 name = command.name,
                 phone = command.phone
             )
+        )
+    }
+
+    override fun update(member: Member, command: UpdateCommand): LoginMemberInfoDto {
+        val newMember = memberRepository.save(
+            member.update(
+                password = command.password?.let { passwordEncoder.encode(it) },
+                name = command.name,
+                phone = command.phone,
+            )
+        )
+        return LoginMemberInfoDto(
+            id = newMember.id,
+            email = newMember.email,
+            name = newMember.name,
+            phone = newMember.phone,
         )
     }
 

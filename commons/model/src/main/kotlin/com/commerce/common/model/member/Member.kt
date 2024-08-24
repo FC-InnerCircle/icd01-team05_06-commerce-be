@@ -30,4 +30,18 @@ class Member(
         lastLoginDate = LocalDateTime.now(),
         refreshToken = null,
     )
+
+    fun update(password: String?, name: String, phone: String) = Member(
+        id = id,
+        email = email,
+        password = if (password.isNullOrBlank()) {
+            this.password
+        } else {
+            password
+        },
+        name = name,
+        phone = phone,
+        lastLoginDate = lastLoginDate,
+        refreshToken = refreshToken,
+    )
 }
