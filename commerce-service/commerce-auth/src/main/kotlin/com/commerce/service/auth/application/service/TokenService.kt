@@ -1,6 +1,7 @@
 package com.commerce.service.auth.application.service
 
 import com.commerce.service.auth.application.usecase.TokenUseCase
+import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
@@ -31,6 +32,20 @@ class TokenService : TokenUseCase {
         when (tokenType) {
             TokenType.ACCESS_TOKEN -> this.accessTokenSigningKey
             TokenType.REFRESH_TOKEN -> this.refreshTokenSigningKey
+        }
+
+    override fun getTokenSubject(token: String, tokenType: TokenType) =
+        getClaims(token, tokenType)?.subject
+
+    private fun getClaims(token: String, tokenType: TokenType) =
+        try {
+            Jwts.parser()
+                .verifyWith(this.getSigningKey(tokenType))
+                .build()
+                .parseSignedClaims(token)
+                .payload
+        } catch (e: JwtException) {
+            null
         }
 
     override fun createToken(memberId: Long, tokenType: TokenType): String {

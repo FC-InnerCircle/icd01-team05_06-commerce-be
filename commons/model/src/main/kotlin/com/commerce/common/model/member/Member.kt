@@ -20,4 +20,14 @@ class Member(
         lastLoginDate = LocalDateTime.now(),
         refreshToken = refreshToken,
     )
+
+    fun logout() = Member(
+        id = id,
+        email = email,
+        password = password,
+        name = name,
+        phone = phone,
+        lastLoginDate = LocalDateTime.now(),
+        refreshToken = null,
+    )
 }

@@ -1,15 +1,21 @@
 package com.commerce.service.auth.config
 
+import com.commerce.common.model.member.Member
+import com.commerce.common.model.member.MemberRepository
+import com.commerce.service.auth.controller.common.BaseResponse
+import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.MediaType
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.logout.LogoutFilter
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
 import org.springframework.security.web.csrf.*
 import org.springframework.util.StringUtils
@@ -26,13 +32,31 @@ class SecurityConfig {
     }
 
     @Bean
-    fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
+    fun securityFilterChain(
+        http: HttpSecurity,
+        memberRepository: MemberRepository,
+        objectMapper: ObjectMapper,
+        jwtAuthenticationFilter: JwtAuthenticationFilter,
+    ): SecurityFilterChain {
         http
             .csrf {
                 it.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 it.csrfTokenRequestHandler(SpaCsrfTokenRequestHandler())
             }
-        http.addFilterAfter(CsrfCookieFilter(), BasicAuthenticationFilter::class.java)
+            .logout {
+                it.logoutSuccessHandler { _, response, authentication ->
+                    val member = authentication?.principal as? Member
+                    if (member != null) {
+                        memberRepository.save(member.logout())
+                    }
+
+                    response.contentType = MediaType.APPLICATION_JSON_VALUE
+                    response.characterEncoding = Charsets.UTF_8.name()
+                    response.writer.write(objectMapper.writeValueAsString(BaseResponse.success()))
+                }
+            }
+            .addFilterBefore(jwtAuthenticationFilter, LogoutFilter::class.java)
+            .addFilterAfter(CsrfCookieFilter(), BasicAuthenticationFilter::class.java)
         return http.build()
     }
 }
