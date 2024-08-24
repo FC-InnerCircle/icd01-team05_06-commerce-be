@@ -3,6 +3,8 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     kotlin("jvm") version "1.9.24"
     kotlin("plugin.spring") version "1.9.24"
+    kotlin("plugin.jpa") version "1.7.20"
+
     id("org.springframework.boot") version "3.3.2"
     id("io.spring.dependency-management") version "1.1.6"
 }
@@ -23,6 +25,7 @@ configure(subprojects.filter { it.name !in nonDependenciesProjects }) {
 
     apply(plugin = "kotlin")
     apply(plugin = "kotlin-spring")
+    apply(plugin = "kotlin-jpa")
 
     dependencies {
         implementation("org.jetbrains.kotlin:kotlin-reflect")

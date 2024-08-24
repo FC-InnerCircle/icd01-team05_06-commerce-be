@@ -1,7 +1,3 @@
-plugins {
-    kotlin("plugin.jpa") version "1.7.20"
-}
-
 dependencies {
     implementation(project(":commons:model"))
     api("org.springframework.boot:spring-boot-starter-data-jpa")
