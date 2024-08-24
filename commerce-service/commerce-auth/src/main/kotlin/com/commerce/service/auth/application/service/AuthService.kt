@@ -4,6 +4,7 @@ import com.commerce.common.model.member.Member
 import com.commerce.common.model.member.MemberRepository
 import com.commerce.service.auth.application.usecase.AuthUseCase
 import com.commerce.service.auth.application.usecase.command.SignUpCommand
+import com.commerce.service.auth.application.usecase.exception.AuthException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -17,7 +18,7 @@ class AuthService(
     @Transactional
     override fun signUp(command: SignUpCommand) {
         memberRepository.findByEmail(command.email)?.let {
-            throw IllegalArgumentException("중복된 이메일입니다.")
+            throw AuthException("중복된 이메일입니다.")
         }
 
         memberRepository.save(

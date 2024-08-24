@@ -20,6 +20,7 @@ import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfig
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
@@ -61,5 +62,6 @@ class AuthControllerTest(
                 .content(objectMapper.writeValueAsString(request))
         )
             .andExpect(status().isOk)
+            .andExpect(content().json(objectMapper.writeValueAsString(mapOf("message" to "success"))))
     }
 }

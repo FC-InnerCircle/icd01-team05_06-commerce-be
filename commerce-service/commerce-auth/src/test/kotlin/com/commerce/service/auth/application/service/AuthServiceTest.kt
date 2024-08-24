@@ -2,6 +2,7 @@ package com.commerce.service.auth.application.service
 
 import com.commerce.common.model.member.Member
 import com.commerce.service.auth.application.usecase.command.SignUpCommand
+import com.commerce.service.auth.application.usecase.exception.AuthException
 import com.mock.common.model.member.FakeMemberRepository
 import com.mock.config.FakePasswordEncoder
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
@@ -62,7 +63,9 @@ class AuthServiceTest {
 
         assertThatThrownBy {
             authService.signUp(command)
-        }.isInstanceOf(IllegalArgumentException::class.java)
+        }
+            .isInstanceOf(AuthException::class.java)
+            .hasMessage("중복된 이메일입니다.")
     }
 
     @Test
