@@ -1,0 +1,28 @@
+ifndef::snippets[]
+:snippets: build/generated-snippets
+endif::[]
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+:sectlinks:
+:operation-http-request-title: Example Request
+:operation-http-response-title: Example Response
+ifndef::snippets-custom[]
+:snippets-custom: ../../../src/docs/custom
+
+[[title]]
+= 커머스 서비스 API 문서 - 인증 API
+
+include::{docdir}/common.adoc[]
+
+[[sign-up]]
+== 회원가입
+=== Http
+include::{snippets}/sign-up/http-request.adoc[]
+=== Request
+include::{snippets}/sign-up/request-fields.adoc[]
+=== Response
+include::{snippets}/sign-up/response-fields.adoc[]
+include::{snippets}/sign-up/response-body.adoc[]
