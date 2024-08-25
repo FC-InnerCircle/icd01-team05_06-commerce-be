@@ -65,17 +65,17 @@ class AuthService(
     }
 
     override fun refresh(refreshToken: String): String {
-        val TokenExpiredExceptionMessage = "권한이 만료되었습니다.\n다시 로그인해 주세요."
+        val tokenExpiredExceptionMessage = "권한이 만료되었습니다.\n다시 로그인해 주세요."
 
         val id = (tokenUseCase.getTokenSubject(refreshToken, TokenType.REFRESH_TOKEN)
-            ?: throw AuthException(TokenExpiredExceptionMessage))
+            ?: throw AuthException(tokenExpiredExceptionMessage))
             .toLong()
 
         memberRepository.findById(id)?.let {
             if (it.refreshToken != refreshToken) {
-                throw AuthException(TokenExpiredExceptionMessage)
+                throw AuthException(tokenExpiredExceptionMessage)
             }
-        } ?: throw AuthException(TokenExpiredExceptionMessage)
+        } ?: throw AuthException(tokenExpiredExceptionMessage)
 
         return tokenUseCase.createToken(id, TokenType.ACCESS_TOKEN)
     }
