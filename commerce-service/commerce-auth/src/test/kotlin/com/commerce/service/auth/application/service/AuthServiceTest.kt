@@ -2,7 +2,7 @@ package com.commerce.service.auth.application.service
 
 import com.commerce.common.model.member.Member
 import com.commerce.service.auth.application.usecase.TokenUseCase
-import com.commerce.service.auth.application.usecase.command.SignInCommand
+import com.commerce.service.auth.application.usecase.command.LoginCommand
 import com.commerce.service.auth.application.usecase.command.SignUpCommand
 import com.commerce.service.auth.application.usecase.command.UpdateCommand
 import com.commerce.service.auth.application.usecase.exception.AuthException
@@ -33,7 +33,7 @@ class AuthServiceTest {
 
     @Test
     fun `저장된 아이디가 없으면 로그인에 실패한다`() {
-        val command = SignInCommand(
+        val command = LoginCommand(
             email = "jerome.boyd@example.com",
             password = "phasellus",
         )
@@ -53,7 +53,7 @@ class AuthServiceTest {
             name = "Cameron Mayo",
             phone = "(737) 231-4205"
         ))
-        val command = SignInCommand(
+        val command = LoginCommand(
             email = "jerome.boyd@example.com",
             password = "safsafwa",
         )
@@ -73,7 +73,7 @@ class AuthServiceTest {
             name = "Cameron Mayo",
             phone = "(737) 231-4205"
         ))
-        val command = SignInCommand(
+        val command = LoginCommand(
             email = "jerome.boyd@example.com",
             password = "phasellus",
         )
@@ -93,7 +93,7 @@ class AuthServiceTest {
             name = "Cameron Mayo",
             phone = "(737) 231-4205"
         ))
-        val command = SignInCommand(
+        val command = LoginCommand(
             email = "jerome.boyd@example.com",
             password = "phasellus",
         )
@@ -113,7 +113,7 @@ class AuthServiceTest {
             name = "Cameron Mayo",
             phone = "(737) 231-4205"
         ))
-        val command = SignInCommand(
+        val command = LoginCommand(
             email = "jerome.boyd@example.com",
             password = "phasellus",
         )
@@ -135,7 +135,7 @@ class AuthServiceTest {
             name = "Cameron Mayo",
             phone = "(737) 231-4205"
         ))
-        val command = SignInCommand(
+        val command = LoginCommand(
             email = "jerome.boyd@example.com",
             password = "phasellus",
         )

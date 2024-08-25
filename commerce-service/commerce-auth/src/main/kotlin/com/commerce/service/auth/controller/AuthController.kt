@@ -6,7 +6,7 @@ import com.commerce.service.auth.application.usecase.dto.LoginInfoDto
 import com.commerce.service.auth.application.usecase.dto.LoginMemberInfoDto
 import com.commerce.service.auth.application.usecase.exception.AuthException
 import com.commerce.service.auth.controller.common.BaseResponse
-import com.commerce.service.auth.controller.request.SignInRequest
+import com.commerce.service.auth.controller.request.LoginRequest
 import com.commerce.service.auth.controller.request.SignUpRequest
 import com.commerce.service.auth.controller.request.UpdateRequest
 import com.commerce.service.auth.controller.response.AccessTokenResponse
@@ -20,7 +20,7 @@ class AuthController(
 ) {
 
     @PostMapping("/login")
-    fun login(@RequestBody request: SignInRequest): LoginInfoDto {
+    fun login(@RequestBody request: LoginRequest): LoginInfoDto {
         return authUseCase.login(request.toCommand())
     }
 

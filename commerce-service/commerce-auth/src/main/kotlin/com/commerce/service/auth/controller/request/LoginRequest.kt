@@ -1,12 +1,12 @@
 package com.commerce.service.auth.controller.request
 
-import com.commerce.service.auth.application.usecase.command.SignInCommand
+import com.commerce.service.auth.application.usecase.command.LoginCommand
 
-data class SignInRequest(
+data class LoginRequest(
     val email: String,
     val password: String,
 ) {
-    fun toCommand() = SignInCommand(
+    fun toCommand() = LoginCommand(
         email = email,
         password = password
     )

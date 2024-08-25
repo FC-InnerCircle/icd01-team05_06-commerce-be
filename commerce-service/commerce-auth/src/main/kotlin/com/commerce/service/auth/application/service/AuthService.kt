@@ -4,7 +4,7 @@ import com.commerce.common.model.member.Member
 import com.commerce.common.model.member.MemberRepository
 import com.commerce.service.auth.application.usecase.AuthUseCase
 import com.commerce.service.auth.application.usecase.TokenUseCase
-import com.commerce.service.auth.application.usecase.command.SignInCommand
+import com.commerce.service.auth.application.usecase.command.LoginCommand
 import com.commerce.service.auth.application.usecase.command.SignUpCommand
 import com.commerce.service.auth.application.usecase.command.UpdateCommand
 import com.commerce.service.auth.application.usecase.dto.LoginInfoDto
@@ -23,7 +23,7 @@ class AuthService(
 ) : AuthUseCase {
 
     @Transactional
-    override fun login(command: SignInCommand): LoginInfoDto {
+    override fun login(command: LoginCommand): LoginInfoDto {
         val loginFailedMessage = "아이디 혹은 비밀번호가 일치하지 않습니다."
 
         val member = memberRepository.findByEmail(command.email) ?: throw AuthException(loginFailedMessage)
