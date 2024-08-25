@@ -3,13 +3,13 @@ package com.commerce.service.auth.controller
 import com.commerce.common.model.member.Member
 import com.commerce.service.auth.application.usecase.AuthUseCase
 import com.commerce.service.auth.application.usecase.dto.LoginInfoDto
-import com.commerce.service.auth.application.usecase.dto.LoginMemberInfoDto
 import com.commerce.service.auth.application.usecase.exception.AuthException
 import com.commerce.service.auth.controller.common.BaseResponse
 import com.commerce.service.auth.controller.request.LoginRequest
 import com.commerce.service.auth.controller.request.SignUpRequest
 import com.commerce.service.auth.controller.request.UpdateRequest
 import com.commerce.service.auth.controller.response.AccessTokenResponse
+import com.commerce.service.auth.controller.response.UpdateResponse
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
@@ -44,8 +44,8 @@ class AuthController(
     }
 
     @PutMapping("/update")
-    fun update(@AuthenticationPrincipal member: Member, @RequestBody request: UpdateRequest): LoginMemberInfoDto {
-        return authUseCase.update(member, request.toCommand())
+    fun update(@AuthenticationPrincipal member: Member, @RequestBody request: UpdateRequest): UpdateResponse {
+        return UpdateResponse(authUseCase.update(member, request.toCommand()))
     }
 
     @DeleteMapping("/withdrawal")
