@@ -1,5 +1,6 @@
 plugins {
     id("org.asciidoctor.jvm.convert") version "3.3.2"
+    id("com.palantir.docker") version "0.35.0"
 }
 
 dependencies {
@@ -43,7 +44,16 @@ tasks {
         }
     }
 
-    build {
+    bootJar {
         dependsOn(asciidoctor)
     }
+}
+
+docker {
+    name = "${project.name}:${version}" // 이미지 이름
+    setDockerfile(file("../../Dockerfile"))
+    files(tasks.bootJar.get().outputs.files)
+    buildArgs(mapOf(
+        "JAR_FILE" to tasks.bootJar.get().outputs.files.singleFile.name
+    ))
 }
