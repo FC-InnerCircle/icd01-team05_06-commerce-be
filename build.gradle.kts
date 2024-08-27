@@ -18,6 +18,27 @@ allprojects {
     }
 }
 
+// 코틀린 버전, 자바 버전 충돌 방지
+subprojects {
+    apply(plugin = "org.jetbrains.kotlin.jvm")
+    apply(plugin = "java")
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    }
+
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions {
+            jvmTarget = "21"
+        }
+    }
+
+    tasks.withType<Test> {
+        useJUnitPlatform()
+    }
+}
+
 val nonDependenciesProjects = listOf("commons", "commerce-service")
 configure(subprojects.filter { it.name !in nonDependenciesProjects }) {
     apply(plugin = "org.springframework.boot")

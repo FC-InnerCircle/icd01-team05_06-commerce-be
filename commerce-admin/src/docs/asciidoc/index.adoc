@@ -1,0 +1,23 @@
+= Sample API Documentation
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+== Sample Endpoint
+
+=== Get a sample
+
+.request
+include::{snippets}/sample/http-request.adoc[]
+
+.response
+include::{snippets}/sample/http-response.adoc[]
+
+.response-fields
+include::{snippets}/sample/response-fields.adoc[]
+
+== Swagger UI
+View the Swagger UI here: link:/swagger-ui.html[Swagger UI]
