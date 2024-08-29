@@ -9,3 +9,4 @@ include("commerce-admin")
 
 include("commerce-service")
 include("commerce-service:commerce-auth")
+include("commerce-service:commerce-product")
