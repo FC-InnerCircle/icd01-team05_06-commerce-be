@@ -1,0 +1,72 @@
+ifndef::snippets[]
+:snippets: build/generated-snippets
+endif::[]
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+:sectlinks:
+:operation-http-request-title: Example Request
+:operation-http-response-title: Example Response
+ifndef::snippets-custom[]
+:snippets-custom: ../../../src/docs/custom
+
+[[title]]
+= 커머스 서비스 API 문서 - 인증 API
+
+include::{docdir}/common.adoc[]
+
+[[login]]
+== 로그인
+=== Http
+include::{snippets}/login/http-request.adoc[]
+=== Request
+include::{snippets}/login/request-fields.adoc[]
+=== Response
+include::{snippets}/login/response-fields.adoc[]
+include::{snippets}/login/response-body.adoc[]
+
+[[sign-up]]
+== 회원가입
+=== Http
+include::{snippets}/sign-up/http-request.adoc[]
+=== Request
+include::{snippets}/sign-up/request-fields.adoc[]
+=== Response
+include::{snippets}/sign-up/response-fields.adoc[]
+include::{snippets}/sign-up/response-body.adoc[]
+
+[[logout]]
+== 로그아웃
+=== Http
+include::{snippets}/logout/http-request.adoc[]
+=== Response
+include::{snippets}/logout/response-fields.adoc[]
+include::{snippets}/logout/response-body.adoc[]
+
+[[refresh]]
+== 액세스 토큰 재발급
+=== Http
+include::{snippets}/refresh/http-request.adoc[]
+=== Response
+include::{snippets}/refresh/response-fields.adoc[]
+include::{snippets}/refresh/response-body.adoc[]
+
+[[update]]
+== 사용자 정보 수정
+=== Http
+include::{snippets}/update/http-request.adoc[]
+=== Request
+include::{snippets}/update/request-fields.adoc[]
+=== Response
+include::{snippets}/update/response-fields.adoc[]
+include::{snippets}/update/response-body.adoc[]
+
+[[withdrawal]]
+== 회원탈퇴
+=== Http
+include::{snippets}/withdrawal/http-request.adoc[]
+=== Response
+include::{snippets}/withdrawal/response-fields.adoc[]
+include::{snippets}/withdrawal/response-body.adoc[]
