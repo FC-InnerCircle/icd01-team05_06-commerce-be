@@ -1,0 +1,13 @@
+services:
+  commerce-auth:
+    container_name: commerce-auth
+    image: commerce-auth:0.0.1-SNAPSHOT
+    networks:
+      - commerce_network
+    ports:
+      - "8080:8080"
+
+networks:
+  commerce_network:
+    name: commerce_network
+    driver: bridge
