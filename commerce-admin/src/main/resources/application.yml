@@ -13,9 +13,23 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create-drop
+  web:
+    resources:
+      static-locations: classpath:/static/
 
 logging:
   level:
     org.springframework.web: DEBUG
     org.h2: DEBUG
     org.hibernate.SQL: DEBUG
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tagsSorter: alpha
+  packages-to-scan: com.commerce.admin.controller
+  paths-to-match: /api/**
+

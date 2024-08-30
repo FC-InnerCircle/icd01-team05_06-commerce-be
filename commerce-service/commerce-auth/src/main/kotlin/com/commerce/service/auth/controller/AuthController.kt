@@ -6,11 +6,8 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class AuthController(
-    private val authUseCase: AuthUseCase
+    private val authUseCase: AuthUseCase,
 ) {
-
     @GetMapping("/auth/hello")
-    fun hello(): String {
-        return authUseCase.findMember(1).toString()
-    }
+    fun hello(): String = authUseCase.findMember(1).toString()
 }
