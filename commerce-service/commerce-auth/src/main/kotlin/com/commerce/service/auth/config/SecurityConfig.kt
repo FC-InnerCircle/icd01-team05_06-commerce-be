@@ -62,6 +62,7 @@ class SecurityConfig {
             .authorizeHttpRequests {
                 it
                     .requestMatchers(
+                        AntPathRequestMatcher("/actuator/**", HttpMethod.GET.name()),
                         AntPathRequestMatcher("/docs/**", HttpMethod.GET.name()),
                         AntPathRequestMatcher("/login", HttpMethod.POST.name()),
                         AntPathRequestMatcher("/sign-up", HttpMethod.POST.name()),
