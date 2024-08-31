@@ -48,9 +48,16 @@ class OpenApiConfig {
                         "ErrorResponse",
                         Schema<Any>()
                             .type("object")
-                            .addProperties("code", Schema<String>())
+                            .addProperties("status", Schema<String>())
                             .addProperties("message", Schema<String>())
-                            .addProperties("status", Schema<Int>()),
+                            .addProperties(
+                                "data",
+                                Schema<Any>()
+                                    .type("object")
+                                    .addProperties("code", Schema<String>())
+                                    .addProperties("message", Schema<String>())
+                                    .addProperties("status", Schema<Int>()),
+                            ).addProperties("timestamp", Schema<String>().format("date-time")),
                     ),
             )
 
@@ -130,9 +137,15 @@ class OpenApiConfig {
                 val errorExample =
                     Example().value(
                         mapOf(
-                            "code" to errorCode.code,
-                            "message" to errorCode.message,
-                            "status" to errorCode.httpStatus.value(),
+                            "status" to "ERROR",
+                            "message" to "커스터 메시지 노출 부분",
+                            "data" to
+                                mapOf(
+                                    "code" to errorCode.code,
+                                    "message" to errorCode.message,
+                                    "status" to errorCode.httpStatus.value(),
+                                ),
+                            "timestamp" to "2024-08-31T15:30:00Z",
                         ),
                     )
                 mediaType.addExamples(errorCode.code, errorExample)
@@ -173,9 +186,15 @@ class OpenApiConfig {
         val example =
             Example().value(
                 mapOf(
-                    "code" to errorCode.code,
-                    "message" to errorCode.message,
-                    "status" to errorCode.httpStatus.value(),
+                    "status" to "ERROR",
+                    "message" to "커스텀 메시지 노출 부분",
+                    "data" to
+                        mapOf(
+                            "code" to errorCode.code,
+                            "message" to errorCode.message,
+                            "status" to errorCode.httpStatus.value(),
+                        ),
+                    "timestamp" to "2024-08-31T15:30:00Z",
                 ),
             )
         mediaType.addExamples("default", example)
