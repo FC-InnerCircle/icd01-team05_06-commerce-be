@@ -1,4 +1,9 @@
 spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://inner-circle-commerce.c74w06weohlm.ap-northeast-2.rds.amazonaws.com:3306/commerce
+    username: root
+    password: b1ALeR4JgTyBICO3T91y
   jpa:
     open-in-view: false
     properties:
@@ -6,6 +11,8 @@ spring:
         default_batch_fetch_size: 100
         format_sql: true
         highlight_sql: true
+    hibernate:
+      ddl-auto: update
 
 logging:
   level:
