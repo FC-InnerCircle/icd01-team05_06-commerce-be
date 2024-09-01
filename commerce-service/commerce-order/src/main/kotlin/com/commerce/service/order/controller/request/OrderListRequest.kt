@@ -3,9 +3,11 @@ package com.commerce.service.order.controller.request
 import com.commerce.service.order.controller.common.request.CommonRequest
 import com.commerce.service.order.controller.common.request.DateRange
 import com.commerce.service.order.controller.common.request.SortOption
+import jakarta.validation.constraints.NotNull
 import java.time.LocalDateTime
 
 data class OrderListRequest(
+    @field:NotNull(message = "Date range is required")
     val dateRange: DateRange,
     val status: String? = null,
     val sortBy: SortOption = SortOption.RECENT,

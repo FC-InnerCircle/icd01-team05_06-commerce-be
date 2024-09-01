@@ -3,12 +3,12 @@ package com.commerce.service.order.applicaton.usecase.exception
 import com.commerce.service.order.controller.common.responese.CommonResponse
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
 @RestControllerAdvice
 class GlobalExceptionHandler {
-
     @ExceptionHandler(CustomException::class)
     fun handleCustomException(ex: CustomException): ResponseEntity<CommonResponse<Unit>> {
         val status = when (ex) {
