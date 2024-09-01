@@ -43,6 +43,13 @@ configure(subprojects.filter { it.name !in nonDependenciesProjects }) {
         }
     }
 
+    // Java 컴파일러 설정
+    // 빌드 이슈로 인해 Java 컴파일러 설정을 추가합니다.
+    tasks.withType<JavaCompile> {
+        sourceCompatibility = JavaVersion.VERSION_21.toString()
+        targetCompatibility = JavaVersion.VERSION_21.toString()
+    }
+
     tasks.withType<Test> {
         useJUnitPlatform()
     }
