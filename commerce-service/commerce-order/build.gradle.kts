@@ -1,5 +1,3 @@
-import groovy.xml.dom.DOMCategory.attributes
-
 plugins {
     id("org.asciidoctor.jvm.convert") version "3.3.2" // Spring REST Docs
 }
@@ -15,37 +13,38 @@ dependencies {
     implementation(project(":commons:common-util"))
     implementation(project(":commons:model"))
     implementation(project(":commons:persistence-database"))
+
+    testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
 }
 
 val snippetsDir = layout.buildDirectory.dir("generated-snippets")
+val outputDir = layout.buildDirectory.dir("asciidoc/html5")
 
 tasks {
     test {
         outputs.dir(snippetsDir)
-        useJUnitPlatform()
     }
 
     asciidoctor {
         inputs.dir(snippetsDir)
+        setOutputDir(layout.buildDirectory.dir("asciidoc/html5").get().asFile)
         dependsOn(test)
-        attributes(mapOf("snippets" to snippetsDir))
+        finalizedBy("copyAsciidoctorDocs")
     }
 
-    register<Copy>("copyRestDocs") {
-        dependsOn(asciidoctor)
-        from(layout.buildDirectory.dir("docs/asciidoc"))
-        into(layout.buildDirectory.dir("resources/main/static/docs"))
+    register<Copy>("copyAsciidoctorDocs") {
+        from(outputDir)
+        into(layout.projectDirectory.dir("src/main/resources/static/docs"))
     }
 
     bootJar {
-        dependsOn("copyRestDocs")
+        dependsOn(asciidoctor)
+        from(outputDir) {
+            into("static/docs")
+        }
     }
+}
 
-    jar {
-        dependsOn("copyRestDocs")
-    }
-
-    named("resolveMainClassName") {
-        dependsOn("copyRestDocs")
-    }
+tasks.named("build") {
+    dependsOn("copyAsciidoctorDocs")
 }

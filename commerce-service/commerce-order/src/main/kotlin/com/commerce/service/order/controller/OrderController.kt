@@ -5,26 +5,27 @@ import com.commerce.service.order.config.ApiPaths
 import com.commerce.service.order.controller.common.responese.CommonResponse
 import com.commerce.service.order.controller.response.OrderListResponse
 import com.commerce.service.order.controller.request.OrderListRequest
+import com.commerce.service.order.controller.response.OrderDetail
+import com.commerce.service.order.controller.response.OrderDetailResponse
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping(ApiPaths.ORDERS)
 class OrderController (
     private val orderUseCase: OrderUseCase
 ) {
-    @GetMapping
+    @PostMapping
     fun getOrder(@Valid @RequestBody request: OrderListRequest): ResponseEntity<CommonResponse<OrderListResponse>> {
-//        return orderUseCase.getOrder()
-        return ResponseEntity.ok(CommonResponse(success = true, data = null))
+        request.validate()
+        val response = orderUseCase.getOrder(request)
+        return ResponseEntity.ok(CommonResponse(success = true, data = response))
     }
 
     @GetMapping("/{orderId}")
-    fun getOrderDetail() {
-        return orderUseCase.getOrderDetail()
+    fun getOrderDetail(): ResponseEntity<CommonResponse<OrderDetailResponse>> {
+//        return orderUseCase.getOrderDetail()
+        return ResponseEntity.ok(CommonResponse(success = true, data = null))
     }
 }
