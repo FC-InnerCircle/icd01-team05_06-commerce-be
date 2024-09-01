@@ -15,7 +15,7 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
   web:
     resources:
       static-locations: classpath:/static/
