@@ -1,5 +1,6 @@
 package com.commerce.common.persistence.category
 
+import com.commerce.common.model.category.Category
 import jakarta.persistence.*
 
 @Entity
@@ -18,5 +19,12 @@ class CategoryJpaEntity (
     val subcategories: List<CategoryJpaEntity> = mutableListOf(),
 
     val name: String,
-    val depth:Int,
-)
+    val depth: Int,
+) {
+    fun toModel(): Category = Category(
+        id = id,
+        parentId = parent?.id,
+        name = name,
+        depth = depth,
+    )
+}
