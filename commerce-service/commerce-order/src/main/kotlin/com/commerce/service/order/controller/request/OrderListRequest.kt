@@ -1,6 +1,7 @@
 package com.commerce.service.order.controller.request
 
 import com.commerce.service.order.controller.common.request.CommonRequest
+import com.fasterxml.jackson.annotation.JsonFormat
 import jakarta.validation.constraints.NotNull
 import java.time.LocalDateTime
 
@@ -10,7 +11,11 @@ data class OrderListRequest(
     val status: String? = null,
     val sortBy: SortOption = SortOption.RECENT,
     val page: Int = 0,
-    val size: Int = 20
+    val size: Int = 20,
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    var startDate: LocalDateTime? = null,
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    var endDate: LocalDateTime? = null
 ) : CommonRequest {
 
     // 주문 조회 날짜 범위
@@ -30,9 +35,6 @@ data class OrderListRequest(
     enum class SortOption {
         RECENT, ORDER_STATUS, ALL
     }
-
-    var startDate: LocalDateTime? = null
-    var endDate: LocalDateTime? = null
 
     override fun validate() {
         if (dateRange == DateRange.CUSTOM) {
