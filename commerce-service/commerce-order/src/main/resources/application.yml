@@ -1,5 +1,5 @@
 server:
-  port: 9090
+  port: 8080
 
 spring:
   datasource:
@@ -16,9 +16,9 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-  web:
-    resources:
-      static-locations: classpath:/static/
+#  web:
+#    resources:
+#      static-locations: classpath:/static/
 
 logging:
   level:

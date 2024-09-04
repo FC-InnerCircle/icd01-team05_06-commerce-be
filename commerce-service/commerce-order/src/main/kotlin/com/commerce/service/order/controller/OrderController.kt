@@ -11,6 +11,7 @@ import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
+// 미개발 API는 Mock Data를 리턴하도록 구현
 @RestController
 @RequestMapping(ApiPaths.ORDERS)
 class OrderController (
@@ -24,8 +25,8 @@ class OrderController (
     }
 
     @GetMapping("/{orderId}")
-    fun getOrderDetail(): ResponseEntity<CommonResponse<OrderDetailResponse>> {
-//        return orderUseCase.getOrderDetail()
-        return ResponseEntity.ok(CommonResponse(success = true, data = null))
+    fun getOrderDetail(@PathVariable orderId: String): ResponseEntity<CommonResponse<OrderDetailResponse>> {
+        val response = orderUseCase.getOrderDetail(orderId)
+        return ResponseEntity.ok(CommonResponse(success = true, data = response))
     }
 }
