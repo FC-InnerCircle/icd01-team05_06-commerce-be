@@ -17,34 +17,36 @@ dependencies {
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
 }
 
-val snippetsDir = layout.buildDirectory.dir("generated-snippets")
-val outputDir = layout.buildDirectory.dir("asciidoc/html5")
+val asciidoctorExt: Configuration by configurations.creating
+val snippetsDir by extra { file("build/generated-snippets") }
+
+dependencies {
+    asciidoctorExt("org.springframework.restdocs:spring-restdocs-asciidoctor")
+}
 
 tasks {
     test {
         outputs.dir(snippetsDir)
+        useJUnitPlatform()
     }
 
     asciidoctor {
         inputs.dir(snippetsDir)
-        setOutputDir(layout.buildDirectory.dir("asciidoc/html5").get().asFile)
+        configurations(asciidoctorExt.name)
         dependsOn(test)
-        finalizedBy("copyAsciidoctorDocs")
-    }
-
-    register<Copy>("copyAsciidoctorDocs") {
-        from(outputDir)
-        into(layout.projectDirectory.dir("src/main/resources/static/docs"))
+        doFirst { // 작업이 실행되기전 수행하는 작업 선언
+            delete("build/resources/main/static/docs") // 기존 문서 삭제
+        }
+        baseDirFollowsSourceFile()
+        doLast {
+            copy {
+                from("build/docs/asciidoc")
+                into("build/resources/main/static/docs")
+            }
+        }
     }
 
     bootJar {
         dependsOn(asciidoctor)
-        from(outputDir) {
-            into("static/docs")
-        }
     }
-}
-
-tasks.named("build") {
-    dependsOn("copyAsciidoctorDocs")
 }
