@@ -47,10 +47,10 @@ include::common.adoc[]
 
 [[order-list]]
 == 주문 목록 조회
-=== Http Request
+=== HTTP Request
 include::{snippets}/get-orders/http-request.adoc[]
-=== Request Fields
-include::{snippets}/get-orders/request-fields.adoc[]
+=== Request Parameters
+include::{snippets}/get-orders/query-parameters.adoc[]
 === Http Response
 include::{snippets}/get-orders/http-response.adoc[]
 === Response Fields
