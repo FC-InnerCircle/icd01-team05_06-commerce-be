@@ -43,8 +43,8 @@ data class OrdersJpaEntity(
     val price: BigDecimal,
 
     @Column(name = "status")
-    // @Enumerated(EnumType.STRING)
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
+//    @Enumerated(EnumType.ORDINAL)
     val status: OrderStatus,
 
     @Column(name = "order_date")
