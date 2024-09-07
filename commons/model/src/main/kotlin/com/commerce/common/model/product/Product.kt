@@ -1,5 +1,6 @@
 package com.commerce.common.model.product
 
+import com.commerce.common.model.category.CategoryDetail
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
@@ -19,5 +20,5 @@ class Product(
     val stockQuantity: Int,
     val rating: Double,
     val status: SaleStatus,
-    // val category: ProductCategoryInfoDto,
+    val category: CategoryDetail? = null,
 )

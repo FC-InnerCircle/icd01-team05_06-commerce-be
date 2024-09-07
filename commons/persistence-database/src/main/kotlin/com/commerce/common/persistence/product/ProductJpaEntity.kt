@@ -1,5 +1,6 @@
 package com.commerce.common.persistence.product
 
+import com.commerce.common.model.category.CategoryDetail
 import com.commerce.common.model.product.Product
 import com.commerce.common.model.product.SaleStatus
 import jakarta.persistence.*
@@ -46,7 +47,7 @@ class ProductJpaEntity(
     val deletedAt: LocalDateTime,
 
     ) {
-    fun toModel(): Product {
+    fun toModel(category: CategoryDetail?): Product {
      return Product(
          id = id,
          title = title,
@@ -63,6 +64,7 @@ class ProductJpaEntity(
          stockQuantity = stockQuantity,
          rating = rating,
          status = status,
+         category = category,
      )
     }
 }

@@ -1,9 +1,11 @@
 package com.commerce.service.product.application.usecase.dto
 
+import com.commerce.common.model.category.CategoryDetail
 import com.commerce.common.model.product.Product
 import com.commerce.common.model.product.SaleStatus
 import com.fasterxml.jackson.annotation.JsonFormat
 import java.math.BigDecimal
+import java.math.RoundingMode
 import java.time.LocalDateTime
 
 class ProductInfoDto(
@@ -13,7 +15,8 @@ class ProductInfoDto(
     val price: BigDecimal,
     val discountedPrice: BigDecimal,
     val publisher: String,
-    val publishDate: String,
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd")
+    val publishDate: LocalDateTime,
     val isbn: String,
     val description: String,
     val pages: Int,
@@ -22,7 +25,7 @@ class ProductInfoDto(
     val stockQuantity: Int,
     val rating: Double,
     val status: SaleStatus,
-    // val category: ProductCategoryInfoDto,
+    val category: CategoryDetail?,
 ) {
     companion object {
         fun from(product: Product): ProductInfoDto {
@@ -30,10 +33,10 @@ class ProductInfoDto(
                 id = product.id,
                 title = product.title,
                 author = product.author,
-                price = product.price,
-                discountedPrice = product.discountedPrice,
+                price = product.price.setScale(0, RoundingMode.DOWN),
+                discountedPrice = product.discountedPrice.setScale(0, RoundingMode.DOWN),
                 publisher = product.publisher,
-                publishDate = product.publishDate.toString().split("T")[0],
+                publishDate = product.publishDate,
                 isbn = product.isbn,
                 description = product.description,
                 pages = product.pages,
@@ -42,6 +45,7 @@ class ProductInfoDto(
                 stockQuantity = product.stockQuantity,
                 rating = product.rating,
                 status = product.status,
+                category = product.category,
             )
         }
     }

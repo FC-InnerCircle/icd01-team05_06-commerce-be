@@ -1,6 +1,7 @@
 package com.commerce.common.persistence.category
 
 import com.commerce.common.model.category.Category
+import com.commerce.common.model.category.CategoryDetail
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
@@ -32,5 +33,16 @@ class CategoryJpaEntity (
         parentId = parent?.id,
         name = name,
         depth = depth,
+    )
+
+    fun toProductModel(): CategoryDetail = CategoryDetail(
+        id = id,
+        name = name,
+        parentCategory = parent?.let {
+            CategoryDetail.ParentCategory(
+                id = parent.id,
+                name = parent.name,
+            )
+        }
     )
 }
