@@ -3,6 +3,7 @@ package com.commerce.service.order.applicaton.service
 import com.commerce.common.model.orders.Orders
 import com.commerce.common.model.orders.OrdersRepository
 import com.commerce.common.model.orderProduct.OrderProduct
+import com.commerce.common.model.orders.OrderStatus
 import com.commerce.service.order.applicaton.usecase.OrderUseCase
 import com.commerce.service.order.applicaton.usecase.exception.InvalidInputException
 import com.commerce.service.order.controller.request.OrderListRequest
@@ -34,7 +35,7 @@ class OrderService (
         val pageable = PageRequest.of(request.page, request.size, sort)
 
         val ordersPage = if (request.status != null) {
-            val status = Orders.OrderStatus.valueOf(request.status)
+            val status = OrderStatus.valueOf(request.status)
             ordersRepository.findByCreatedAtBetweenAndStatus(startDate, endDate, status, pageable)
         } else {
             ordersRepository.findByCreatedAtBetween(startDate, endDate, pageable)
@@ -125,7 +126,7 @@ class OrderService (
             content = orders.content,
             discountedPrice = orders.discountedPrice,
             price = orders.price,
-            status = Orders.OrderStatus.valueOf(orders.status.name),
+            status = OrderStatus.valueOf(orders.status.name),
             orderDate = orders.orderDate,
             createdAt = orders.createdAt,
             updatedAt = orders.updatedAt,

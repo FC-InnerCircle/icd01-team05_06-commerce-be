@@ -1,6 +1,7 @@
 package com.commerce.common.persistence.orders
 
 import com.commerce.common.model.orderProduct.OrderProduct
+import com.commerce.common.model.orders.OrderStatus
 import com.commerce.common.persistence.orderProduct.OrderProductJpaEntity
 import jakarta.persistence.*
 import java.math.BigDecimal
@@ -58,18 +59,6 @@ data class OrdersJpaEntity(
 ) {
     @OneToMany(mappedBy = "order", cascade = [CascadeType.ALL], orphanRemoval = true)
     val orderProducts: MutableList<OrderProductJpaEntity> = mutableListOf()
-
-    // 주문상태
-    // PENDING: 주문 생성
-    // PROCESSING: 주문 처리중
-    // SHIPPED: 배송중
-    // DELIVERED: 배송완료
-    // CANCEL: 주문 취소
-    // REFUND: 환불
-    // EXCHANGE: 교환
-    enum class OrderStatus {
-        PENDING, PROCESSING, SHIPPED, DELIVERED, CANCEL, REFUND, EXCHANGE
-    }
 
     fun addOrderProduct(orderProductJpaEntity: OrderProductJpaEntity) {
         orderProducts.add(orderProductJpaEntity)

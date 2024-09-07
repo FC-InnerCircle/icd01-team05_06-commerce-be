@@ -1,5 +1,6 @@
 package com.commerce.common.persistence.orders
 
+import com.commerce.common.model.orders.OrderStatus
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Page
 import org.springframework.data.jpa.repository.JpaRepository
@@ -15,7 +16,7 @@ interface OrdersJpaRepository : JpaRepository<OrdersJpaEntity, Long> {
     fun findByCreatedAtBetweenAndStatus(
         startDate: LocalDateTime,
         endDate: LocalDateTime,
-        status: OrdersJpaEntity.OrderStatus,
+        status: OrderStatus,
         pageable: Pageable
     ): Page<OrdersJpaEntity>
 }

@@ -3,6 +3,7 @@ package com.commerce.common.persistence.orders
 import com.commerce.common.model.orders.Orders
 import com.commerce.common.model.orders.OrdersRepository
 import com.commerce.common.model.orderProduct.OrderProduct
+import com.commerce.common.model.orders.OrderStatus
 import com.commerce.common.persistence.orderProduct.OrderProductJpaEntity
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
@@ -17,7 +18,7 @@ class OrdersRepositoryImpl (
     override fun findByCreatedAtBetweenAndStatus(
         startDate: LocalDateTime,
         endDate: LocalDateTime,
-        status: Orders.OrderStatus,
+        status: OrderStatus,
         pageable: Pageable
     ): Page<Orders> {
         val orderJpaEntities = ordersJpaRepository.findByCreatedAtBetweenAndStatus(startDate, endDate, status.toJpaStatus(), pageable)
@@ -48,7 +49,7 @@ class OrdersRepositoryImpl (
             content = this.content,
             discountedPrice = this.discountedPrice,
             price = this.price,
-            status = Orders.OrderStatus.valueOf(this.status.name),
+            status = OrderStatus.valueOf(this.status.name),
             orderDate = this.orderDate,
             createdAt = this.createdAt,
             updatedAt = this.updatedAt,
@@ -69,7 +70,7 @@ class OrdersRepositoryImpl (
         )
     }
 
-    private fun Orders.OrderStatus.toJpaStatus(): OrdersJpaEntity.OrderStatus {
-        return OrdersJpaEntity.OrderStatus.valueOf(this.name)
+    private fun OrderStatus.toJpaStatus(): OrderStatus {
+        return OrderStatus.valueOf(this.name)
     }
 }

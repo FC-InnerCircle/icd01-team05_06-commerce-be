@@ -9,7 +9,7 @@ interface OrdersRepository {
     fun findByCreatedAtBetweenAndStatus(
         startDate: LocalDateTime,
         endDate: LocalDateTime,
-        status: Orders.OrderStatus,
+        status: OrderStatus,
         pageable: Pageable
     ): Page<Orders>
 }

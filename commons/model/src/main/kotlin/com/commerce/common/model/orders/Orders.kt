@@ -22,17 +22,6 @@ data class Orders(
     val updatedAt: LocalDateTime,
     val orderProducts: List<OrderProduct>
 ) {
-    // 주문상태
-    // PENDING: 주문 생성
-    // PROCESSING: 주문 처리중
-    // SHIPPED: 배송중
-    // DELIVERED: 배송완료
-    // CANCEL: 주문 취소
-    // REFUND: 환불
-    // EXCHANGE: 교환
-    enum class OrderStatus {
-        PENDING, PROCESSING, SHIPPED, DELIVERED, CANCEL, REFUND, EXCHANGE
-    }
 
     val totalAmount: BigDecimal
         get() = orderProducts.sumOf { it.price * BigDecimal(it.quantity) }
