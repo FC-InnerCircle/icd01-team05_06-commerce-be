@@ -11,7 +11,7 @@ class ProductRepositoryImpl (
 ) : ProductRepository {
 
     override fun findByCategoryId(categoryId: Long, page: Int, size: Int): List<Product> {
-        return productJpaRepository.findByCategoryJpaEntityId(categoryId, PageRequest.of(page, size))
+        return productJpaRepository.findByCategoryId(categoryId, PageRequest.of(page, size))
             .map { it.toModel() }
             .toList()
     }

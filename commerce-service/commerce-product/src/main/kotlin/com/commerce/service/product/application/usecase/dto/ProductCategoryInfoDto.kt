@@ -12,7 +12,7 @@ class ProductCategoryInfoDto(
     companion object {
         fun from(categories: List<Category>): ProductCategoryInfoDto {
 
-            val rootCategory = categories.first { it.parentId == 0L }
+            val rootCategory = categories.first { it.parentId == null }
             return buildDto(rootCategory, categories)
         }
 

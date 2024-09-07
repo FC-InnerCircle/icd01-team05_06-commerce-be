@@ -4,4 +4,6 @@ dependencies {
     implementation(project(":commons:common-util"))
     implementation(project(":commons:model"))
     implementation(project(":commons:persistence-database"))
+
+    runtimeOnly("com.mysql:mysql-connector-j")
 }

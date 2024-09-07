@@ -27,6 +27,6 @@ class ProductService(
     override fun getProducts(query: SelectQuery): List<ProductInfoDto> {
         val products = productRepository.findByCategoryId(query.categoryId, query.page, query.size)
 
-        return products.map { ProductInfoDto.of(it) }
+        return products.map { ProductInfoDto.from(it) }
     }
 }

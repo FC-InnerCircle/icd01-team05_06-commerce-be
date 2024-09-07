@@ -1,11 +1,48 @@
 package com.commerce.service.product.application.usecase.dto
 
 import com.commerce.common.model.product.Product
+import com.commerce.common.model.product.SaleStatus
+import com.fasterxml.jackson.annotation.JsonFormat
+import java.math.BigDecimal
+import java.time.LocalDateTime
 
-class ProductInfoDto {
+class ProductInfoDto(
+    val id : Long?,
+    val title: String,
+    val author: String,
+    val price: BigDecimal,
+    val discountedPrice: BigDecimal,
+    val publisher: String,
+    val publishDate: String,
+    val isbn: String,
+    val description: String,
+    val pages: Int,
+    val coverImage: String,
+    val previewLink: String,
+    val stockQuantity: Int,
+    val rating: Double,
+    val status: SaleStatus,
+    // val category: ProductCategoryInfoDto,
+) {
     companion object {
-        fun of(product: Product): ProductInfoDto {
-            TODO("Not yet implemented")
+        fun from(product: Product): ProductInfoDto {
+            return ProductInfoDto(
+                id = product.id,
+                title = product.title,
+                author = product.author,
+                price = product.price,
+                discountedPrice = product.discountedPrice,
+                publisher = product.publisher,
+                publishDate = product.publishDate.toString().split("T")[0],
+                isbn = product.isbn,
+                description = product.description,
+                pages = product.pages,
+                coverImage = product.coverImage,
+                previewLink = product.previewLink,
+                stockQuantity = product.stockQuantity,
+                rating = product.rating,
+                status = product.status,
+            )
         }
     }
 }
