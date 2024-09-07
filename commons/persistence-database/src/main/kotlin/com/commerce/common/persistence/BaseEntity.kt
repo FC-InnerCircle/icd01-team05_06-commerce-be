@@ -14,5 +14,5 @@ abstract class BaseEntity : BaseTimeEntity() {
     var createdBy: String? = null
 
     @LastModifiedBy
-    var lastModifiedBy: String? = null
+    var updatedBy: String? = null
 }

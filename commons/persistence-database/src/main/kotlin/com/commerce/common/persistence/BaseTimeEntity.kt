@@ -14,9 +14,9 @@ abstract class BaseTimeEntity {
 
     @Column(name = "createdAt")
     @CreatedDate
-    val createdAt: LocalDateTime? = null
+    var createdAt: LocalDateTime? = null
 
     @Column(name = "updatedAt")
     @LastModifiedDate
-    val updatedAt: LocalDateTime? = null
+    var updatedAt: LocalDateTime? = null
 }
