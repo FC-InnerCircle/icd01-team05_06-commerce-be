@@ -1,27 +1,5 @@
-server:
-  port: 8080
-
+# 배포 작업 시 설정 예정
 spring:
-  datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-#  web:
-#    resources:
-#      static-locations: classpath:/static/
-
-logging:
-  level:
-    org.springframework.web: DEBUG
-    org.h2: DEBUG
-    org.hibernate.SQL: DEBUG
+  sql:
+    init:
+      mode: never

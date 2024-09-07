@@ -1,10 +1,8 @@
 package com.commerce.service.order.applicaton.service
 
-import com.commerce.common.model.order.Order
-import com.commerce.common.model.order.OrderRepository
-import com.commerce.common.model.orderItem.OrderItem
-import com.commerce.common.persistence.order.OrderJpaEntity
-import com.commerce.common.persistence.orderItem.OrderItemJpaEntity
+import com.commerce.common.model.orders.Orders
+import com.commerce.common.model.orders.OrdersRepository
+import com.commerce.common.model.orderProduct.OrderProduct
 import com.commerce.service.order.applicaton.usecase.OrderUseCase
 import com.commerce.service.order.applicaton.usecase.exception.InvalidInputException
 import com.commerce.service.order.controller.request.OrderListRequest
@@ -20,7 +18,7 @@ import java.time.LocalDateTime
 
 @Service
 class OrderService (
-    private val orderRepository: OrderRepository
+    private val ordersRepository: OrdersRepository
 ) : OrderUseCase {
     override fun getOrder(request: OrderListRequest) : OrderListResponse {
         if (request.page < 0) {
@@ -36,16 +34,16 @@ class OrderService (
         val pageable = PageRequest.of(request.page, request.size, sort)
 
         val ordersPage = if (request.status != null) {
-            val status = Order.OrderStatus.valueOf(request.status)
-            orderRepository.findByCreatedAtBetweenAndStatus(startDate, endDate, status, pageable)
+            val status = Orders.OrderStatus.valueOf(request.status)
+            ordersRepository.findByCreatedAtBetweenAndStatus(startDate, endDate, status, pageable)
         } else {
-            orderRepository.findByCreatedAtBetween(startDate, endDate, pageable)
+            ordersRepository.findByCreatedAtBetween(startDate, endDate, pageable)
         }
 
         val orders = ordersPage.content.map { toOrder(it) }
 
         return OrderListResponse(
-            orders = orders.map { toOrderSummary(it) },
+            products = orders.map { toOrderSummary(it) },
             totalElements = ordersPage.totalElements,
             totalPages = ordersPage.totalPages
         )
@@ -90,13 +88,17 @@ class OrderService (
         }
     }
 
-    private fun toOrderSummary(order: Order): OrderSummary {
+    private fun toOrderSummary(orders: Orders): OrderSummary {
         return OrderSummary(
-            id = order.id.toString(),
-            orderDate = order.createdAt.toString(),
-            status = order.status.toString(),
-            totalAmount = order.totalAmount,
-//            customerName = "Customer-${order.memberId}"  // 임시 처리
+            id = orders.id.toString(),
+            orderNumber = orders.orderDate.toString() + "-" + orders.memberId, // 주문번호 = 주문 일자 + 주문자 ID (임시)
+            content = orders.content,
+            orderDate = orders.orderDate.toString(),
+            status = orders.status.toString(),
+            pricie = orders.price.toDouble(),
+            discoutedPrice = orders.discountedPrice.toDouble(),
+            memberName = "Customer-${orders.memberId}", // 임시 처리
+            recipient = orders.recipient
         )
     }
 //    private fun Order.toOrderDetail() = OrderDetail(
@@ -110,30 +112,38 @@ class OrderService (
 //        paymentMethod = "Credit Card" // Example, replace with actual field
 //    )
 
-    private fun toOrder(entity: Order): Order {
-        return Order(
-            id = entity.id,
-            memberId = entity.memberId,
-            status = Order.OrderStatus.valueOf(entity.status.name),
-            createdAt = entity.createdAt,
-            updatedAt = entity.updatedAt,
-            streetAddress = entity.streetAddress,
-            detailAddress = entity.detailAddress,
-            postalCode = entity.postalCode,
-            orderItems = entity.orderItems.map { toOrderItem(it) }
+    private fun toOrder(orders: Orders): Orders {
+        return Orders(
+            id = orders.id,
+            memberId = orders.memberId,
+            streetAddress = orders.streetAddress,
+            detailAddress = orders.detailAddress,
+            postalCode = orders.postalCode,
+            orderNumber = orders.orderNumber,
+            paymentMethod = orders.paymentMethod,
+            recipient = orders.recipient,
+            content = orders.content,
+            discountedPrice = orders.discountedPrice,
+            price = orders.price,
+            status = Orders.OrderStatus.valueOf(orders.status.name),
+            orderDate = orders.orderDate,
+            createdAt = orders.createdAt,
+            updatedAt = orders.updatedAt,
+            orderProducts = orders.orderProducts.map { toOrderProducts(it) }
         )
     }
 
 
-    private fun toOrderItem(orderItem: OrderItem): OrderItem {
-        return OrderItem(
-            id = orderItem.id,
-            orderId = orderItem.orderId,
-            itemId = orderItem.itemId,
-            quantity = orderItem.quantity,
-            priceAtPurchase = orderItem.priceAtPurchase.toDouble(),
-            createdAt = orderItem.createdAt,
-            updatedAt = orderItem.updatedAt
+    private fun toOrderProducts(orderProuct: OrderProduct): OrderProduct {
+        return OrderProduct(
+            id = orderProuct.id,
+            orderId = orderProuct.orderId,
+            productId = orderProuct.productId,
+            quantity = orderProuct.quantity,
+            price = orderProuct.price,
+            discountedPrice = orderProuct.discountedPrice,
+            createdAt = orderProuct.createdAt,
+            updatedAt = orderProuct.updatedAt
         )
     }
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*
 class OrderController (
     private val orderUseCase: OrderUseCase
 ) {
+    // 주문 조회 API
     @PostMapping
     fun getOrder(@Valid @RequestBody request: OrderListRequest): ResponseEntity<CommonResponse<OrderListResponse>> {
         request.validate()
@@ -24,9 +25,19 @@ class OrderController (
         return ResponseEntity.ok(CommonResponse(success = true, data = response))
     }
 
+    // 주문 상세 조회 API
     @GetMapping("/{orderId}")
     fun getOrderDetail(@PathVariable orderId: String): ResponseEntity<CommonResponse<OrderDetailResponse>> {
         val response = orderUseCase.getOrderDetail(orderId)
         return ResponseEntity.ok(CommonResponse(success = true, data = response))
     }
+
+    // 주문 생성 API
+    @PostMapping("/create")
+    fun createOrder(@Valid @RequestBody request: OrderDetail): ResponseEntity<CommonResponse<OrderDetailResponse>> {
+//        return ResponseEntity.ok(CommonResponse(success = true, data = OrderDetailResponse(order = request)))
+        val response = null;
+        return ResponseEntity.ok(CommonResponse(success = true, data = response))
+    }
+
 }

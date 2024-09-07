@@ -14,7 +14,12 @@ dependencies {
     implementation(project(":commons:model"))
     implementation(project(":commons:persistence-database"))
 
+    // 접속 정보 암호화
+    implementation("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5")
+
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
+
+    runtimeOnly("com.mysql:mysql-connector-j") // MySQL
 }
 
 val asciidoctorExt: Configuration by configurations.creating
