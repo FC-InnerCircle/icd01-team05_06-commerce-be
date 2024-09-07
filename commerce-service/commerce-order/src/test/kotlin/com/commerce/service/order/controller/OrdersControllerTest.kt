@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
+import org.springframework.restdocs.operation.preprocess.Preprocessors.*
 import org.springframework.restdocs.payload.PayloadDocumentation.*
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
@@ -159,6 +160,8 @@ class OrdersControllerTest {
             .content(objectMapper.writeValueAsString(sampleListRequest)))
             .andExpect(status().isOk)
             .andDo(document("get-orders",
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
                 requestFields(
                     fieldWithPath("dateRange").description("주문 목록 조회 기간"),
                     fieldWithPath("status").description("주문 상태").optional(),
@@ -194,6 +197,8 @@ class OrdersControllerTest {
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk)
             .andDo(document("get-order-detail",
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
                 responseFields(
                     fieldWithPath("success").description("요청 성공 여부"),
                     fieldWithPath("data").description("응답 데이터"),
