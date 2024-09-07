@@ -1,0 +1,38 @@
+ifndef::snippets[]
+:snippets: build/generated-snippets
+endif::[]
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+:sectlinks:
+:operation-http-request-title: Example Request
+:operation-http-response-title: Example Response
+ifndef::snippets-custom[]
+:snippets-custom: ../../../src/docs/custom
+
+[[title]]
+= 상품 서비스 API 문서 - 상품 API
+
+include::{docdir}/common.adoc[]
+
+[[상품카테고리]]
+== 상품 카테고리
+=== Http
+include::{snippets}/categories/http-request.adoc[]
+=== Request
+// include::{snippets}/categories/request-fields.adoc[]
+=== Response
+include::{snippets}/categories/response-fields.adoc[]
+include::{snippets}/categories/response-body.adoc[]
+
+[[상품조회]]
+== 상품 조회
+=== Http
+include::{snippets}/products/http-request.adoc[]
+=== Request
+include::{snippets}/products/request-fields.adoc[]
+=== Response
+include::{snippets}/products/response-fields.adoc[]
+include::{snippets}/products/response-body.adoc[]

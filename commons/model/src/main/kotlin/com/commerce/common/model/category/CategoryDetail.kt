@@ -1,6 +1,6 @@
 package com.commerce.common.model.category
 
-class CategoryDetail(
+data class CategoryDetail(
     val id: Long?,
     val name: String,
     val parentCategory: ParentCategory?,
