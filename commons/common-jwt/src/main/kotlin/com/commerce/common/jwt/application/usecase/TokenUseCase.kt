@@ -1,6 +1,6 @@
-package com.commerce.service.auth.application.usecase
+package com.commerce.common.jwt.application.usecase
 
-import com.commerce.service.auth.application.service.TokenType
+import com.commerce.common.jwt.application.service.TokenType
 
 interface TokenUseCase {
 

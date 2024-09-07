@@ -1,9 +1,10 @@
 package com.commerce.service.auth.application.service
 
+import com.commerce.common.jwt.application.service.TokenType
+import com.commerce.common.jwt.application.usecase.TokenUseCase
 import com.commerce.common.model.member.Member
 import com.commerce.common.model.member.MemberRepository
 import com.commerce.service.auth.application.usecase.AuthUseCase
-import com.commerce.service.auth.application.usecase.TokenUseCase
 import com.commerce.service.auth.application.usecase.command.LoginCommand
 import com.commerce.service.auth.application.usecase.command.SignUpCommand
 import com.commerce.service.auth.application.usecase.command.UpdateCommand

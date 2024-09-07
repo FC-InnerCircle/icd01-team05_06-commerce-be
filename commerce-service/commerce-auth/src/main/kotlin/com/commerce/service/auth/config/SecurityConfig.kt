@@ -1,5 +1,6 @@
 package com.commerce.service.auth.config
 
+import com.commerce.common.jwt.config.JwtAuthenticationFilter
 import com.commerce.common.model.member.Member
 import com.commerce.common.model.member.MemberRepository
 import com.commerce.service.auth.controller.common.BaseResponse

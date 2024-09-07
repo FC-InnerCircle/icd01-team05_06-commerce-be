@@ -1,7 +1,7 @@
-package com.mock.service.auth.application.usecase
+package com.mock.common.jwt.application.usecase
 
-import com.commerce.service.auth.application.service.TokenType
-import com.commerce.service.auth.application.usecase.TokenUseCase
+import com.commerce.common.jwt.application.service.TokenType
+import com.commerce.common.jwt.application.usecase.TokenUseCase
 
 class FakeTokenUseCase : TokenUseCase {
 

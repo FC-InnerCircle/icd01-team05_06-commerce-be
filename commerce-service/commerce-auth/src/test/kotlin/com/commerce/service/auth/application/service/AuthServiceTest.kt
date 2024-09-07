@@ -1,14 +1,15 @@
 package com.commerce.service.auth.application.service
 
+import com.commerce.common.jwt.application.service.TokenType
+import com.commerce.common.jwt.application.usecase.TokenUseCase
 import com.commerce.common.model.member.Member
-import com.commerce.service.auth.application.usecase.TokenUseCase
 import com.commerce.service.auth.application.usecase.command.LoginCommand
 import com.commerce.service.auth.application.usecase.command.SignUpCommand
 import com.commerce.service.auth.application.usecase.command.UpdateCommand
 import com.commerce.service.auth.application.usecase.exception.AuthException
+import com.mock.common.jwt.application.usecase.FakeTokenUseCase
 import com.mock.common.model.member.FakeMemberRepository
 import com.mock.config.FakePasswordEncoder
-import com.mock.service.auth.application.usecase.FakeTokenUseCase
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
 import org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy
 import org.junit.jupiter.api.BeforeEach

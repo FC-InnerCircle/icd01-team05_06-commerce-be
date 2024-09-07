@@ -1,6 +1,6 @@
-package com.commerce.service.auth.application.service
+package com.commerce.common.jwt.application.service
 
-import com.commerce.service.auth.application.usecase.TokenUseCase
+import com.commerce.common.jwt.application.usecase.TokenUseCase
 import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.io.Decoders

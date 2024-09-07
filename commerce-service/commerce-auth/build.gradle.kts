@@ -10,15 +10,12 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 
-    implementation("io.jsonwebtoken:jjwt-api:0.12.6")
-    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.6")
-    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.6")
-
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
 
     implementation(project(":commons:common-util"))
     implementation(project(":commons:model"))
     implementation(project(":commons:persistence-database"))
+    implementation(project(":commons:common-jwt"))
 }
 
 val asciidoctorExt: Configuration by configurations.creating

@@ -4,6 +4,7 @@ include("commons")
 include("commons:common-util")
 include("commons:model")
 include("commons:persistence-database")
+include("commons:common-jwt")
 
 include("commerce-admin")
 

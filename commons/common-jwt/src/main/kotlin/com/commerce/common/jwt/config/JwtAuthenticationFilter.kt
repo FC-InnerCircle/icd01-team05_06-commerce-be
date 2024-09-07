@@ -1,8 +1,8 @@
-package com.commerce.service.auth.config
+package com.commerce.common.jwt.config
 
+import com.commerce.common.jwt.application.service.TokenType
+import com.commerce.common.jwt.application.usecase.TokenUseCase
 import com.commerce.common.model.member.MemberRepository
-import com.commerce.service.auth.application.service.TokenType
-import com.commerce.service.auth.application.usecase.TokenUseCase
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse

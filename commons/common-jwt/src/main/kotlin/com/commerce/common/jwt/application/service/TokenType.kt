@@ -1,4 +1,4 @@
-package com.commerce.service.auth.application.service
+package com.commerce.common.jwt.application.service
 
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.days
