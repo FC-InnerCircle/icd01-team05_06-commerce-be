@@ -10,7 +10,7 @@ class ProductCategoryInfoDto(
     val childCategories: List<ProductCategoryInfoDto>? = null,
 ) {
     companion object {
-        fun of(categories: List<Category>): ProductCategoryInfoDto {
+        fun from(categories: List<Category>): ProductCategoryInfoDto {
 
             val rootCategory = categories.first { it.parentId == 0L }
             return buildDto(rootCategory, categories)
