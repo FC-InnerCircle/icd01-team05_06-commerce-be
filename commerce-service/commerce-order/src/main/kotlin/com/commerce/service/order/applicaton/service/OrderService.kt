@@ -35,7 +35,7 @@ class OrderService (
         val pageable = PageRequest.of(request.page, request.size, sort)
 
         val ordersPage = if (request.status != null) {
-            val status = OrderStatus.valueOf(request.status)
+            val status = OrderStatus.valueOf(request.status.name)
             ordersRepository.findByCreatedAtBetweenAndStatus(startDate, endDate, status, pageable)
         } else {
             ordersRepository.findByCreatedAtBetween(startDate, endDate, pageable)

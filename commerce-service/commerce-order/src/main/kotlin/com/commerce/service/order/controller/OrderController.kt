@@ -8,8 +8,11 @@ import com.commerce.service.order.controller.request.OrderListRequest
 import com.commerce.service.order.controller.response.OrderDetail
 import com.commerce.service.order.controller.response.OrderDetailResponse
 import jakarta.validation.Valid
+import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.ResponseEntity
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
 
 // 미개발 API는 Mock Data를 리턴하도록 구현
 @RestController
@@ -18,8 +21,8 @@ class OrderController (
     private val orderUseCase: OrderUseCase
 ) {
     // 주문 조회 API
-    @PostMapping
-    fun getOrder(@Valid @RequestBody request: OrderListRequest): ResponseEntity<CommonResponse<OrderListResponse>> {
+    @GetMapping
+    fun getOrder(@Validated request: OrderListRequest): ResponseEntity<CommonResponse<OrderListResponse>> {
         request.validate()
         val response = orderUseCase.getOrder(request)
         return ResponseEntity.ok(CommonResponse(success = true, data = response))

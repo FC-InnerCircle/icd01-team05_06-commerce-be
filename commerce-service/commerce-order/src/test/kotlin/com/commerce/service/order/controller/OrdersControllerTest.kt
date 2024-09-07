@@ -16,6 +16,8 @@ import org.springframework.http.MediaType
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.restdocs.operation.preprocess.Preprocessors.*
 import org.springframework.restdocs.payload.PayloadDocumentation.*
+import org.springframework.restdocs.request.RequestDocumentation.parameterWithName
+import org.springframework.restdocs.request.RequestDocumentation.queryParameters
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
@@ -155,21 +157,24 @@ class OrdersControllerTest {
 
     @Test
     fun `주문 목록을 반환해야 한다`() {
-        mockMvc.perform(post("/orders")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(sampleListRequest)))
+        mockMvc.perform(get("/orders")
+            .param("dateRange", sampleListRequest.dateRange.toString())
+            .param("sortBy", sampleListRequest.sortBy.toString())
+            .param("page", sampleListRequest.page.toString())
+            .param("size", sampleListRequest.size.toString())
+            .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk)
             .andDo(document("get-orders",
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
-                requestFields(
-                    fieldWithPath("dateRange").description("주문 목록 조회 기간"),
-                    fieldWithPath("status").description("주문 상태").optional(),
-                    fieldWithPath("sortBy").description("정렬 옵션"),
-                    fieldWithPath("page").description("페이지 번호"),
-                    fieldWithPath("size").description("페이지 크기"),
-                    fieldWithPath("startDate").description("사용자 지정 조회 시작일").optional(),
-                    fieldWithPath("endDate").description("사용자 지정 조회 종료일").optional()
+                queryParameters(
+                    parameterWithName("dateRange").description("주문 목록 조회 기간"),
+                    parameterWithName("status").description("주문 상태").optional(),
+                    parameterWithName("sortBy").description("정렬 옵션"),
+                    parameterWithName("page").description("페이지 번호"),
+                    parameterWithName("size").description("페이지 크기"),
+                    parameterWithName("startDate").description("사용자 지정 조회 시작일").optional(),
+                    parameterWithName("endDate").description("사용자 지정 조회 종료일").optional()
                 ),
                 responseFields(
                     fieldWithPath("success").description("요청 성공 여부"),

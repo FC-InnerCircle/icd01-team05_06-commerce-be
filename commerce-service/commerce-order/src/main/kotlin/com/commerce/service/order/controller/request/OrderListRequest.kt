@@ -1,20 +1,22 @@
 package com.commerce.service.order.controller.request
 
+import com.commerce.common.model.orders.OrderStatus
 import com.commerce.service.order.controller.common.request.CommonRequest
 import com.fasterxml.jackson.annotation.JsonFormat
 import jakarta.validation.constraints.NotNull
+import org.springframework.format.annotation.DateTimeFormat
 import java.time.LocalDateTime
 
 data class OrderListRequest(
     @field:NotNull(message = "Date range is required")
     val dateRange: DateRange,
-    val status: String? = null,
+    val status: OrderStatus? = null,
     val sortBy: SortOption = SortOption.RECENT,
     val page: Int = 0,
     val size: Int = 20,
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") // 쿼리 파라미터 파싱
     var startDate: LocalDateTime? = null,
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") // 쿼리 파라미터 파싱
     var endDate: LocalDateTime? = null
 ) : CommonRequest {
 
