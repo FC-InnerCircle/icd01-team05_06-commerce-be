@@ -42,7 +42,7 @@ configure(subprojects.filter { it.name !in nonDependenciesProjects }) {
             jvmTarget.set(JvmTarget.JVM_21)
         }
     }
-
+    
     tasks.withType<Test> {
         useJUnitPlatform()
     }

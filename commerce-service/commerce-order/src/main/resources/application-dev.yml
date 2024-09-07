@@ -1,0 +1,33 @@
+server:
+  port: 8080
+
+# Database configuration for MySQL
+# 암호화
+spring:
+  datasource:
+      url: ENC(yddkldjrangZGGzGaAaEx2VaEI34o7RSEr8Sl8cY5wlj0VDz+DaOnq6Fh/01XKbgPULh5diRx5oYtvti2fGqDNKfD90ncykyp/28aO9azoQ4iLuTuQxCE0sMxQN7TkAMupQvUhhnLyJ7hobt5dw8Y63WNf2pcwRedvql7NuGAJo=)
+      username: ENC(ijo4Jc/UZcp0vqbAo3zcYCFx4XXslvVNAJ8ydo2157fcmujzA7tz/rVy8Xmyp+ZS)
+      password: ENC(3eqf88zhi8cUIRZ8JpTMv/De/uoQkFwD01xQa/5Bu5SjX52W9/EKFq412vqZZXXZdLxRP+nuP2pxXnq6akoZHQ==)
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  sql:
+    init:
+      mode: never
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true # SQL 출력
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+        use_sql_comments: false
+        jdbc:
+          batch_size: 50
+          fetch_size: 50
+          lob:
+            non_contextual_creation: true
+
+jasypt:
+  encryptor:
+    algorithm: PBEWITHHMACSHA512ANDAES_256
+    iv-generator-classname: org.jasypt.iv.RandomIvGenerator

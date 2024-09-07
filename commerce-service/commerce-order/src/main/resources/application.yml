@@ -1,0 +1,5 @@
+# 배포 작업 시 설정 예정
+spring:
+  sql:
+    init:
+      mode: never
