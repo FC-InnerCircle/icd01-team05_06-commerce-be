@@ -1,5 +1,6 @@
 plugins {
     id("org.asciidoctor.jvm.convert") version "3.3.2" // Spring REST Docs
+    id("com.palantir.docker") version "0.35.0"
 }
 
 repositories {
@@ -13,6 +14,8 @@ dependencies {
     implementation(project(":commons:common-util"))
     implementation(project(":commons:model"))
     implementation(project(":commons:persistence-database"))
+
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
 
     // 접속 정보 암호화
     implementation("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5")
@@ -54,4 +57,15 @@ tasks {
     bootJar {
         dependsOn(asciidoctor)
     }
+}
+
+docker {
+    val dockerImageName = project.findProperty("dockerImageName") as String?
+
+    name = dockerImageName ?: "${project.name}:${version}"
+    setDockerfile(file("../../Dockerfile"))
+    files(tasks.bootJar.get().outputs.files)
+    buildArgs(mapOf(
+        "JAR_FILE" to tasks.bootJar.get().outputs.files.singleFile.name
+    ))
 }
