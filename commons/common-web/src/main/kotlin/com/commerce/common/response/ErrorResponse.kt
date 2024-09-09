@@ -1,4 +1,4 @@
-package com.commerce.service.order.applicaton.usecase.exception
+package com.commerce.common.response
 
 data class ErrorResponse(
     val code: String,

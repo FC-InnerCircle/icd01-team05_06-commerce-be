@@ -213,7 +213,7 @@ class AuthServiceTest {
             authService.refresh(refreshToken)
         }
             .isInstanceOf(AuthException::class.java)
-            .hasMessage("권한이 만료되었습니다.\n다시 로그인해 주세요.")
+            .hasMessage("Permission Denied")
     }
 
     @Test
@@ -224,7 +224,7 @@ class AuthServiceTest {
             authService.refresh(refreshToken)
         }
             .isInstanceOf(AuthException::class.java)
-            .hasMessage("권한이 만료되었습니다.\n다시 로그인해 주세요.")
+            .hasMessage("Permission Denied")
     }
 
     @Test
@@ -243,7 +243,7 @@ class AuthServiceTest {
             authService.refresh(refreshToken)
         }
             .isInstanceOf(AuthException::class.java)
-            .hasMessage("권한이 만료되었습니다.\n다시 로그인해 주세요.")
+            .hasMessage("Permission Denied")
     }
 
     @Test

@@ -1,10 +1,11 @@
 package com.commerce.service.auth.controller
 
 import com.commerce.common.model.member.Member
+import com.commerce.common.response.CommonResponse
+import com.commerce.common.response.ErrorCode
 import com.commerce.service.auth.application.usecase.AuthUseCase
 import com.commerce.service.auth.application.usecase.dto.LoginInfoDto
 import com.commerce.service.auth.application.usecase.exception.AuthException
-import com.commerce.service.auth.controller.common.BaseResponse
 import com.commerce.service.auth.controller.request.LoginRequest
 import com.commerce.service.auth.controller.request.SignUpRequest
 import com.commerce.service.auth.controller.request.UpdateRequest
@@ -20,37 +21,40 @@ class AuthController(
 ) {
 
     @PostMapping("/login")
-    fun login(@RequestBody request: LoginRequest): LoginInfoDto {
-        return authUseCase.login(request.toCommand())
+    fun login(@RequestBody request: LoginRequest): CommonResponse<LoginInfoDto> {
+        return CommonResponse.ok(authUseCase.login(request.toCommand()))
     }
 
     @PostMapping("/sign-up")
-    fun signUp(@RequestBody request: SignUpRequest): BaseResponse {
+    fun signUp(@RequestBody request: SignUpRequest): CommonResponse<Unit> {
         authUseCase.signUp(request.toCommand())
-        return BaseResponse.success()
+        return CommonResponse.ok()
     }
 
     @PostMapping("/refresh")
-    fun refresh(request: HttpServletRequest): AccessTokenResponse {
+    fun refresh(request: HttpServletRequest): CommonResponse<AccessTokenResponse> {
         val authHeader = request.getHeader("refresh-token")
         if (authHeader?.startsWith("Bearer ") != true) {
-            throw AuthException("권한이 없습니다.")
+            throw AuthException(ErrorCode.PERMISSION_ERROR)
         }
 
         val refreshToken = authHeader.substring(7)
 
         val accessToken = authUseCase.refresh(refreshToken)
-        return AccessTokenResponse(accessToken = accessToken)
+        return CommonResponse.ok(AccessTokenResponse(accessToken = accessToken))
     }
 
     @PutMapping("/update")
-    fun update(@AuthenticationPrincipal member: Member, @RequestBody request: UpdateRequest): UpdateResponse {
-        return UpdateResponse(authUseCase.update(member, request.toCommand()))
+    fun update(
+        @AuthenticationPrincipal member: Member,
+        @RequestBody request: UpdateRequest
+    ): CommonResponse<UpdateResponse> {
+        return CommonResponse.ok(UpdateResponse(authUseCase.update(member, request.toCommand())))
     }
 
     @DeleteMapping("/withdrawal")
-    fun withdrawal(@AuthenticationPrincipal member: Member): BaseResponse {
+    fun withdrawal(@AuthenticationPrincipal member: Member): CommonResponse<Unit> {
         authUseCase.withdrawal(member)
-        return BaseResponse.success()
+        return CommonResponse.ok()
     }
 }

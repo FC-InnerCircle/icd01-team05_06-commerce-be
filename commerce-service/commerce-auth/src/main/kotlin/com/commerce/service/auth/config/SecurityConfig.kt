@@ -3,8 +3,9 @@ package com.commerce.service.auth.config
 import com.commerce.common.jwt.config.JwtAuthenticationFilter
 import com.commerce.common.model.member.Member
 import com.commerce.common.model.member.MemberRepository
-import com.commerce.service.auth.controller.common.BaseResponse
-import com.commerce.service.auth.controller.common.ErrorResponse
+import com.commerce.common.response.CommonResponse
+import com.commerce.common.response.ErrorCode
+import com.commerce.common.response.ErrorResponse
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -48,7 +49,7 @@ class SecurityConfig {
 
                     response.contentType = MediaType.APPLICATION_JSON_VALUE
                     response.characterEncoding = Charsets.UTF_8.name()
-                    response.writer.write(objectMapper.writeValueAsString(BaseResponse.success()))
+                    response.writer.write(objectMapper.writeValueAsString(CommonResponse.ok(null)))
                 }
             }
             .authorizeHttpRequests {
@@ -68,13 +69,13 @@ class SecurityConfig {
                         response.status = HttpStatus.FORBIDDEN.value()
                         response.contentType = MediaType.APPLICATION_JSON_VALUE
                         response.characterEncoding = Charsets.UTF_8.name()
-                        response.writer.write(objectMapper.writeValueAsString(ErrorResponse("권한이 없습니다.")))
+                        response.writer.write(objectMapper.writeValueAsString(CommonResponse.error(listOf(ErrorResponse(ErrorCode.PERMISSION_ERROR.code, ErrorCode.PERMISSION_ERROR.message)))))
                     }
                     .accessDeniedHandler { _, response, _ ->
                         response.status = HttpStatus.FORBIDDEN.value()
                         response.contentType = MediaType.APPLICATION_JSON_VALUE
                         response.characterEncoding = Charsets.UTF_8.name()
-                        response.writer.write(objectMapper.writeValueAsString(ErrorResponse("권한이 없습니다.")))
+                        response.writer.write(objectMapper.writeValueAsString(CommonResponse.error(listOf(ErrorResponse(ErrorCode.PERMISSION_ERROR.code, ErrorCode.PERMISSION_ERROR.message)))))
                     }
             }
             .addFilterBefore(jwtAuthenticationFilter, LogoutFilter::class.java)

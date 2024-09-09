@@ -130,14 +130,17 @@ class AuthControllerTest(
                         fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호"),
                     ),
                     responseFields(
-                        fieldWithPath("memberInfo").type(JsonFieldType.OBJECT).description("사용자 정보"),
-                        fieldWithPath("memberInfo.id").type(JsonFieldType.NUMBER).description("고유번호"),
-                        fieldWithPath("memberInfo.email").type(JsonFieldType.STRING).description("이메일"),
-                        fieldWithPath("memberInfo.name").type(JsonFieldType.STRING).description("이름"),
-                        fieldWithPath("memberInfo.phone").type(JsonFieldType.STRING).description("연락처"),
-                        fieldWithPath("tokenInfo").type(JsonFieldType.OBJECT).description("JWT 토큰 정보"),
-                        fieldWithPath("tokenInfo.accessToken").type(JsonFieldType.STRING).description("액세스 토큰"),
-                        fieldWithPath("tokenInfo.refreshToken").type(JsonFieldType.STRING).description("리프레쉬 토큰"),
+                        fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("요청 성공 여부"),
+                        fieldWithPath("data").type(JsonFieldType.OBJECT).description("응답 데이터"),
+                        fieldWithPath("data.memberInfo").type(JsonFieldType.OBJECT).description("사용자 정보"),
+                        fieldWithPath("data.memberInfo.id").type(JsonFieldType.NUMBER).description("고유번호"),
+                        fieldWithPath("data.memberInfo.email").type(JsonFieldType.STRING).description("이메일"),
+                        fieldWithPath("data.memberInfo.name").type(JsonFieldType.STRING).description("이름"),
+                        fieldWithPath("data.memberInfo.phone").type(JsonFieldType.STRING).description("연락처"),
+                        fieldWithPath("data.tokenInfo").type(JsonFieldType.OBJECT).description("JWT 토큰 정보"),
+                        fieldWithPath("data.tokenInfo.accessToken").type(JsonFieldType.STRING).description("액세스 토큰"),
+                        fieldWithPath("data.tokenInfo.refreshToken").type(JsonFieldType.STRING).description("리프레쉬 토큰"),
+                        fieldWithPath("error").type(JsonFieldType.ARRAY).optional().description("오류 정보")
                     )
                 )
             )
@@ -171,7 +174,9 @@ class AuthControllerTest(
                             .attributes(format("숫자만 입력")),
                     ),
                     responseFields(
-                        fieldWithPath("message").type(JsonFieldType.STRING).description("결과 메세지"),
+                        fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("요청 성공 여부"),
+                        fieldWithPath("data").type(JsonFieldType.OBJECT).optional().description("응답 데이터"),
+                        fieldWithPath("error").type(JsonFieldType.ARRAY).optional().description("오류 정보")
                     )
                 )
             )
@@ -190,7 +195,9 @@ class AuthControllerTest(
                     preprocessRequest(prettyPrint()),
                     preprocessResponse(prettyPrint()),
                     responseFields(
-                        fieldWithPath("message").type(JsonFieldType.STRING).description("결과 메세지"),
+                        fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("요청 성공 여부"),
+                        fieldWithPath("data").type(JsonFieldType.OBJECT).optional().description("응답 데이터"),
+                        fieldWithPath("error").type(JsonFieldType.ARRAY).optional().description("오류 정보")
                     )
                 )
             )
@@ -213,7 +220,10 @@ class AuthControllerTest(
                     preprocessRequest(prettyPrint()),
                     preprocessResponse(prettyPrint()),
                     responseFields(
-                        fieldWithPath("accessToken").type(JsonFieldType.STRING).description("액세스 토큰"),
+                        fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("요청 성공 여부"),
+                        fieldWithPath("data").type(JsonFieldType.OBJECT).description("응답 데이터"),
+                        fieldWithPath("data.accessToken").type(JsonFieldType.STRING).description("액세스 토큰"),
+                        fieldWithPath("error").type(JsonFieldType.ARRAY).optional().description("오류 정보")
                     )
                 )
             )
@@ -255,11 +265,14 @@ class AuthControllerTest(
                             .attributes(format("숫자만 입력")),
                     ),
                     responseFields(
-                        fieldWithPath("memberInfo").type(JsonFieldType.OBJECT).description("사용자 정보"),
-                        fieldWithPath("memberInfo.id").type(JsonFieldType.NUMBER).description("고유번호"),
-                        fieldWithPath("memberInfo.email").type(JsonFieldType.STRING).description("이메일"),
-                        fieldWithPath("memberInfo.name").type(JsonFieldType.STRING).description("이름"),
-                        fieldWithPath("memberInfo.phone").type(JsonFieldType.STRING).description("연락처"),
+                        fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("요청 성공 여부"),
+                        fieldWithPath("data").type(JsonFieldType.OBJECT).description("응답 데이터"),
+                        fieldWithPath("data.memberInfo").type(JsonFieldType.OBJECT).description("사용자 정보"),
+                        fieldWithPath("data.memberInfo.id").type(JsonFieldType.NUMBER).description("고유번호"),
+                        fieldWithPath("data.memberInfo.email").type(JsonFieldType.STRING).description("이메일"),
+                        fieldWithPath("data.memberInfo.name").type(JsonFieldType.STRING).description("이름"),
+                        fieldWithPath("data.memberInfo.phone").type(JsonFieldType.STRING).description("연락처"),
+                        fieldWithPath("error").type(JsonFieldType.ARRAY).optional().description("오류 정보")
                     )
                 )
             )
@@ -278,7 +291,9 @@ class AuthControllerTest(
                     preprocessRequest(prettyPrint()),
                     preprocessResponse(prettyPrint()),
                     responseFields(
-                        fieldWithPath("message").type(JsonFieldType.STRING).description("결과 메세지"),
+                        fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("요청 성공 여부"),
+                        fieldWithPath("data").type(JsonFieldType.OBJECT).optional().description("응답 데이터"),
+                        fieldWithPath("error").type(JsonFieldType.ARRAY).optional().description("오류 정보")
                     )
                 )
             )

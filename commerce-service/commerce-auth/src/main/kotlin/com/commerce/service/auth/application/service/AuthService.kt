@@ -4,6 +4,7 @@ import com.commerce.common.jwt.application.service.TokenType
 import com.commerce.common.jwt.application.usecase.TokenUseCase
 import com.commerce.common.model.member.Member
 import com.commerce.common.model.member.MemberRepository
+import com.commerce.common.response.ErrorCode
 import com.commerce.service.auth.application.usecase.AuthUseCase
 import com.commerce.service.auth.application.usecase.command.LoginCommand
 import com.commerce.service.auth.application.usecase.command.SignUpCommand
@@ -25,10 +26,8 @@ class AuthService(
 
     @Transactional
     override fun login(command: LoginCommand): LoginInfoDto {
-        val loginFailedMessage = "아이디 혹은 비밀번호가 일치하지 않습니다."
-
-        val member = memberRepository.findByEmail(command.email) ?: throw AuthException(loginFailedMessage)
-        if (!passwordEncoder.matches(command.password, member.password)) throw AuthException(loginFailedMessage)
+        val member = memberRepository.findByEmail(command.email) ?: throw AuthException(ErrorCode.LOGIN_FAILED)
+        if (!passwordEncoder.matches(command.password, member.password)) throw AuthException(ErrorCode.LOGIN_FAILED)
 
         val accessToken = tokenUseCase.createToken(member.id, TokenType.ACCESS_TOKEN)
         val refreshToken = tokenUseCase.createToken(member.id, TokenType.REFRESH_TOKEN)
@@ -52,7 +51,7 @@ class AuthService(
     @Transactional
     override fun signUp(command: SignUpCommand) {
         memberRepository.findByEmail(command.email)?.let {
-            throw AuthException("중복된 이메일입니다.")
+            throw AuthException(ErrorCode.DUPLICATED_EMAIL)
         }
 
         memberRepository.save(
@@ -66,17 +65,15 @@ class AuthService(
     }
 
     override fun refresh(refreshToken: String): String {
-        val tokenExpiredExceptionMessage = "권한이 만료되었습니다.\n다시 로그인해 주세요."
-
         val id = (tokenUseCase.getTokenSubject(refreshToken, TokenType.REFRESH_TOKEN)
-            ?: throw AuthException(tokenExpiredExceptionMessage))
+            ?: throw AuthException(ErrorCode.PERMISSION_ERROR))
             .toLong()
 
         memberRepository.findById(id)?.let {
             if (it.refreshToken != refreshToken) {
-                throw AuthException(tokenExpiredExceptionMessage)
+                throw AuthException(ErrorCode.PERMISSION_ERROR)
             }
-        } ?: throw AuthException(tokenExpiredExceptionMessage)
+        } ?: throw AuthException(ErrorCode.PERMISSION_ERROR)
 
         return tokenUseCase.createToken(id, TokenType.ACCESS_TOKEN)
     }
