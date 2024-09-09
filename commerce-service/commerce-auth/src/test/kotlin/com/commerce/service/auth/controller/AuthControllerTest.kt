@@ -16,7 +16,6 @@ import com.commerce.service.auth.controller.request.SignUpRequest
 import com.commerce.service.auth.controller.request.UpdateRequest
 import com.common.RestDocsUtil.Companion.format
 import com.fasterxml.jackson.databind.ObjectMapper
-import jakarta.servlet.http.Cookie
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -28,7 +27,6 @@ import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Import
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
-import org.springframework.mock.web.MockHttpServletRequest
 import org.springframework.restdocs.RestDocumentationContextProvider
 import org.springframework.restdocs.RestDocumentationExtension
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
@@ -38,10 +36,8 @@ import org.springframework.restdocs.operation.preprocess.Preprocessors.*
 import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation.*
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.RequestPostProcessor
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
@@ -88,7 +84,12 @@ class AuthControllerTest(
             .build()
 
         // JwtAuthenticationFilter
-        given(tokenUseCase.getTokenSubject(testAccessToken, TokenType.ACCESS_TOKEN)).willReturn(testMember.id.toString())
+        given(
+            tokenUseCase.getTokenSubject(
+                testAccessToken,
+                TokenType.ACCESS_TOKEN
+            )
+        ).willReturn(testMember.id.toString())
         given(memberRepository.findById(testMember.id)).willReturn(testMember)
     }
 
@@ -114,7 +115,7 @@ class AuthControllerTest(
         )
 
         mockMvc.perform(
-            post("/login").with(SpaCsrf())
+            post("/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request))
         )
@@ -152,7 +153,7 @@ class AuthControllerTest(
         )
 
         mockMvc.perform(
-            post("/sign-up").with(SpaCsrf())
+            post("/sign-up")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request))
         )
@@ -179,7 +180,7 @@ class AuthControllerTest(
     @Test
     fun logout() {
         mockMvc.perform(
-            post("/logout").with(SpaCsrf())
+            post("/logout")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer $testAccessToken")
         )
             .andExpect(status().isOk)
@@ -202,7 +203,7 @@ class AuthControllerTest(
         given(authUseCase.refresh(refreshToken)).willReturn(testAccessToken)
 
         mockMvc.perform(
-            post("/refresh").with(SpaCsrf())
+            post("/refresh")
                 .header("refresh-token", "Bearer $refreshToken")
         )
             .andExpect(status().isOk)
@@ -236,7 +237,7 @@ class AuthControllerTest(
         )
 
         mockMvc.perform(
-            put("/update").with(SpaCsrf())
+            put("/update")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer $testAccessToken")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request))
@@ -267,7 +268,7 @@ class AuthControllerTest(
     @Test
     fun withdrawal() {
         mockMvc.perform(
-            delete("/withdrawal").with(SpaCsrf())
+            delete("/withdrawal")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer $testAccessToken")
         )
             .andExpect(status().isOk)
@@ -281,18 +282,5 @@ class AuthControllerTest(
                     )
                 )
             )
-    }
-}
-
-class SpaCsrf : RequestPostProcessor {
-
-    private val cookieCsrfTokenRepository = CookieCsrfTokenRepository()
-
-    override fun postProcessRequest(request: MockHttpServletRequest): MockHttpServletRequest {
-        val csrfToken = cookieCsrfTokenRepository.generateToken(request)
-        val cookie = Cookie("XSRF-TOKEN", csrfToken.token)
-        request.setCookies(*request.cookies?.plus(cookie) ?: arrayOf(cookie))
-        request.addHeader(csrfToken.headerName, csrfToken.token)
-        return request
     }
 }
