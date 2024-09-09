@@ -1,5 +1,6 @@
 package com.commerce.service.product.controller
 
+import com.commerce.common.response.CommonResponse
 import com.commerce.service.product.application.usecase.ProductUseCase
 import com.commerce.service.product.application.usecase.dto.ProductCategoryInfoDto
 import com.commerce.service.product.application.usecase.dto.ProductInfoDto
@@ -16,13 +17,13 @@ class ProductController(
 
     // 카테고리 select
     @GetMapping("/categories")
-    fun getProductCategories(): ProductCategoryInfoDto {
-        return productUseCase.getProductCategories()
+    fun getProductCategories(): CommonResponse<ProductCategoryInfoDto> {
+        return CommonResponse.ok(productUseCase.getProductCategories())
     }
 
     // 상품 select
     @GetMapping
-    fun getProducts(request: ProductQueryRequest): List<ProductInfoDto> {
-       return productUseCase.getProducts(request.toQuery())
+    fun getProducts(request: ProductQueryRequest): CommonResponse<List<ProductInfoDto>> {
+        return CommonResponse.ok(productUseCase.getProducts(request.toQuery()))
     }
 }
