@@ -5,6 +5,8 @@ import com.commerce.common.model.orders.OrdersRepository
 import com.commerce.common.model.orderProduct.OrderProduct
 import com.commerce.common.model.orders.OrderStatus
 import com.commerce.service.order.applicaton.usecase.OrderUseCase
+import com.commerce.service.order.applicaton.usecase.converter.toOrder
+import com.commerce.service.order.applicaton.usecase.converter.toOrderSummary
 import com.commerce.service.order.applicaton.usecase.exception.InvalidInputException
 import com.commerce.service.order.controller.request.OrderListRequest
 import com.commerce.service.order.controller.response.OrderDetail
@@ -41,10 +43,10 @@ class OrderService (
             ordersRepository.findByCreatedAtBetween(startDate, endDate, pageable)
         }
 
-        val orders = ordersPage.content.map { toOrder(it) }
+        val orders = ordersPage.content.map { it.toOrder() }
 
         return OrderListResponse(
-            products = orders.map { toOrderSummary(it) },
+            products = orders.map { it.toOrderSummary() },
             totalElements = ordersPage.totalElements,
             totalPages = ordersPage.totalPages
         )
@@ -88,20 +90,6 @@ class OrderService (
             }
         }
     }
-
-    private fun toOrderSummary(orders: Orders): OrderSummary {
-        return OrderSummary(
-            id = orders.id.toString(),
-            orderNumber = orders.orderDate.toString() + "-" + orders.memberId, // 주문번호 = 주문 일자 + 주문자 ID (임시)
-            content = orders.content,
-            orderDate = orders.orderDate.toString(),
-            status = orders.status.toString(),
-            pricie = orders.price.toDouble(),
-            discoutedPrice = orders.discountedPrice.toDouble(),
-            memberName = "Customer-${orders.memberId}", // 임시 처리
-            recipient = orders.recipient
-        )
-    }
 //    private fun Order.toOrderDetail() = OrderDetail(
 //        id = this.id,
 //        orderNumber = this.id,
@@ -112,39 +100,4 @@ class OrderService (
 //        shippingAddress = this.streetAddress + " " + this.detailAddress,
 //        paymentMethod = "Credit Card" // Example, replace with actual field
 //    )
-
-    private fun toOrder(orders: Orders): Orders {
-        return Orders(
-            id = orders.id,
-            memberId = orders.memberId,
-            streetAddress = orders.streetAddress,
-            detailAddress = orders.detailAddress,
-            postalCode = orders.postalCode,
-            orderNumber = orders.orderNumber,
-            paymentMethod = orders.paymentMethod,
-            recipient = orders.recipient,
-            content = orders.content,
-            discountedPrice = orders.discountedPrice,
-            price = orders.price,
-            status = OrderStatus.valueOf(orders.status.name),
-            orderDate = orders.orderDate,
-            createdAt = orders.createdAt,
-            updatedAt = orders.updatedAt,
-            orderProducts = orders.orderProducts.map { toOrderProducts(it) }
-        )
-    }
-
-
-    private fun toOrderProducts(orderProuct: OrderProduct): OrderProduct {
-        return OrderProduct(
-            id = orderProuct.id,
-            orderId = orderProuct.orderId,
-            productId = orderProuct.productId,
-            quantity = orderProuct.quantity,
-            price = orderProuct.price,
-            discountedPrice = orderProuct.discountedPrice,
-            createdAt = orderProuct.createdAt,
-            updatedAt = orderProuct.updatedAt
-        )
-    }
 }
