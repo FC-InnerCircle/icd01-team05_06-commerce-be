@@ -235,19 +235,15 @@ class OrdersControllerTest {
                             LAST_3_MONTHS: 최근 3개월 동안의 주문
                             LAST_6_MONTHS: 최근 6개월 동안의 주문
                             CUSTOM: 사용자 지정 기간 (startDate와 endDate 파라미터 필요)
-                        """.trimIndent()
-                                )
-                            ),
-                        parameterWithName("status").description("주문 상태").optional()
-                            .attributes(key("format").value("ENUM (PENDING, PROCESSING, SHIPPED, DELIVERED, CANCEL, REFUND, EXCHANGE)"))
-                            .attributes(
-                                key("description").value(
-                                    """
+                        """.trimIndent())),
+                    parameterWithName("status").description("주문 상태").optional()
+                        .attributes(key("format").value("ENUM (PENDING, PROCESSING, SHIPPED, DELIVERED, CANCELLED, REFUND, EXCHANGE)"))
+                        .attributes(key("description").value("""
                             PENDING: 주문 생성
                             PROCESSING: 주문 처리중
                             SHIPPED: 배송중
                             DELIVERED: 배송완료
-                            CANCEL: 주문 취소
+                            CANCELLED: 주문 취소
                             REFUND: 환불
                             EXCHANGE: 교환
                             (미지정 시 모든 상태의 주문 조회)
