@@ -1,5 +1,6 @@
 plugins {
     id("org.asciidoctor.jvm.convert") version "3.3.2"
+    id("com.palantir.docker") version "0.35.0"
 }
 
 dependencies {
@@ -10,6 +11,8 @@ dependencies {
     implementation(project(":commons:persistence-database"))
     implementation(project(":commons:common-web"))
 
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    
     runtimeOnly("com.mysql:mysql-connector-j")
 
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
@@ -43,4 +46,15 @@ tasks {
     bootJar {
         dependsOn(asciidoctor)
     }
+}
+
+docker {
+    val dockerImageName = project.findProperty("dockerImageName") as String?
+
+    name = dockerImageName ?: "${project.name}:${version}"
+    setDockerfile(file("../../Dockerfile"))
+    files(tasks.bootJar.get().outputs.files)
+    buildArgs(mapOf(
+        "JAR_FILE" to tasks.bootJar.get().outputs.files.singleFile.name
+    ))
 }
