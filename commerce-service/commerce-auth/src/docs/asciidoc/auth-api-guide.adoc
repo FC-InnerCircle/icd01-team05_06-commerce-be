@@ -37,6 +37,14 @@ include::{snippets}/sign-up/request-fields.adoc[]
 include::{snippets}/sign-up/response-fields.adoc[]
 include::{snippets}/sign-up/response-body.adoc[]
 
+[[info]]
+== 사용자 정보 조회
+=== Http
+include::{snippets}/info/http-request.adoc[]
+=== Response
+include::{snippets}/info/response-fields.adoc[]
+include::{snippets}/info/response-body.adoc[]
+
 [[logout]]
 == 로그아웃
 === Http

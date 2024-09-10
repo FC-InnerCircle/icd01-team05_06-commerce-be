@@ -178,6 +178,32 @@ class AuthControllerTest(
     }
 
     @Test
+    fun info() {
+        mockMvc.perform(
+            get("/info")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer $testAccessToken")
+        )
+            .andExpect(status().isOk)
+            .andDo(
+                document(
+                    "info",
+                    preprocessRequest(prettyPrint()),
+                    preprocessResponse(prettyPrint()),
+                    responseFields(
+                        fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("요청 성공 여부"),
+                        fieldWithPath("data").type(JsonFieldType.OBJECT).description("응답 데이터"),
+                        fieldWithPath("data.id").type(JsonFieldType.NUMBER).description("고유번호"),
+                        fieldWithPath("data.email").type(JsonFieldType.STRING).description("이메일"),
+                        fieldWithPath("data.name").type(JsonFieldType.STRING).description("이름"),
+                        fieldWithPath("data.phone").type(JsonFieldType.STRING).description("연락처"),
+                        fieldWithPath("error").type(JsonFieldType.ARRAY).optional().description("오류 정보")
+                    )
+                )
+            )
+    }
+
+
+    @Test
     fun logout() {
         mockMvc.perform(
             post("/logout")
