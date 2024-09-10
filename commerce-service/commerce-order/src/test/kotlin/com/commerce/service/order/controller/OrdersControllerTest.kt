@@ -14,14 +14,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get
 import org.springframework.restdocs.operation.preprocess.Preprocessors.*
-import org.springframework.restdocs.payload.PayloadDocumentation.*
-import org.springframework.restdocs.request.RequestDocumentation.parameterWithName
-import org.springframework.restdocs.request.RequestDocumentation.queryParameters
+import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
+import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
+import org.springframework.restdocs.request.RequestDocumentation.*
 import org.springframework.restdocs.snippet.Attributes.key
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import java.math.BigDecimal
 import java.time.LocalDateTime
@@ -246,12 +245,15 @@ class OrdersControllerTest {
 
     @Test
     fun `주문 상세 정보를 반환해야 한다`() {
-        mockMvc.perform(get("/orders/1")
+        mockMvc.perform(get("/orders/{orderId}", 1)
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk)
             .andDo(document("get-order-detail",
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
+                pathParameters(
+                    parameterWithName("orderId").description("주문 ID")
+                ),
                 responseFields(
                     fieldWithPath("success").description("요청 성공 여부"),
                     fieldWithPath("data").description("응답 데이터"),

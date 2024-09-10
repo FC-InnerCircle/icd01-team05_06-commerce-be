@@ -60,6 +60,8 @@ include::{snippets}/get-orders/response-fields.adoc[]
 == 주문 상세 조회
 === Http Request
 include::{snippets}/get-order-detail/http-request.adoc[]
+=== Path Parameters
+include::{snippets}/get-order-detail/path-parameters.adoc[]
 === Http Response
 include::{snippets}/get-order-detail/http-response.adoc[]
 === Response Fields

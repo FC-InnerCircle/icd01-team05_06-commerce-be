@@ -13,7 +13,7 @@ ifndef::snippets-custom[]
 :snippets-custom: ../../../src/docs/custom
 
 [[title]]
-= 상품 서비스 API 문서 - 상품 API
+= 커머스 서비스 API 문서 - 상품 API
 
 include::{docdir}/common.adoc[]
 
@@ -21,8 +21,6 @@ include::{docdir}/common.adoc[]
 == 상품 카테고리
 === Http
 include::{snippets}/categories/http-request.adoc[]
-=== Request
-// include::{snippets}/categories/request-fields.adoc[]
 === Response
 include::{snippets}/categories/response-fields.adoc[]
 include::{snippets}/categories/response-body.adoc[]
@@ -32,7 +30,7 @@ include::{snippets}/categories/response-body.adoc[]
 === Http
 include::{snippets}/products/http-request.adoc[]
 === Request
-include::{snippets}/products/request-fields.adoc[]
+include::{snippets}/products/query-parameters.adoc[]
 === Response
 include::{snippets}/products/response-fields.adoc[]
 include::{snippets}/products/response-body.adoc[]
