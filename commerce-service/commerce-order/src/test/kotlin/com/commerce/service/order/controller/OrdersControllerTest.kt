@@ -1,36 +1,64 @@
 package com.commerce.service.order.controller
 
+import com.commerce.common.jwt.application.service.TokenType
+import com.commerce.common.jwt.application.usecase.TokenUseCase
+import com.commerce.common.jwt.config.JwtAuthenticationFilter
+import com.commerce.common.model.member.Member
+import com.commerce.common.model.member.MemberRepository
 import com.commerce.common.model.orderProduct.OrderProduct
+import com.commerce.common.util.ObjectMapperConfig
 import com.commerce.service.order.applicaton.usecase.OrderUseCase
+import com.commerce.service.order.config.SecurityConfig
 import com.commerce.service.order.controller.request.OrderListRequest
 import com.commerce.service.order.controller.response.*
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.BDDMockito.given
 import org.mockito.Mockito.`when`
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.context.annotation.ComponentScan
+import org.springframework.context.annotation.Import
+import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
+import org.springframework.restdocs.RestDocumentationContextProvider
+import org.springframework.restdocs.RestDocumentationExtension
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get
 import org.springframework.restdocs.operation.preprocess.Preprocessors.*
 import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
 import org.springframework.restdocs.request.RequestDocumentation.*
 import org.springframework.restdocs.snippet.Attributes.key
+import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import org.springframework.web.context.WebApplicationContext
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
+@Import(ObjectMapperConfig::class, JwtAuthenticationFilter::class)
 @WebMvcTest(OrderController::class)
-@AutoConfigureRestDocs
+@ExtendWith(RestDocumentationExtension::class)
+@ContextConfiguration(classes = [SecurityConfig::class])
+@ComponentScan(basePackages = ["com.commerce.service.order.controller"])
 class OrdersControllerTest {
 
-    @Autowired
     private lateinit var mockMvc: MockMvc
+
+    @MockBean
+    private lateinit var tokenUseCase: TokenUseCase
+
+    @MockBean
+    private lateinit var memberRepository: MemberRepository
 
     @MockBean
     private lateinit var orderUseCase: OrderUseCase
@@ -42,8 +70,35 @@ class OrdersControllerTest {
     private lateinit var sampleListResponse: OrderListResponse
     private lateinit var sampleDetailResponse: OrderDetailResponse
 
+    private val testAccessToken =
+        "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzI0NTIwNDc5LCJleHAiOjE3MjU3MzAwNzl9.i1WjcNXU2wBYjikGu5u0r41XmciafAfaMF3nNheb9cc7TUpai-tnMZCg3NUcTWP9"
+    private val testMember = Member(
+        id = 1,
+        email = "commerce@example.com",
+        password = "123!@#qwe",
+        name = "홍길동",
+        phone = "01012345678"
+    )
+
     @BeforeEach
-    fun setUp() {
+    fun setUp(
+        applicationContext: WebApplicationContext,
+        restDocumentation: RestDocumentationContextProvider
+    ) {
+        mockMvc = MockMvcBuilders.webAppContextSetup(applicationContext)
+            .apply<DefaultMockMvcBuilder>(springSecurity())
+            .apply<DefaultMockMvcBuilder>(documentationConfiguration(restDocumentation))
+            .build()
+
+        // JwtAuthenticationFilter
+        given(
+            tokenUseCase.getTokenSubject(
+                testAccessToken,
+                TokenType.ACCESS_TOKEN
+            )
+        ).willReturn(testMember.id.toString())
+        given(memberRepository.findById(testMember.id)).willReturn(testMember)
+
         // 주문 목록 샘플 데이터
         sampleListRequest = OrderListRequest(
             dateRange = OrderListRequest.DateRange.LAST_6_MONTHS,
@@ -158,6 +213,7 @@ class OrdersControllerTest {
     @Test
     fun `주문 목록을 반환해야 한다`() {
         mockMvc.perform(get("/orders")
+            .header(HttpHeaders.AUTHORIZATION, "Bearer $testAccessToken")
             .param("dateRange", sampleListRequest.dateRange.toString())
             .param("sortBy", sampleListRequest.sortBy.toString())
             .param("page", sampleListRequest.page.toString())
@@ -246,6 +302,7 @@ class OrdersControllerTest {
     @Test
     fun `주문 상세 정보를 반환해야 한다`() {
         mockMvc.perform(get("/orders/{orderId}", 1)
+            .header(HttpHeaders.AUTHORIZATION, "Bearer $testAccessToken")
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk)
             .andDo(document("get-order-detail",

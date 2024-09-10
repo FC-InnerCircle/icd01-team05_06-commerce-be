@@ -10,11 +10,14 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    testImplementation("org.springframework.security:spring-security-test")
 
     implementation(project(":commons:common-util"))
     implementation(project(":commons:model"))
     implementation(project(":commons:persistence-database"))
     implementation(project(":commons:common-web"))
+    implementation(project(":commons:common-jwt"))
 
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 
