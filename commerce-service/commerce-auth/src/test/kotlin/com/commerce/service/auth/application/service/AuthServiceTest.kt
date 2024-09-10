@@ -102,29 +102,7 @@ class AuthServiceTest {
         authService.login(command)
 
         val member = memberRepository.findByEmail("jerome.boyd@example.com")!!
-        assertThat(member.refreshToken).isEqualTo(tokenUseCase.createToken(1, TokenType.REFRESH_TOKEN))
-    }
-
-    @Test
-    fun `로그인에 성공하면 필요한 사용자 정보를 반환한다`() {
-        memberRepository.save(Member(
-            id = 1,
-            email = "jerome.boyd@example.com",
-            password = passwordEncoder.encode("phasellus"),
-            name = "Cameron Mayo",
-            phone = "(737) 231-4205"
-        ))
-        val command = LoginCommand(
-            email = "jerome.boyd@example.com",
-            password = "phasellus",
-        )
-
-        val result = authService.login(command)
-
-        assertThat(result.memberInfo.id).isEqualTo(1)
-        assertThat(result.memberInfo.email).isEqualTo("jerome.boyd@example.com")
-        assertThat(result.memberInfo.name).isEqualTo("Cameron Mayo")
-        assertThat(result.memberInfo.phone).isEqualTo("(737) 231-4205")
+        assertThat(member.refreshToken).isEqualTo(tokenUseCase.createToken(1, TokenType.REFRESH_TOKEN).token)
     }
 
     @Test
@@ -143,8 +121,8 @@ class AuthServiceTest {
 
         val result = authService.login(command)
 
-        assertThat(result.tokenInfo.accessToken).isEqualTo(tokenUseCase.createToken(1, TokenType.ACCESS_TOKEN))
-        assertThat(result.tokenInfo.refreshToken).isEqualTo(tokenUseCase.createToken(1, TokenType.REFRESH_TOKEN))
+        assertThat(result.tokenInfo.accessToken).isEqualTo(tokenUseCase.createToken(1, TokenType.ACCESS_TOKEN).token)
+        assertThat(result.tokenInfo.refreshToken).isEqualTo(tokenUseCase.createToken(1, TokenType.REFRESH_TOKEN).token)
     }
 
     @Test
@@ -218,7 +196,7 @@ class AuthServiceTest {
 
     @Test
     fun `토큰이 정상이지만 Member가 없으면 재로그인 필요 에러를 던진다`() {
-        val refreshToken = tokenUseCase.createToken(1, TokenType.REFRESH_TOKEN)
+        val refreshToken = tokenUseCase.createToken(1, TokenType.REFRESH_TOKEN).token
 
         assertThatThrownBy {
             authService.refresh(refreshToken)
@@ -229,7 +207,7 @@ class AuthServiceTest {
 
     @Test
     fun `토큰이 정상이지만 Member 테이블 내 컬럼과 값이 다르면 재로그인 필요 에러를 던진다`() {
-        val refreshToken = tokenUseCase.createToken(1, TokenType.REFRESH_TOKEN)
+        val refreshToken = tokenUseCase.createToken(1, TokenType.REFRESH_TOKEN).token
         memberRepository.save(Member(
             id = 1,
             email = "jerome.boyd@example.com",
@@ -248,7 +226,7 @@ class AuthServiceTest {
 
     @Test
     fun `토큰이 정상이고 Member 테이블 내 컬럼과 값이 일치하면 재발급한다`() {
-        val refreshToken = tokenUseCase.createToken(1, TokenType.REFRESH_TOKEN)
+        val refreshToken = tokenUseCase.createToken(1, TokenType.REFRESH_TOKEN).token
         memberRepository.save(Member(
             id = 1,
             email = "jerome.boyd@example.com",
@@ -260,7 +238,7 @@ class AuthServiceTest {
 
         val result = authService.refresh(refreshToken)
 
-        assertThat(tokenUseCase.getTokenSubject(result, TokenType.ACCESS_TOKEN)).isEqualTo("1")
+        assertThat(tokenUseCase.getTokenSubject(result.tokenInfo.accessToken, TokenType.ACCESS_TOKEN)).isEqualTo("1")
     }
 
     @Test

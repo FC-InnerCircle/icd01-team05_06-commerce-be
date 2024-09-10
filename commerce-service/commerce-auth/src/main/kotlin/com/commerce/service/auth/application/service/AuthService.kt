@@ -10,8 +10,7 @@ import com.commerce.service.auth.application.usecase.command.LoginCommand
 import com.commerce.service.auth.application.usecase.command.SignUpCommand
 import com.commerce.service.auth.application.usecase.command.UpdateCommand
 import com.commerce.service.auth.application.usecase.dto.LoginInfoDto
-import com.commerce.service.auth.application.usecase.dto.LoginMemberInfoDto
-import com.commerce.service.auth.application.usecase.dto.LoginTokenInfoDto
+import com.commerce.service.auth.application.usecase.dto.TokenInfoDto
 import com.commerce.service.auth.application.usecase.exception.AuthException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
@@ -29,21 +28,17 @@ class AuthService(
         val member = memberRepository.findByEmail(command.email) ?: throw AuthException(ErrorCode.LOGIN_FAILED)
         if (!passwordEncoder.matches(command.password, member.password)) throw AuthException(ErrorCode.LOGIN_FAILED)
 
-        val accessToken = tokenUseCase.createToken(member.id, TokenType.ACCESS_TOKEN)
-        val refreshToken = tokenUseCase.createToken(member.id, TokenType.REFRESH_TOKEN)
+        val accessTokenDto = tokenUseCase.createToken(member.id, TokenType.ACCESS_TOKEN)
+        val refreshTokenDto = tokenUseCase.createToken(member.id, TokenType.REFRESH_TOKEN)
 
-        val newMember = memberRepository.save(member.login(refreshToken))
+        memberRepository.save(member.login(refreshTokenDto.token))
 
         return LoginInfoDto(
-            memberInfo = LoginMemberInfoDto(
-                id = newMember.id,
-                email = newMember.email,
-                name = member.name,
-                phone = member.phone
-            ),
-            tokenInfo = LoginTokenInfoDto(
-                accessToken = accessToken,
-                refreshToken = refreshToken
+            tokenInfo = TokenInfoDto(
+                accessToken = accessTokenDto.token,
+                accessTokenExpiresIn = accessTokenDto.expiresIn,
+                refreshToken = refreshTokenDto.token,
+                refreshTokenExpiresIn = refreshTokenDto.expiresIn
             )
         )
     }
@@ -64,7 +59,7 @@ class AuthService(
         )
     }
 
-    override fun refresh(refreshToken: String): String {
+    override fun refresh(refreshToken: String): LoginInfoDto {
         val id = (tokenUseCase.getTokenSubject(refreshToken, TokenType.REFRESH_TOKEN)
             ?: throw AuthException(ErrorCode.PERMISSION_ERROR))
             .toLong()
@@ -75,22 +70,27 @@ class AuthService(
             }
         } ?: throw AuthException(ErrorCode.PERMISSION_ERROR)
 
-        return tokenUseCase.createToken(id, TokenType.ACCESS_TOKEN)
+        val accessTokenDto = tokenUseCase.createToken(id, TokenType.ACCESS_TOKEN)
+        // TODO : kakao처럼 기존 refresh token이 7일 이하로 남은 경우만 갱신하도록 하기?
+        val refreshTokenDto = tokenUseCase.createToken(id, TokenType.REFRESH_TOKEN)
+
+        return LoginInfoDto(
+            tokenInfo = TokenInfoDto(
+                accessToken = accessTokenDto.token,
+                accessTokenExpiresIn = accessTokenDto.expiresIn,
+                refreshToken = refreshTokenDto.token,
+                refreshTokenExpiresIn = refreshTokenDto.expiresIn
+            )
+        )
     }
 
-    override fun update(member: Member, command: UpdateCommand): LoginMemberInfoDto {
-        val newMember = memberRepository.save(
+    override fun update(member: Member, command: UpdateCommand) {
+        memberRepository.save(
             member.update(
                 password = command.password?.let { passwordEncoder.encode(it) },
                 name = command.name,
                 phone = command.phone,
             )
-        )
-        return LoginMemberInfoDto(
-            id = newMember.id,
-            email = newMember.email,
-            name = newMember.name,
-            phone = newMember.phone,
         )
     }
 

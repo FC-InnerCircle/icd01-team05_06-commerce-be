@@ -1,5 +1,6 @@
 package com.commerce.common.jwt.application.service
 
+import com.commerce.common.jwt.application.usecase.TokenDto
 import com.commerce.common.jwt.application.usecase.TokenUseCase
 import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts
@@ -48,14 +49,20 @@ class TokenService : TokenUseCase {
             null
         }
 
-    override fun createToken(memberId: Long, tokenType: TokenType): String {
+    override fun createToken(memberId: Long, tokenType: TokenType): TokenDto {
         val time = System.currentTimeMillis()
+        val expiresIn = time + tokenType.validTime.inWholeMilliseconds
 
-        return Jwts.builder()
+        val token = Jwts.builder()
             .subject(memberId.toString())
             .issuedAt(Date(time))
-            .expiration(Date(time + tokenType.validTime.inWholeMilliseconds))
+            .expiration(Date(expiresIn))
             .signWith(this.getSigningKey(tokenType))
             .compact()
+
+        return TokenDto(
+            token = token,
+            expiresIn = expiresIn,
+        )
     }
 }

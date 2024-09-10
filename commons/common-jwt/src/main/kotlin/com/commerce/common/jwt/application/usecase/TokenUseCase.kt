@@ -6,5 +6,5 @@ interface TokenUseCase {
 
     fun getTokenSubject(token: String, tokenType: TokenType): String?
 
-    fun createToken(memberId: Long, tokenType: TokenType): String
+    fun createToken(memberId: Long, tokenType: TokenType): TokenDto
 }

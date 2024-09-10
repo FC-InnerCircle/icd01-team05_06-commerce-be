@@ -5,7 +5,6 @@ import com.commerce.service.auth.application.usecase.command.LoginCommand
 import com.commerce.service.auth.application.usecase.command.SignUpCommand
 import com.commerce.service.auth.application.usecase.command.UpdateCommand
 import com.commerce.service.auth.application.usecase.dto.LoginInfoDto
-import com.commerce.service.auth.application.usecase.dto.LoginMemberInfoDto
 
 interface AuthUseCase {
 
@@ -13,9 +12,9 @@ interface AuthUseCase {
 
     fun signUp(command: SignUpCommand)
 
-    fun refresh(refreshToken: String): String
+    fun refresh(refreshToken: String): LoginInfoDto
 
-    fun update(member: Member, command: UpdateCommand): LoginMemberInfoDto
+    fun update(member: Member, command: UpdateCommand)
 
     fun withdrawal(member: Member)
 }

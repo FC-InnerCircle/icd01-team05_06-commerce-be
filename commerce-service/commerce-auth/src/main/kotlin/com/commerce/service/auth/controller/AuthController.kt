@@ -5,12 +5,11 @@ import com.commerce.common.response.CommonResponse
 import com.commerce.common.response.ErrorCode
 import com.commerce.service.auth.application.usecase.AuthUseCase
 import com.commerce.service.auth.application.usecase.dto.LoginInfoDto
+import com.commerce.service.auth.application.usecase.dto.TokenInfoDto
 import com.commerce.service.auth.application.usecase.exception.AuthException
 import com.commerce.service.auth.controller.request.LoginRequest
 import com.commerce.service.auth.controller.request.SignUpRequest
 import com.commerce.service.auth.controller.request.UpdateRequest
-import com.commerce.service.auth.controller.response.AccessTokenResponse
-import com.commerce.service.auth.controller.response.UpdateResponse
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
@@ -32,7 +31,7 @@ class AuthController(
     }
 
     @PostMapping("/refresh")
-    fun refresh(request: HttpServletRequest): CommonResponse<AccessTokenResponse> {
+    fun refresh(request: HttpServletRequest): CommonResponse<LoginInfoDto> {
         val authHeader = request.getHeader("refresh-token")
         if (authHeader?.startsWith("Bearer ") != true) {
             throw AuthException(ErrorCode.PERMISSION_ERROR)
@@ -40,16 +39,16 @@ class AuthController(
 
         val refreshToken = authHeader.substring(7)
 
-        val accessToken = authUseCase.refresh(refreshToken)
-        return CommonResponse.ok(AccessTokenResponse(accessToken = accessToken))
+        return CommonResponse.ok(authUseCase.refresh(refreshToken))
     }
 
     @PutMapping("/update")
     fun update(
         @AuthenticationPrincipal member: Member,
         @RequestBody request: UpdateRequest
-    ): CommonResponse<UpdateResponse> {
-        return CommonResponse.ok(UpdateResponse(authUseCase.update(member, request.toCommand())))
+    ): CommonResponse<Unit> {
+        authUseCase.update(member, request.toCommand())
+        return CommonResponse.ok()
     }
 
     @DeleteMapping("/withdrawal")

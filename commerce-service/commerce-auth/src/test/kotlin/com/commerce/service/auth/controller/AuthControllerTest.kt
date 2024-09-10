@@ -8,8 +8,7 @@ import com.commerce.common.model.member.MemberRepository
 import com.commerce.common.util.ObjectMapperConfig
 import com.commerce.service.auth.application.usecase.AuthUseCase
 import com.commerce.service.auth.application.usecase.dto.LoginInfoDto
-import com.commerce.service.auth.application.usecase.dto.LoginMemberInfoDto
-import com.commerce.service.auth.application.usecase.dto.LoginTokenInfoDto
+import com.commerce.service.auth.application.usecase.dto.TokenInfoDto
 import com.commerce.service.auth.config.SecurityConfig
 import com.commerce.service.auth.controller.request.LoginRequest
 import com.commerce.service.auth.controller.request.SignUpRequest
@@ -102,14 +101,11 @@ class AuthControllerTest(
 
         given(authUseCase.login(request.toCommand())).willReturn(
             LoginInfoDto(
-                memberInfo = LoginMemberInfoDto(
-                    id = 1,
-                    email = "commerce@example.com",
-                    name = "홍길동",
-                    phone = "01012345678"
-                ), tokenInfo = LoginTokenInfoDto(
+                tokenInfo = TokenInfoDto(
                     accessToken = "accessToken",
-                    refreshToken = "refreshToken"
+                    accessTokenExpiresIn = System.currentTimeMillis() + TokenType.ACCESS_TOKEN.validTime.inWholeMilliseconds,
+                    refreshToken = "refreshToken",
+                    refreshTokenExpiresIn = System.currentTimeMillis() + TokenType.REFRESH_TOKEN.validTime.inWholeMilliseconds,
                 )
             )
         )
@@ -132,14 +128,13 @@ class AuthControllerTest(
                     responseFields(
                         fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("요청 성공 여부"),
                         fieldWithPath("data").type(JsonFieldType.OBJECT).description("응답 데이터"),
-                        fieldWithPath("data.memberInfo").type(JsonFieldType.OBJECT).description("사용자 정보"),
-                        fieldWithPath("data.memberInfo.id").type(JsonFieldType.NUMBER).description("고유번호"),
-                        fieldWithPath("data.memberInfo.email").type(JsonFieldType.STRING).description("이메일"),
-                        fieldWithPath("data.memberInfo.name").type(JsonFieldType.STRING).description("이름"),
-                        fieldWithPath("data.memberInfo.phone").type(JsonFieldType.STRING).description("연락처"),
                         fieldWithPath("data.tokenInfo").type(JsonFieldType.OBJECT).description("JWT 토큰 정보"),
                         fieldWithPath("data.tokenInfo.accessToken").type(JsonFieldType.STRING).description("액세스 토큰"),
+                        fieldWithPath("data.tokenInfo.accessTokenExpiresIn").type(JsonFieldType.NUMBER)
+                            .description("액세스 토큰 만료 시각"),
                         fieldWithPath("data.tokenInfo.refreshToken").type(JsonFieldType.STRING).description("리프레쉬 토큰"),
+                        fieldWithPath("data.tokenInfo.refreshTokenExpiresIn").type(JsonFieldType.NUMBER)
+                            .description("리프레쉬 토큰 만료 시각"),
                         fieldWithPath("error").type(JsonFieldType.ARRAY).optional().description("오류 정보")
                     )
                 )
@@ -207,7 +202,16 @@ class AuthControllerTest(
     fun refresh() {
         val refreshToken =
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
-        given(authUseCase.refresh(refreshToken)).willReturn(testAccessToken)
+        given(authUseCase.refresh(refreshToken)).willReturn(
+            LoginInfoDto(
+                TokenInfoDto(
+                    accessToken = testAccessToken,
+                    accessTokenExpiresIn = System.currentTimeMillis() + TokenType.ACCESS_TOKEN.validTime.inWholeMilliseconds,
+                    refreshToken = refreshToken,
+                    refreshTokenExpiresIn = System.currentTimeMillis() + TokenType.REFRESH_TOKEN.validTime.inWholeMilliseconds,
+                )
+            )
+        )
 
         mockMvc.perform(
             post("/refresh")
@@ -222,7 +226,13 @@ class AuthControllerTest(
                     responseFields(
                         fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("요청 성공 여부"),
                         fieldWithPath("data").type(JsonFieldType.OBJECT).description("응답 데이터"),
-                        fieldWithPath("data.accessToken").type(JsonFieldType.STRING).description("액세스 토큰"),
+                        fieldWithPath("data.tokenInfo").type(JsonFieldType.OBJECT).description("JWT 토큰 정보"),
+                        fieldWithPath("data.tokenInfo.accessToken").type(JsonFieldType.STRING).description("액세스 토큰"),
+                        fieldWithPath("data.tokenInfo.accessTokenExpiresIn").type(JsonFieldType.NUMBER)
+                            .description("액세스 토큰 만료 시각"),
+                        fieldWithPath("data.tokenInfo.refreshToken").type(JsonFieldType.STRING).description("리프레쉬 토큰"),
+                        fieldWithPath("data.tokenInfo.refreshTokenExpiresIn").type(JsonFieldType.NUMBER)
+                            .description("리프레쉬 토큰 만료 시각"),
                         fieldWithPath("error").type(JsonFieldType.ARRAY).optional().description("오류 정보")
                     )
                 )
@@ -235,15 +245,6 @@ class AuthControllerTest(
             password = "123!@#qwe",
             name = "홍길동",
             phone = "01012345678"
-        )
-
-        given(authUseCase.update(testMember, request.toCommand())).willReturn(
-            LoginMemberInfoDto(
-                id = 1,
-                email = "commerce@example.com",
-                name = "홍길동",
-                phone = "01012345678"
-            )
         )
 
         mockMvc.perform(
@@ -266,12 +267,7 @@ class AuthControllerTest(
                     ),
                     responseFields(
                         fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("요청 성공 여부"),
-                        fieldWithPath("data").type(JsonFieldType.OBJECT).description("응답 데이터"),
-                        fieldWithPath("data.memberInfo").type(JsonFieldType.OBJECT).description("사용자 정보"),
-                        fieldWithPath("data.memberInfo.id").type(JsonFieldType.NUMBER).description("고유번호"),
-                        fieldWithPath("data.memberInfo.email").type(JsonFieldType.STRING).description("이메일"),
-                        fieldWithPath("data.memberInfo.name").type(JsonFieldType.STRING).description("이름"),
-                        fieldWithPath("data.memberInfo.phone").type(JsonFieldType.STRING).description("연락처"),
+                        fieldWithPath("data").type(JsonFieldType.OBJECT).optional().description("응답 데이터"),
                         fieldWithPath("error").type(JsonFieldType.ARRAY).optional().description("오류 정보")
                     )
                 )
