@@ -3,8 +3,12 @@ package com.commerce.service.order.applicaton.service
 import com.commerce.common.model.member.Member
 import com.commerce.common.model.shopping_cart.ShoppingCart
 import com.commerce.common.model.shopping_cart.ShoppingCartRepository
+import com.commerce.common.response.CustomException
+import com.commerce.common.response.ErrorCode
 import com.commerce.service.order.applicaton.usecase.ShoppingCartUseCase
+import com.commerce.service.order.applicaton.usecase.command.PatchShoppingCartCommand
 import com.commerce.service.order.applicaton.usecase.command.PostShoppingCartCommand
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 
 @Service
@@ -22,5 +26,19 @@ class ShoppingCartService(
             quantity = command.quantity
         )
         shoppingCartRepository.save(shoppingCart)
+    }
+
+    override fun patch(shoppingCartId: Long, command: PatchShoppingCartCommand) {
+        val shoppingCart = shoppingCartRepository.findById(shoppingCartId)
+            ?: throw CustomException(
+                HttpStatus.NOT_FOUND,
+                ErrorCode.SHOPPING_CART_NOT_FOUND
+            )
+
+        shoppingCartRepository.save(shoppingCart.updateQuantity(command.quantity))
+    }
+
+    override fun delete(shoppingCartId: Long) {
+        shoppingCartRepository.deleteById(shoppingCartId)
     }
 }

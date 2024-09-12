@@ -80,3 +80,25 @@ include::{snippets}/shopping-carts-post/request-fields.adoc[]
 === Response
 include::{snippets}/shopping-carts-post/response-fields.adoc[]
 include::{snippets}/shopping-carts-post/response-body.adoc[]
+
+[[shopping-carts-patch]]
+== 장바구니 상품 수량 변경
+=== Http
+include::{snippets}/shopping-carts-patch/http-request.adoc[]
+=== Path Variable
+include::{snippets}/shopping-carts-patch/path-parameters.adoc[]
+=== Request
+include::{snippets}/shopping-carts-patch/request-fields.adoc[]
+=== Response
+include::{snippets}/shopping-carts-patch/response-fields.adoc[]
+include::{snippets}/shopping-carts-patch/response-body.adoc[]
+
+[[shopping-carts-delete]]
+== 장바구니 상품 삭제
+=== Http
+include::{snippets}/shopping-carts-delete/http-request.adoc[]
+=== Path Variable
+include::{snippets}/shopping-carts-delete/path-parameters.adoc[]
+=== Response
+include::{snippets}/shopping-carts-delete/response-fields.adoc[]
+include::{snippets}/shopping-carts-delete/response-body.adoc[]

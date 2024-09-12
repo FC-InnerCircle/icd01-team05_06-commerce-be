@@ -8,6 +8,7 @@ import com.commerce.common.model.member.MemberRepository
 import com.commerce.common.util.ObjectMapperConfig
 import com.commerce.service.order.applicaton.usecase.ShoppingCartUseCase
 import com.commerce.service.order.config.SecurityConfig
+import com.commerce.service.order.controller.request.PatchShoppingCartRequest
 import com.commerce.service.order.controller.request.PostShoppingCartRequest
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.BeforeEach
@@ -24,10 +25,12 @@ import org.springframework.restdocs.RestDocumentationContextProvider
 import org.springframework.restdocs.RestDocumentationExtension
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*
 import org.springframework.restdocs.operation.preprocess.Preprocessors.*
 import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation.*
+import org.springframework.restdocs.request.RequestDocumentation.parameterWithName
+import org.springframework.restdocs.request.RequestDocumentation.pathParameters
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
@@ -108,6 +111,63 @@ class ShoppingCartControllerTest {
                     requestFields(
                         fieldWithPath("productId").type(JsonFieldType.NUMBER).description("상품 고유번호"),
                         fieldWithPath("quantity").type(JsonFieldType.NUMBER).description("수량"),
+                    ),
+                    responseFields(
+                        fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("요청 성공 여부"),
+                        fieldWithPath("data").type(JsonFieldType.OBJECT).optional().description("응답 데이터"),
+                        fieldWithPath("error").type(JsonFieldType.ARRAY).optional().description("오류 정보")
+                    )
+                )
+            )
+    }
+
+    @Test
+    fun patchTest() {
+        val request = PatchShoppingCartRequest(
+            quantity = 2
+        )
+
+        mockMvc.perform(
+            patch("/shopping-carts/{shoppingCartId}", 1)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer $testAccessToken")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request))
+        )
+            .andExpect(status().isOk)
+            .andDo(
+                document(
+                    "shopping-carts-patch",
+                    preprocessRequest(prettyPrint()),
+                    preprocessResponse(prettyPrint()),
+                    pathParameters(
+                        parameterWithName("shoppingCartId").description("장바구니 ID")
+                    ),
+                    requestFields(
+                        fieldWithPath("quantity").type(JsonFieldType.NUMBER).description("수량"),
+                    ),
+                    responseFields(
+                        fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("요청 성공 여부"),
+                        fieldWithPath("data").type(JsonFieldType.OBJECT).optional().description("응답 데이터"),
+                        fieldWithPath("error").type(JsonFieldType.ARRAY).optional().description("오류 정보")
+                    )
+                )
+            )
+    }
+
+    @Test
+    fun deleteTest() {
+        mockMvc.perform(
+            delete("/shopping-carts/{shoppingCartId}", 1)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer $testAccessToken")
+        )
+            .andExpect(status().isOk)
+            .andDo(
+                document(
+                    "shopping-carts-delete",
+                    preprocessRequest(prettyPrint()),
+                    preprocessResponse(prettyPrint()),
+                    pathParameters(
+                        parameterWithName("shoppingCartId").description("장바구니 ID")
                     ),
                     responseFields(
                         fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("요청 성공 여부"),

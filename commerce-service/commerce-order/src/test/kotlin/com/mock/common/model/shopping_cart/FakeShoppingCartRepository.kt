@@ -24,7 +24,13 @@ class FakeShoppingCartRepository : ShoppingCartRepository {
             newShoppingCart
         }
 
+    override fun findById(id: Long) = data.find { it.id == id }
+
     override fun findByMemberIdAndProductId(memberId: Long, productId: Long) = data.find {
         it.memberId == memberId && it.productId == productId
+    }
+
+    override fun deleteById(shoppingCartId: Long) {
+        data.removeIf { it.id == shoppingCartId }
     }
 }
