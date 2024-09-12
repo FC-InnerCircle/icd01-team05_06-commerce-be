@@ -18,10 +18,8 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.BDDMockito.given
 import org.mockito.Mockito.`when`
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
-import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Import
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
@@ -45,11 +43,10 @@ import org.springframework.web.context.WebApplicationContext
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
-@Import(ObjectMapperConfig::class, JwtAuthenticationFilter::class)
+@Import(OrderController::class, ObjectMapperConfig::class, JwtAuthenticationFilter::class)
 @WebMvcTest(OrderController::class)
 @ExtendWith(RestDocumentationExtension::class)
 @ContextConfiguration(classes = [SecurityConfig::class])
-@ComponentScan(basePackages = ["com.commerce.service.order.controller"])
 class OrdersControllerTest {
 
     private lateinit var mockMvc: MockMvc

@@ -17,7 +17,6 @@ import org.mockito.BDDMockito.given
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
-import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType
 import org.springframework.restdocs.RestDocumentationContextProvider
@@ -40,10 +39,9 @@ import org.springframework.web.context.WebApplicationContext
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
-@Import(ObjectMapperConfig::class)
+@Import(ProductController::class, ObjectMapperConfig::class)
 @ExtendWith(RestDocumentationExtension::class)
 @WebMvcTest(controllers = [ProductController::class])
-@ComponentScan(basePackages = ["com.commerce.service.product.controller"])
 class ProductControllerTest(
     @Autowired
     private val objectMapper: ObjectMapper

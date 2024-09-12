@@ -22,7 +22,6 @@ import org.mockito.BDDMockito.given
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
-import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Import
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
@@ -42,11 +41,10 @@ import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 
-@Import(ObjectMapperConfig::class, JwtAuthenticationFilter::class)
+@Import(AuthController::class, ObjectMapperConfig::class, JwtAuthenticationFilter::class)
 @ExtendWith(RestDocumentationExtension::class)
 @ContextConfiguration(classes = [SecurityConfig::class])
 @WebMvcTest(controllers = [AuthController::class])
-@ComponentScan(basePackages = ["com.commerce.service.auth.controller"])
 class AuthControllerTest(
     @Autowired
     private val objectMapper: ObjectMapper,
