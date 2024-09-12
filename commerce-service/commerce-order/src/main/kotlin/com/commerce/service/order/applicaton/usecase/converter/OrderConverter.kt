@@ -2,12 +2,13 @@ package com.commerce.service.order.applicaton.usecase.converter
 
 import com.commerce.common.model.orders.OrderStatus
 import com.commerce.common.model.orders.Orders
+import com.commerce.service.order.applicaton.usecase.domain.OrderNumber
 import com.commerce.service.order.controller.response.OrderSummary
 
 fun Orders.toOrderSummary(): OrderSummary {
     return OrderSummary(
         id = this.id.toString(),
-        orderNumber = "${this.orderDate}-${this.memberId}", // 주문번호 = 주문 일자 + 주문자 ID (임시)
+        orderNumber = OrderNumber.create(this.id.toString()), // 주문 번호 ("ORD-20240815-001")
         content = this.content,
         orderDate = this.orderDate.toString(),
         status = this.status.toString(),
