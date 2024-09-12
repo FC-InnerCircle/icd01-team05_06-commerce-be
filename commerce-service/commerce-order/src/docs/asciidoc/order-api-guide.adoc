@@ -66,3 +66,17 @@ include::{snippets}/get-order-detail/path-parameters.adoc[]
 include::{snippets}/get-order-detail/http-response.adoc[]
 === Response Fields
 include::{snippets}/get-order-detail/response-fields.adoc[]
+
+---
+
+= 장바구니 관련 API
+
+[[shopping-carts-post]]
+== 장바구니 상품 등록
+=== Http
+include::{snippets}/shopping-carts-post/http-request.adoc[]
+=== Request
+include::{snippets}/shopping-carts-post/request-fields.adoc[]
+=== Response
+include::{snippets}/shopping-carts-post/response-fields.adoc[]
+include::{snippets}/shopping-carts-post/response-body.adoc[]
