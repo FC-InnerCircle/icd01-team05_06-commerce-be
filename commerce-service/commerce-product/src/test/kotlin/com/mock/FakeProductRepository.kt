@@ -17,6 +17,10 @@ class FakeProductRepository : ProductRepository{
         return data.filter { categoryId == it.category?.id }
     }
 
+    override fun findByProductIdIn(ids: List<Long>): List<Product> {
+        return data.filter { ids.contains(it.id) }
+    }
+
     fun initData() {
         val command1 = Product(
             id = autoIncrementId++,

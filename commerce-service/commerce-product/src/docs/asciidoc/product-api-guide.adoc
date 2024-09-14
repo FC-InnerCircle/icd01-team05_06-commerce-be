@@ -34,3 +34,13 @@ include::{snippets}/products/query-parameters.adoc[]
 === Response
 include::{snippets}/products/response-fields.adoc[]
 include::{snippets}/products/response-body.adoc[]
+
+[[주문전상품조회]]
+== 주문 전 상품 조회
+=== Http
+include::{snippets}/api/v1/products/order/before/http-request.adoc[]
+=== Request
+include::{snippets}/api/v1/products/order/before/request-fields.adoc[]
+=== Response
+include::{snippets}/api/v1/products/order/before/response-fields.adoc[]
+include::{snippets}/api/v1/products/order/before/response-body.adoc[]

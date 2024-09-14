@@ -25,4 +25,17 @@ class ProductRepositoryImpl (
             }
             .toList()
     }
+
+    override fun findByProductIdIn(ids: List<Long>): List<Product> {
+        return productJpaRepository.findByIdIn(ids)
+            .map { product ->
+                val category = product.categoryId?.let { categoryId ->
+                    categoryJpaRepository.findById(categoryId)
+                        .map { it.toProductModel() }
+                        .orElse(null)
+                }
+                product.toModel(category)
+            }
+            .toList()
+    }
 }
