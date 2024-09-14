@@ -9,4 +9,6 @@ interface ShoppingCartRepository {
     fun findByMemberIdAndProductId(memberId: Long, productId: Long): ShoppingCart?
 
     fun deleteById(shoppingCartId: Long)
+
+    fun findProducts(id: Long): List<ShoppingCartProduct>
 }

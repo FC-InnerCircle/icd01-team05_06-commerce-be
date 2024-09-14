@@ -8,6 +8,7 @@ import com.commerce.common.response.ErrorCode
 import com.commerce.service.order.applicaton.usecase.ShoppingCartUseCase
 import com.commerce.service.order.applicaton.usecase.command.PatchShoppingCartCommand
 import com.commerce.service.order.applicaton.usecase.command.PostShoppingCartCommand
+import com.commerce.service.order.applicaton.usecase.dto.ShoppingCartListDto
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 
@@ -40,5 +41,9 @@ class ShoppingCartService(
 
     override fun delete(shoppingCartId: Long) {
         shoppingCartRepository.deleteById(shoppingCartId)
+    }
+
+    override fun getList(member: Member): ShoppingCartListDto {
+        return ShoppingCartListDto(shoppingCartRepository.findProducts(member.id))
     }
 }

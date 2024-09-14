@@ -1,6 +1,7 @@
 package com.mock.common.model.shopping_cart
 
 import com.commerce.common.model.shopping_cart.ShoppingCart
+import com.commerce.common.model.shopping_cart.ShoppingCartProduct
 import com.commerce.common.model.shopping_cart.ShoppingCartRepository
 
 class FakeShoppingCartRepository : ShoppingCartRepository {
@@ -32,5 +33,9 @@ class FakeShoppingCartRepository : ShoppingCartRepository {
 
     override fun deleteById(shoppingCartId: Long) {
         data.removeIf { it.id == shoppingCartId }
+    }
+
+    override fun findProducts(id: Long): List<ShoppingCartProduct> {
+        TODO("Not yet implemented")
     }
 }
