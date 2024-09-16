@@ -1,19 +1,18 @@
 server:
-  port: 8080
+  port: 9090
 
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+    url: jdbc:mysql://localhost:3306/commerce
+    username: commerce_user
+    password: commerce_password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#  h2:
+#    console:
+#      enabled: true
+#      path: /h2-console
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: update
   sql:
