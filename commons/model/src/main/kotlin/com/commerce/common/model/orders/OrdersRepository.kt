@@ -5,8 +5,15 @@ import org.springframework.data.domain.Pageable
 import java.time.LocalDateTime
 
 interface OrdersRepository {
-    fun findByCreatedAtBetween(startDate: LocalDateTime, endDate: LocalDateTime, pageable: Pageable): Page<Orders>
-    fun findByCreatedAtBetweenAndStatus(
+    fun findByMemberIdAndCreatedAtBetween(
+        memberId: Long,
+        startDate: LocalDateTime,
+        endDate: LocalDateTime,
+        pageable: Pageable
+    ): Page<Orders>
+
+    fun findByMemberIdAndCreatedAtBetweenAndStatus(
+        memberId: Long,
         startDate: LocalDateTime,
         endDate: LocalDateTime,
         status: OrderStatus,

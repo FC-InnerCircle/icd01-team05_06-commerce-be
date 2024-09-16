@@ -17,3 +17,7 @@ enum class OrderStatus {
     REFUND,
     EXCHANGE
 }
+
+fun OrderStatus.toJpaStatus(): OrderStatus {
+    return OrderStatus.valueOf(this.name)
+}

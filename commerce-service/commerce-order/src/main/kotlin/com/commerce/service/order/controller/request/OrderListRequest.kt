@@ -5,6 +5,8 @@ import com.commerce.service.order.controller.common.request.CommonRequest
 import com.fasterxml.jackson.annotation.JsonFormat
 import jakarta.validation.constraints.NotNull
 import org.springframework.format.annotation.DateTimeFormat
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.core.userdetails.UserDetails
 import java.time.LocalDateTime
 
 data class OrderListRequest(
@@ -15,9 +17,9 @@ data class OrderListRequest(
     val page: Int = 0,
     val size: Int = 20,
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") // 쿼리 파라미터 파싱
-    var startDate: LocalDateTime? = null,
+    var startDate: LocalDateTime? = null, // 주문 생성일
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") // 쿼리 파라미터 파싱
-    var endDate: LocalDateTime? = null
+    var endDate: LocalDateTime? = null,
 ) : CommonRequest {
 
     // 주문 조회 날짜 범위

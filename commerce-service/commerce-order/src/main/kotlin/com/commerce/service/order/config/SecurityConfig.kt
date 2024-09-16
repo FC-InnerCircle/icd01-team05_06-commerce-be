@@ -9,6 +9,7 @@ import com.commerce.common.response.ErrorResponse
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.core.env.Environment
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -22,7 +23,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfig {
+class SecurityConfig(private val env: Environment){
 
     @Bean
     fun passwordEncoder(): PasswordEncoder {
@@ -43,13 +44,32 @@ class SecurityConfig {
             .logout {
                 it.disable()
             }
-            .authorizeHttpRequests {
-                it
-                    .requestMatchers(
-                        AntPathRequestMatcher("/actuator/**", HttpMethod.GET.name()),
-                        AntPathRequestMatcher("/docs/**", HttpMethod.GET.name()),
-                    ).permitAll()
-                    .anyRequest().authenticated()
+
+            if(env.activeProfiles.contains("local")) {
+                http
+                    .headers {
+                        it.frameOptions { frame -> frame.disable() }
+                    }
+                    .authorizeHttpRequests {
+                        it
+                            .requestMatchers(
+                                AntPathRequestMatcher("/actuator/**"),
+                                AntPathRequestMatcher("/docs/**"),
+                                AntPathRequestMatcher("/h2-console/**"),
+                                AntPathRequestMatcher("/login", HttpMethod.POST.name())
+                            ).permitAll()
+                            .anyRequest().authenticated()
+                    }
+            }else {
+                http
+                    .authorizeHttpRequests {
+                        it
+                            .requestMatchers(
+                                AntPathRequestMatcher("/actuator/**", HttpMethod.GET.name()),
+                                AntPathRequestMatcher("/docs/**", HttpMethod.GET.name()),
+                            ).permitAll()
+                            .anyRequest().authenticated()
+                    }
             }
             .exceptionHandling {
                 it

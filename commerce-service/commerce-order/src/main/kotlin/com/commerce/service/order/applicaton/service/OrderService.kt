@@ -1,5 +1,6 @@
 package com.commerce.service.order.applicaton.service
 
+import com.commerce.common.model.member.Member
 import com.commerce.common.model.orders.Orders
 import com.commerce.common.model.orders.OrdersRepository
 import com.commerce.common.model.orderProduct.OrderProduct
@@ -23,10 +24,12 @@ import java.time.LocalDateTime
 class OrderService (
     private val ordersRepository: OrdersRepository
 ) : OrderUseCase {
-    override fun getOrder(request: OrderListRequest) : OrderListResponse {
+    override fun getOrder(request: OrderListRequest, member: Member) : OrderListResponse {
         if (request.page < 0) {
             throw InvalidInputException("Page number cannot be negative")
         }
+
+        val memberId = member.id
 
         val (startDate, endDate) = getDateRange(request.dateRange, request.startDate, request.endDate)
         val sort = when (request.sortBy) {
@@ -38,9 +41,11 @@ class OrderService (
 
         val ordersPage = if (request.status != null) {
             val status = OrderStatus.valueOf(request.status.name)
-            ordersRepository.findByCreatedAtBetweenAndStatus(startDate, endDate, status, pageable)
+            // ordersRepository.findByCreatedAtBetweenAndStatus(startDate, endDate, status, pageable)
+            ordersRepository.findByMemberIdAndCreatedAtBetweenAndStatus(memberId, startDate, endDate, status, pageable)
         } else {
-            ordersRepository.findByCreatedAtBetween(startDate, endDate, pageable)
+            // ordersRepository.findByCreatedAtBetween(startDate, endDate, pageable)
+            ordersRepository.findByMemberIdAndCreatedAtBetween(memberId, startDate, endDate, pageable)
         }
 
         val orders = ordersPage.content.map { it.toOrder() }
