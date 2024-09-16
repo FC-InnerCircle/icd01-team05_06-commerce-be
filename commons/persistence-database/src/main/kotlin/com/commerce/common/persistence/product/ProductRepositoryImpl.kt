@@ -3,6 +3,7 @@ package com.commerce.common.persistence.product
 import com.commerce.common.model.product.Product
 import com.commerce.common.model.product.ProductRepository
 import com.commerce.common.persistence.category.CategoryJpaRepository
+import jakarta.persistence.EntityNotFoundException
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Repository
 
@@ -41,7 +42,7 @@ class ProductRepositoryImpl (
 
     override fun findById(productId: Long): Product {
         val product = productJpaRepository.findById(productId)
-            .orElseThrow{ throw RuntimeException("해당 제품이 존재하지 않습니다.") }
+            .orElseThrow{ throw EntityNotFoundException("해당 제품이 존재하지 않습니다.") }
 
         val category = product.categoryId?.let { categoryId ->
             categoryJpaRepository.findById(categoryId)

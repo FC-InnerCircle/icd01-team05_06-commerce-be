@@ -4,6 +4,7 @@ import com.commerce.common.model.category.CategoryDetail
 import com.commerce.common.model.product.Product
 import com.commerce.common.model.product.ProductRepository
 import com.commerce.common.model.product.SaleStatus
+import jakarta.persistence.EntityNotFoundException
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
@@ -19,6 +20,16 @@ class FakeProductRepository : ProductRepository{
 
     override fun findByProductIdIn(ids: List<Long>): List<Product> {
         return data.filter { ids.contains(it.id) }
+    }
+
+    override fun findById(productId: Long): Product {
+        initData()
+        var data = data.find { productId == it.id }
+
+        if (data == null) {
+            throw EntityNotFoundException("제품이 존재하지 않습니다.")
+        }
+        return data
     }
 
     fun initData() {
