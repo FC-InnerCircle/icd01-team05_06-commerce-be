@@ -4,6 +4,7 @@ import com.commerce.service.product.application.usecase.query.SelectQuery
 
 data class ProductQueryRequest(
     val productCategoryId: Long,
+    val keyword: String?,
     override val page: Int,
     override val size: Int,
     ) : BasePageRequest{

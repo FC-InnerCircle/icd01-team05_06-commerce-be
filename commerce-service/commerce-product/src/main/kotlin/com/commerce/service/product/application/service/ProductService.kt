@@ -29,4 +29,11 @@ class ProductService(
 
         return products.map { ProductInfoDto.from(it) }
     }
+
+    @Transactional(readOnly = true)
+    override fun getProductDetail(productId: Long): ProductInfoDto {
+        val product = productRepository.findById(productId);
+
+        return ProductInfoDto.from(product)
+    }
 }

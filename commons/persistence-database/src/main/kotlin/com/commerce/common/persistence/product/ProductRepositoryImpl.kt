@@ -38,4 +38,17 @@ class ProductRepositoryImpl (
             }
             .toList()
     }
+
+    override fun findById(productId: Long): Product {
+        val product = productJpaRepository.findById(productId)
+            .orElseThrow{ throw RuntimeException("해당 제품이 존재하지 않습니다.") }
+
+        val category = product.categoryId?.let { categoryId ->
+            categoryJpaRepository.findById(categoryId)
+                .map { it.toProductModel() }
+                .orElse(null)
+        }
+
+        return product.toModel(category)
+    }
 }

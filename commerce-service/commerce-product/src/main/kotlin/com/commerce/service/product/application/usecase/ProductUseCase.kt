@@ -7,4 +7,5 @@ import com.commerce.service.product.application.usecase.query.SelectQuery
 interface ProductUseCase {
     fun getProductCategories(): ProductCategoryInfoDto
     fun getProducts(query: SelectQuery): List<ProductInfoDto>
+    fun getProductDetail(productId: Long): ProductInfoDto
 }

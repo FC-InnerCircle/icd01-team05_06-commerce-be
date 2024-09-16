@@ -5,4 +5,6 @@ interface ProductRepository {
     fun findByCategoryId(categoryId: Long, page: Int, size: Int): List<Product>
 
     fun findByProductIdIn(ids: List<Long>): List<Product>
+
+    fun findById(productId: Long): Product
 }
