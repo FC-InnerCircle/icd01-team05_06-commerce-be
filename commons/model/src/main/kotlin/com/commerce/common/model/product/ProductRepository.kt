@@ -7,4 +7,5 @@ interface ProductRepository {
     fun findByProductIdIn(ids: List<Long>): List<Product>
 
     fun findById(productId: Long): Product
+    fun findBySearchWord(keyword: String?, categoryId: Long?, page: Int, size: Int): List<Product>
 }
