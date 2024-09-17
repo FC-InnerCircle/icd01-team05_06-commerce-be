@@ -13,7 +13,7 @@ class FakeProductRepository : ProductRepository{
     var autoIncrementId = 1L
     var data: MutableList<Product> = mutableListOf()
 
-    override fun findByCategoryId(categoryId: Long, page: Int, size: Int): List<Product> {
+    override fun findBySearchWord(searchWord: String?, categoryId: Long?, page: Int, size: Int): List<Product> {
         initData()
         return data.filter { categoryId == it.category?.id }
     }

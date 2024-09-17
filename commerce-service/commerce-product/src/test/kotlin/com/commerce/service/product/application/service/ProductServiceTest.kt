@@ -47,9 +47,14 @@ class ProductServiceTest {
     }
 
     @Test
-    fun `카테고리 id로 product를 검색한다`() {
+    fun `product를 검색한다`() {
         // when
-        val products = productRepository.findByCategoryId(2L, 0, 20)
+        var products = productRepository.findBySearchWord(
+            searchWord = null,
+            categoryId = 2L,
+            page = 1,
+            size = 20
+        )
 
         // then
         assertThat(products).hasSize(1)

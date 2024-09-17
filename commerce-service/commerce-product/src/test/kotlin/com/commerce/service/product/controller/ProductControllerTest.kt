@@ -156,7 +156,7 @@ class ProductControllerTest(
 
     @Test
     fun getProducts() {
-        val query = SelectQuery(2, 0, 20)
+        val query = SelectQuery( 2, "국내도서",1, 20)
 
         given(productUseCase.getProducts(query)).willReturn(
             listOf(
@@ -187,7 +187,7 @@ class ProductControllerTest(
                 ),
                 ProductInfoDto(
                     id = 2L,
-                    title = "The Challenge of Greatness (The Legacy of Great Teachers)",
+                    title = "국내도서The Challenge of Greatness (The Legacy of Great Teachers)",
                     author = "Gose, Michael",
                     price = BigDecimal("31672"),
                     discountedPrice = BigDecimal("28778"),
@@ -215,56 +215,55 @@ class ProductControllerTest(
 
         val queryParams = LinkedMultiValueMap<String, String>()
         queryParams["productCategoryId"] = "2"
-        queryParams["page"] = "0"
+        queryParams["searchWord"] = "국내도서"
+        queryParams["page"] = "1"
         queryParams["size"] = "20"
 
         mockMvc.perform(
             get("/api/v1/products")
                 .params(queryParams)
         )
-            .andExpect(status().isOk)
-            .andDo(
-                document(
-                    "products",
-                    preprocessRequest(prettyPrint()),
-                    preprocessResponse(prettyPrint()),
-                    queryParameters(
-                        parameterWithName("productCategoryId").description("카테고리 Id"),
-                        parameterWithName("page").description("페이지"),
-                        parameterWithName("size").description("사이즈"),
-                    ),
-                    responseFields(
-                        fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("요청 성공 여부"),
-                        fieldWithPath("data").type(JsonFieldType.ARRAY).description("응답 데이터"),
-                        fieldWithPath("data[].id").type(JsonFieldType.NUMBER).description("상품 id"),
-                        fieldWithPath("data[].title").type(JsonFieldType.STRING).description("도서 제목"),
-                        fieldWithPath("data[].author").type(JsonFieldType.STRING).description("작가"),
-                        fieldWithPath("data[].price").type(JsonFieldType.NUMBER).description("가격"),
-                        fieldWithPath("data[].discountedPrice").type(JsonFieldType.NUMBER).description("할인 가격"),
-                        fieldWithPath("data[].publisher").type(JsonFieldType.STRING).description("출판사"),
-                        fieldWithPath("data[].publishDate").type(JsonFieldType.STRING).description("출판일"),
-                        fieldWithPath("data[].isbn").type(JsonFieldType.STRING).description("isbn"),
-                        fieldWithPath("data[].description").type(JsonFieldType.STRING).description("설명"),
-                        fieldWithPath("data[].pages").type(JsonFieldType.NUMBER).description("페이지 수"),
-                        fieldWithPath("data[].coverImage").type(JsonFieldType.STRING).description("커버 이미지"),
-                        fieldWithPath("data[].previewLink").type(JsonFieldType.STRING).description("미리보기 링크"),
-                        fieldWithPath("data[].stockQuantity").type(JsonFieldType.NUMBER).description("남은 수량"),
-                        fieldWithPath("data[].rating").type(JsonFieldType.NUMBER).description("별점"),
-                        fieldWithPath("data[].status").type(JsonFieldType.STRING).description("상태"),
+        .andExpect(status().isOk)
+        .andDo(
+            document(
+                "products",
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                queryParameters(
+                    parameterWithName("productCategoryId").description("카테고리 Id").optional(),
+                    parameterWithName("searchWord").description("검색어").optional(),
+                    parameterWithName("page").description("페이지"),
+                    parameterWithName("size").description("사이즈"),
+                ),
+                responseFields(
+                    fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("요청 성공 여부"),
+                    fieldWithPath("data").type(JsonFieldType.ARRAY).description("응답 데이터"),
+                    fieldWithPath("data[].id").type(JsonFieldType.NUMBER).description("상품 id"),
+                    fieldWithPath("data[].title").type(JsonFieldType.STRING).description("도서 제목"),
+                    fieldWithPath("data[].author").type(JsonFieldType.STRING).description("작가"),
+                    fieldWithPath("data[].price").type(JsonFieldType.NUMBER).description("가격"),
+                    fieldWithPath("data[].discountedPrice").type(JsonFieldType.NUMBER).description("할인 가격"),
+                    fieldWithPath("data[].publisher").type(JsonFieldType.STRING).description("출판사"),
+                    fieldWithPath("data[].publishDate").type(JsonFieldType.STRING).description("출판일"),
+                    fieldWithPath("data[].isbn").type(JsonFieldType.STRING).description("isbn"),
+                    fieldWithPath("data[].description").type(JsonFieldType.STRING).description("설명"),
+                    fieldWithPath("data[].pages").type(JsonFieldType.NUMBER).description("페이지 수"),
+                    fieldWithPath("data[].coverImage").type(JsonFieldType.STRING).description("커버 이미지"),
+                    fieldWithPath("data[].previewLink").type(JsonFieldType.STRING).description("미리보기 링크"),
+                    fieldWithPath("data[].stockQuantity").type(JsonFieldType.NUMBER).description("남은 수량"),
+                    fieldWithPath("data[].rating").type(JsonFieldType.NUMBER).description("별점"),
+                    fieldWithPath("data[].status").type(JsonFieldType.STRING).description("상태"),
 
-                        fieldWithPath("data[].category").type(JsonFieldType.OBJECT).description("카테고리"),
-                        fieldWithPath("data[].category.id").type(JsonFieldType.NUMBER).description("카테고리 id"),
-                        fieldWithPath("data[].category.name").type(JsonFieldType.STRING).description("카테고리 이름"),
-                        fieldWithPath("data[].category.parentCategory").type(JsonFieldType.OBJECT)
-                            .description("부모 카테고리"),
-                        fieldWithPath("data[].category.parentCategory.id").type(JsonFieldType.NUMBER)
-                            .description("부모 카테고리 id"),
-                        fieldWithPath("data[].category.parentCategory.name").type(JsonFieldType.STRING)
-                            .description("부모 카테고리 이름"),
-                        fieldWithPath("error").type(JsonFieldType.ARRAY).optional().description("오류 정보")
-                    )
+                    fieldWithPath("data[].category").type(JsonFieldType.OBJECT).description("카테고리"),
+                    fieldWithPath("data[].category.id").type(JsonFieldType.NUMBER).description("카테고리 id"),
+                    fieldWithPath("data[].category.name").type(JsonFieldType.STRING).description("카테고리 이름"),
+                    fieldWithPath("data[].category.parentCategory").type(JsonFieldType.OBJECT).description("부모 카테고리"),
+                    fieldWithPath("data[].category.parentCategory.id").type(JsonFieldType.NUMBER).description("부모 카테고리 id"),
+                    fieldWithPath("data[].category.parentCategory.name").type(JsonFieldType.STRING).description("부모 카테고리 이름"),
+                    fieldWithPath("error").type(JsonFieldType.ARRAY).optional().description("오류 정보")
                 )
             )
+        )
     }
 
     @Test
