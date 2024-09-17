@@ -25,8 +25,13 @@ class ProductService(
     // 검색 조건 공통 or 단건
     @Transactional(readOnly = true)
     override fun getProducts(query: SelectQuery): List<ProductInfoDto> {
-        val products = productRepository.findByCategoryId(query.categoryId, query.page, query.size)
 
+        val products = productRepository.findBySearchWord(
+            searchWord = query.searchWord,
+            categoryId = query.categoryId,
+            page = query.page,
+            size = query.size,
+        )
         return products.map { ProductInfoDto.from(it) }
     }
 
