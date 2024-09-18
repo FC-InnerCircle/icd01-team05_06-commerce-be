@@ -7,5 +7,5 @@ interface ProductRepository {
 
     fun findByProductIdIn(ids: List<Long>): List<Product>
 
-    fun findBySearchWord(searchWord: String?, categoryId: Long?, page: Int, size: Int): List<Product>
+    fun findBySearchWord(searchWord: String?, categoryId: Long?, page: Int, size: Int): ProductPaginationInfo
 }

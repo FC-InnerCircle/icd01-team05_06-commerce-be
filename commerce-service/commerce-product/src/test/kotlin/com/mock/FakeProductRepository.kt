@@ -1,9 +1,7 @@
 package com.mock
 
 import com.commerce.common.model.category.CategoryDetail
-import com.commerce.common.model.product.Product
-import com.commerce.common.model.product.ProductRepository
-import com.commerce.common.model.product.SaleStatus
+import com.commerce.common.model.product.*
 import jakarta.persistence.EntityNotFoundException
 import java.math.BigDecimal
 import java.time.LocalDateTime
@@ -13,9 +11,26 @@ class FakeProductRepository : ProductRepository{
     var autoIncrementId = 1L
     var data: MutableList<Product> = mutableListOf()
 
-    override fun findBySearchWord(searchWord: String?, categoryId: Long?, page: Int, size: Int): List<Product> {
+    override fun findBySearchWord(searchWord: String?, categoryId: Long?, page: Int, size: Int): ProductPaginationInfo {
         initData()
-        return data.filter { categoryId == it.category?.id }
+        val resultList = data.filter { product ->
+            categoryId?.let { it == product.category?.id } ?: true
+        }.filter { product ->
+            searchWord?.let { product.title.contains(it) } ?: true
+        }
+        val pagination = PaginationInfo(
+            currentPage = 0,
+            totalPage = 1,
+            pageSize = 1,
+            totalCount = resultList.size.toLong(),
+            hasNextPage = true,
+            hasPreviousPage = true,
+        )
+
+        return ProductPaginationInfo(
+            data = resultList,
+            pagination = pagination
+        )
     }
 
     override fun findByProductIdIn(ids: List<Long>): List<Product> {

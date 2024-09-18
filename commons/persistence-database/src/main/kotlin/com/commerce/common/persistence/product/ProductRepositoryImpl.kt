@@ -1,6 +1,8 @@
 package com.commerce.common.persistence.product
 
+import com.commerce.common.model.product.PaginationInfo
 import com.commerce.common.model.product.Product
+import com.commerce.common.model.product.ProductPaginationInfo
 import com.commerce.common.model.product.ProductRepository
 import com.commerce.common.persistence.category.CategoryJpaRepository
 import com.linecorp.kotlinjdsl.dsl.jpql.jpql
@@ -44,21 +46,35 @@ class ProductRepositoryImpl (
         return product.toModel(category)
     }
 
-    override fun findBySearchWord(searchWord: String?, categoryId: Long?, page: Int, size: Int): List<Product> {
+    override fun findBySearchWord(searchWord: String?, categoryId: Long?, page: Int, size: Int): ProductPaginationInfo {
 
         val jpql = jpql {
             select(
                 entity(ProductJpaEntity::class),
             ).from(
                 entity(ProductJpaEntity::class)
-            ).where(
-                path(ProductJpaEntity::title)
-                    .like("%" + (searchWord?:"") + "%")
-            ).apply {
-                if (categoryId != null) {
-                    and(path(ProductJpaEntity::categoryId).eq(categoryId))
-                }
-            }
+            ).whereAnd(
+                searchWord?.let { path(ProductJpaEntity::title).like("%$searchWord%") },
+                categoryId?.let { path(ProductJpaEntity::categoryId).eq(categoryId) }
+            )
+        }
+
+        val countJpql = jpql {
+            select(
+                count(entity(ProductJpaEntity::class))
+            ).from(
+                entity(ProductJpaEntity::class)
+            ).whereAnd(
+                searchWord?.let { path(ProductJpaEntity::title).like("%$searchWord%") },
+                categoryId?.let { path(ProductJpaEntity::categoryId).eq(categoryId) }
+            )
+        }
+
+        val totalCount = entityManager.createQuery(countJpql, jpqlRenderContext).singleResult
+        val totalPage = if (totalCount % size == 0L) {
+            (totalCount / size).toInt()
+        } else {
+            (totalCount / size).toInt()
         }
 
         val query = entityManager.createQuery(jpql, jpqlRenderContext)
@@ -67,7 +83,7 @@ class ProductRepositoryImpl (
         query.firstResult = (page - 1) * size
         query.maxResults = size
 
-        return query.resultList.map { product ->
+      val resultResult = query.resultList.map { product ->
             val category = product.categoryId?.let { categoryId ->
                 categoryJpaRepository.findById(categoryId)
                     .map{ it.toProductModel() }
@@ -76,5 +92,19 @@ class ProductRepositoryImpl (
             product.toModel(category)
         }
             .toList()
+
+        val paginationInfo = PaginationInfo(
+            currentPage = page,
+            totalCount = totalCount,
+            totalPage = totalPage,
+            pageSize = size,
+            hasNextPage = page < totalPage,
+            hasPreviousPage = page > 1,
+        )
+
+        return ProductPaginationInfo(
+            data = resultResult,
+            pagination = paginationInfo,
+        )
     }
 }
