@@ -11,6 +11,7 @@ import com.linecorp.kotlinjdsl.support.spring.data.jpa.extension.createQuery
 import jakarta.persistence.EntityManager
 import jakarta.persistence.EntityNotFoundException
 import org.springframework.stereotype.Repository
+import kotlin.math.ceil
 
 @Repository
 class ProductRepositoryImpl (
@@ -71,11 +72,7 @@ class ProductRepositoryImpl (
         }
 
         val totalCount = entityManager.createQuery(countJpql, jpqlRenderContext).singleResult
-        val totalPage = if (totalCount % size == 0L) {
-            (totalCount / size).toInt()
-        } else {
-            (totalCount / size).toInt()
-        }
+        val totalPage = ceil(totalCount.toDouble() / size).toInt()
 
         val query = entityManager.createQuery(jpql, jpqlRenderContext)
 
