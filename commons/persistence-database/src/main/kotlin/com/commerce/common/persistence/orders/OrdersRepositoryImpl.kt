@@ -17,25 +17,22 @@ class OrdersRepositoryImpl (
     private val ordersJpaRepository: OrdersJpaRepository
 ) : OrdersRepository {
 
-    override fun findByMemberIdAndCreatedAtBetween(
+    override fun findByMemberIdAndOrderDateBetween(
         memberId: Long,
-        startDate: LocalDateTime,
+        orderDate: LocalDateTime,
         endDate: LocalDateTime,
+        status: OrderStatus?,
         pageable: Pageable
     ): Page<Orders> {
-        val orderJpaEntities = ordersJpaRepository.findByMemberIdAndCreatedAtBetween(memberId, startDate, endDate, pageable)
-        val orders = orderJpaEntities.content.map { it.toOrder() }
-        return PageImpl(orders, pageable, orderJpaEntities.totalElements)
-    }
-
-    override fun findByMemberIdAndCreatedAtBetweenAndStatus(
-        memberId: Long,
-        startDate: LocalDateTime,
-        endDate: LocalDateTime,
-        status: OrderStatus,
-        pageable: Pageable
-    ): Page<Orders> {
-        val orderJpaEntities = ordersJpaRepository.findByMemberIdAndCreatedAtBetweenAndStatus(memberId, startDate, endDate, status.toJpaStatus(), pageable)
+        val orderJpaEntities = if (status != null) {
+            ordersJpaRepository.findByMemberIdAndOrderDateBetweenAndStatus(
+                memberId, orderDate, endDate, status.toJpaStatus(), pageable
+            )
+        } else {
+            ordersJpaRepository.findByMemberIdAndOrderDateBetween(
+                memberId, orderDate, endDate, pageable
+            )
+        }
         val orders = orderJpaEntities.content.map { it.toOrder() }
         return PageImpl(orders, pageable, orderJpaEntities.totalElements)
     }

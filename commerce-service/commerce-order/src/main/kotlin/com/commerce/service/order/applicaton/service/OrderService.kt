@@ -18,6 +18,7 @@ import org.springframework.data.domain.PageRequest
 
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Service
@@ -31,22 +32,19 @@ class OrderService (
 
         val memberId = member.id
 
-        val (startDate, endDate) = getDateRange(request.dateRange, request.startDate, request.endDate)
+        val (orderDate, endDate) = getDateRange(request.dateRange, request.orderDate, request.endDate)
         val sort = when (request.sortBy) {
-            OrderListRequest.SortOption.RECENT -> Sort.by(Sort.Direction.DESC, "createdAt")
-            OrderListRequest.SortOption.ORDER_STATUS -> Sort.by("status", "createdAt")
+            OrderListRequest.SortOption.RECENT -> Sort.by(Sort.Direction.DESC, "orderDate")
+            OrderListRequest.SortOption.ORDER_STATUS -> Sort.by("status", "orderDate")
             OrderListRequest.SortOption.ALL -> Sort.unsorted()
         }
         val pageable = PageRequest.of(request.page, request.size, sort)
 
-        val ordersPage = if (request.status != null) {
-            val status = OrderStatus.valueOf(request.status.name)
-            // ordersRepository.findByCreatedAtBetweenAndStatus(startDate, endDate, status, pageable)
-            ordersRepository.findByMemberIdAndCreatedAtBetweenAndStatus(memberId, startDate, endDate, status, pageable)
-        } else {
-            // ordersRepository.findByCreatedAtBetween(startDate, endDate, pageable)
-            ordersRepository.findByMemberIdAndCreatedAtBetween(memberId, startDate, endDate, pageable)
-        }
+        val status = request.status?.let { OrderStatus.valueOf(it.name) }
+
+        val ordersPage = ordersRepository.findByMemberIdAndOrderDateBetween(
+            memberId, orderDate, endDate, status, pageable
+        )
 
         val orders = ordersPage.content.map { it.toOrder() }
 
@@ -80,7 +78,7 @@ class OrderService (
         )
     }
 
-    private fun getDateRange(range: OrderListRequest.DateRange, startDate: LocalDateTime?, endDate: LocalDateTime?): Pair<LocalDateTime, LocalDateTime> {
+    private fun getDateRange(range: OrderListRequest.DateRange, startDate: LocalDate?, endDate: LocalDate?): Pair<LocalDateTime, LocalDateTime> {
         val now = LocalDateTime.now()
         return when (range) {
             OrderListRequest.DateRange.LAST_WEEK -> now.minusWeeks(1) to now
@@ -91,7 +89,10 @@ class OrderService (
                 if (startDate == null || endDate == null) {
                     throw InvalidInputException("Start date and end date are required for custom date range")
                 }
-                startDate to endDate
+                val startDateTime = startDate.atStartOfDay()
+                val endDateTime = endDate.atTime(23, 59, 59)
+
+                startDateTime to endDateTime
             }
         }
     }

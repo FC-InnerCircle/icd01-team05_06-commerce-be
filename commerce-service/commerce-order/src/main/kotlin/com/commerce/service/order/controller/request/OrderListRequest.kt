@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 data class OrderListRequest(
@@ -16,10 +17,12 @@ data class OrderListRequest(
     val sortBy: SortOption = SortOption.RECENT,
     val page: Int = 0,
     val size: Int = 20,
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") // 쿼리 파라미터 파싱
-    var startDate: LocalDateTime? = null, // 주문 생성일
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") // 쿼리 파라미터 파싱
-    var endDate: LocalDateTime? = null,
+//    @DateTimeFormat(pattern = "yyyy-MM-dd") // 쿼리 파라미터 파싱
+//    var startDate: LocalDateTime? = null, // 주문 생성일
+    @DateTimeFormat(pattern = "yyyy-MM-dd") // 쿼리 파라미터 파싱
+    var orderDate: LocalDate? = null,
+    @DateTimeFormat(pattern = "yyyy-MM-dd") // 쿼리 파라미터 파싱
+    var endDate: LocalDate? = null,
 ) : CommonRequest {
 
     // 주문 조회 날짜 범위
@@ -42,8 +45,8 @@ data class OrderListRequest(
 
     override fun validate() {
         if (dateRange == DateRange.CUSTOM) {
-            require(startDate != null && endDate != null) { "Custom date range requires start and end dates" }
-            require(startDate!!.isBefore(endDate)) { "Start date must be before end date" }
+            require(orderDate != null && endDate != null) { "Custom date range requires start and end dates" }
+            require(orderDate!!.isBefore(endDate)) { "Start date must be before end date" }
         }
         require(page >= 0) { "Page must be non-negative" }
         require(size > 0) { "Size must be positive" }
