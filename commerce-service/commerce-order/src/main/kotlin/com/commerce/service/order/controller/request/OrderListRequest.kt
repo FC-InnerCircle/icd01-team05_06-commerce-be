@@ -1,6 +1,7 @@
 package com.commerce.service.order.controller.request
 
 import com.commerce.common.model.orders.OrderStatus
+import com.commerce.service.order.applicaton.usecase.exception.InvalidInputException
 import com.commerce.service.order.controller.common.request.CommonRequest
 import com.fasterxml.jackson.annotation.JsonFormat
 import jakarta.validation.constraints.NotNull
@@ -12,7 +13,7 @@ import java.time.LocalDateTime
 
 data class OrderListRequest(
     @field:NotNull(message = "Date range is required")
-    val dateRange: DateRange,
+    val dateRange: DateRange = DateRange.LAST_WEEK,
     val status: OrderStatus? = null,
     val sortBy: SortOption = SortOption.RECENT,
     val page: Int = 0,
@@ -45,10 +46,21 @@ data class OrderListRequest(
 
     override fun validate() {
         if (dateRange == DateRange.CUSTOM) {
-            require(orderDate != null && endDate != null) { "Custom date range requires start and end dates" }
-            require(orderDate!!.isBefore(endDate)) { "Start date must be before end date" }
+            if (orderDate == null || endDate == null) {
+                throw InvalidInputException("Custom date range requires start and end dates")
+            }
+            if (!orderDate!!.isBefore(endDate)) {
+                throw InvalidInputException("Start date must be before end date")
+            }
+            if (!endDate!!.isAfter(orderDate)) {
+                throw InvalidInputException("End date must be after start date")
+            }
         }
-        require(page >= 0) { "Page must be non-negative" }
-        require(size > 0) { "Size must be positive" }
+        if (page < 0) {
+            throw InvalidInputException("Page must be non-negative")
+        }
+        if (size <= 0) {
+            throw InvalidInputException("Size must be positive")
+        }
     }
 }

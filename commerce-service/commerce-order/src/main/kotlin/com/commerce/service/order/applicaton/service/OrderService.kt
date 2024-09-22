@@ -27,7 +27,7 @@ class OrderService (
 ) : OrderUseCase {
     override fun getOrder(request: OrderListRequest, member: Member) : OrderListResponse {
         if (request.page < 0) {
-            throw InvalidInputException("Page number cannot be negative")
+            throw InvalidInputException("Page number should be 0 or greater")
         }
 
         val memberId = member.id
@@ -38,6 +38,7 @@ class OrderService (
             OrderListRequest.SortOption.ORDER_STATUS -> Sort.by("status", "orderDate")
             OrderListRequest.SortOption.ALL -> Sort.unsorted()
         }
+
         val pageable = PageRequest.of(request.page, request.size, sort)
 
         val status = request.status?.let { OrderStatus.valueOf(it.name) }
@@ -45,6 +46,14 @@ class OrderService (
         val ordersPage = ordersRepository.findByMemberIdAndOrderDateBetween(
             memberId, orderDate, endDate, status, pageable
         )
+
+        if (ordersPage.isEmpty) {
+            return OrderListResponse(
+                products = emptyList(),
+                totalElements = 0,
+                totalPages = 0
+            )
+        }
 
         val orders = ordersPage.content.map { it.toOrder() }
 

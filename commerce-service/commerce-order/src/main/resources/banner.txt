@@ -13,4 +13,4 @@ ${AnsiColor.DEFAULT}
 Powered by Spring Boot ${spring-boot.version}
 
 이너서클 1기 커머스 프로젝트 :: 주문 서비스 서버
-담당 개발자 :: 장현호
+담당 개발자 :: 장현호, 이호준

@@ -47,6 +47,9 @@ include::common.adoc[]
 
 [[order-list]]
 == 주문 목록 조회
+link:https://github.com/FC-InnerCircle/icd01-team05_06-commerce-be/tree/main/commerce-service/commerce-order[주문 목록 예시 요청값 정리 자료]
+
+
 === HTTP Request
 include::{snippets}/get-orders/http-request.adoc[]
 === Request Parameters
@@ -57,7 +60,7 @@ include::{snippets}/get-orders/http-response.adoc[]
 include::{snippets}/get-orders/response-fields.adoc[]
 
 [[order-detail]]
-== 주문 상세 조회
+== 주문 상세 조회 - 미개발 (예정)
 === Http Request
 include::{snippets}/get-order-detail/http-request.adoc[]
 === Path Parameters
