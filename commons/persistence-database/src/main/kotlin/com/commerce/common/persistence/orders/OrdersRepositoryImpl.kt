@@ -4,18 +4,17 @@ import com.commerce.common.model.orders.OrderSortOption
 import com.commerce.common.model.orders.OrderStatus
 import com.commerce.common.model.orders.Orders
 import com.commerce.common.model.orders.OrdersRepository
-import com.commerce.common.model.util.PaginationInfo
 import com.commerce.common.model.util.PaginationModel
+import com.commerce.common.persistence.util.toPaginationModel
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Repository
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
-import kotlin.math.ceil
 
 @Repository
-class OrdersRepositoryImpl (
+class OrdersRepositoryImpl(
     private val ordersJpaRepository: OrdersJpaRepository
 ) : OrdersRepository {
 
@@ -44,22 +43,7 @@ class OrdersRepositoryImpl (
                 memberId, orderDate.atStartOfDay(), LocalDateTime.of(endDate, LocalTime.MAX), pageable
             )
         }
-        val orders = pageResult.content.map { it.toOrder() }
 
-        val totalPage = ceil(pageResult.totalElements.toDouble() / size).toInt()
-
-        val paginationInfo = PaginationInfo(
-            currentPage = page,
-            totalCount = pageResult.totalElements,
-            totalPage = totalPage,
-            pageSize = size,
-            hasNextPage = page < totalPage,
-            hasPreviousPage = page > 1,
-        )
-
-        return PaginationModel(
-            data = orders,
-            pagination = paginationInfo
-        )
+        return pageResult.toPaginationModel { it.toOrder() }
     }
 }
