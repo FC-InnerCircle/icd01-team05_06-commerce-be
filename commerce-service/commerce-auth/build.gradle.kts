@@ -8,6 +8,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     testImplementation("org.springframework.security:spring-security-test")
 
+    compileOnly("org.springframework:spring-tx")
+
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")

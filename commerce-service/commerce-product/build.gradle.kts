@@ -6,6 +6,8 @@ plugins {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
 
+    compileOnly("org.springframework:spring-tx")
+
     implementation(project(":commons:common-util"))
     implementation(project(":commons:model"))
     implementation(project(":commons:persistence-database"))
