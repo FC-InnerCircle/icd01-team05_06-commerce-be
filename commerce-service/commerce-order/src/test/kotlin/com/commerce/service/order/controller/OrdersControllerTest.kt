@@ -7,6 +7,7 @@ import com.commerce.common.model.member.Member
 import com.commerce.common.model.member.MemberRepository
 import com.commerce.common.model.orderProduct.OrderProduct
 import com.commerce.common.model.orders.OrderSortOption
+import com.commerce.common.model.util.PaginationInfo
 import com.commerce.common.util.ObjectMapperConfig
 import com.commerce.service.order.applicaton.usecase.OrderUseCase
 import com.commerce.service.order.applicaton.usecase.domain.OrderNumber
@@ -105,8 +106,8 @@ class OrdersControllerTest {
             sortBy = OrderSortOption.RECENT,
             page = 0,
             size = 20,
-            orderDate = null,
-            endDate = null
+            orderStartDate = null,
+            orderEndDate = null
         )
 
         sampleListResponse = OrderListResponse(
@@ -134,8 +135,14 @@ class OrdersControllerTest {
                     recipient = "이지은"
                 )
             ),
-            totalElements = 2L,
-            totalPages = 1
+            paginationInfo = PaginationInfo(
+                currentPage = 0,
+                totalPage = 1,
+                pageSize = 20,
+                totalCount = 2L,
+                hasNextPage = false,
+                hasPreviousPage = false
+            )
         )
 
         // 주문 상세 샘플 데이터
@@ -229,84 +236,93 @@ class OrdersControllerTest {
                     preprocessRequest(prettyPrint()),
                     preprocessResponse(prettyPrint()),
                     queryParameters(
-                        parameterWithName("dateRange").description("주문 목록 조회 기간")
+                        parameterWithName("dateRange").description("주문 목록 조회 기간").optional()
                             .attributes(key("format").value("ENUM (LAST_WEEK, LAST_MONTH, LAST_3_MONTHS, LAST_6_MONTHS, CUSTOM)"))
                             .attributes(
                                 key("description").value(
                                     """
-                            LAST_WEEK: 최근 1주일 동안의 주문
-                            LAST_MONTH: 최근 1개월 동안의 주문
-                            LAST_3_MONTHS: 최근 3개월 동안의 주문
-                            LAST_6_MONTHS: 최근 6개월 동안의 주문
-                            CUSTOM: 사용자 지정 기간 (startDate와 endDate 파라미터 필요)
-                        """.trimIndent())),
-                    parameterWithName("status").description("주문 상태").optional()
-                        .attributes(key("format").value("ENUM (PENDING, PROCESSING, SHIPPED, DELIVERED, CANCELLED, REFUND, EXCHANGE)"))
-                        .attributes(key("description").value("""
-                            PENDING: 주문 생성
-                            PROCESSING: 주문 처리중
-                            SHIPPED: 배송중
-                            DELIVERED: 배송완료
-                            CANCELLED: 주문 취소
-                            REFUND: 환불
-                            EXCHANGE: 교환
-                            (미지정 시 모든 상태의 주문 조회)
-                        """.trimIndent()
-                                )
+                        LAST_WEEK: 최근 1주일 동안의 주문
+                        LAST_MONTH: 최근 1개월 동안의 주문
+                        LAST_3_MONTHS: 최근 3개월 동안의 주문
+                        LAST_6_MONTHS: 최근 6개월 동안의 주문
+                        CUSTOM: 사용자 지정 기간 (startDate와 endDate 파라미터 필요)
+                    """.trimIndent())),
+                        parameterWithName("status").description("주문 상태").optional()
+                            .attributes(key("format").value("ENUM (PENDING, PROCESSING, SHIPPED, DELIVERED, CANCELLED, REFUND, EXCHANGE)"))
+                            .attributes(key("description").value("""
+                        PENDING: 주문 생성
+                        PROCESSING: 주문 처리중
+                        SHIPPED: 배송중
+                        DELIVERED: 배송완료
+                        CANCELLED: 주문 취소
+                        REFUND: 환불
+                        EXCHANGE: 교환
+                        (미지정 시 모든 상태의 주문 조회)
+                    """.trimIndent()
+                            )
                             ),
-                        parameterWithName("sortBy").description("정렬 옵션")
+                        parameterWithName("sortBy").description("정렬 옵션").optional()
                             .attributes(key("format").value("ENUM (RECENT, ORDER_STATUS, ALL)"))
                             .attributes(
                                 key("description").value(
                                     """
-                            RECENT: 최근 생성된 주문부터 정렬
-                            ORDER_STATUS: 주문 상태별로 정렬 후, 각 상태 내에서 생성 일시로 정렬
-                            ALL: 특별한 정렬 기준 없음 (데이터베이스 기본 순서)
-                        """.trimIndent())),
-                    parameterWithName("page").description("페이지 번호 (0부터 시작)")
-                        .attributes(key("format").value("NUMBER (0 이상의 정수)"))
-                        .attributes(key("description").value("조회하고자 하는 페이지 번호. 0부터 시작하며, 음수 입력 시 에러 발생")),
-                    parameterWithName("size").description("페이지 크기")
-                        .attributes(key("format").value("NUMBER (양의 정수)"))
-                        .attributes(key("description").value("한 페이지에 표시할 주문의 수. 1 이상의 정수여야 하며, 기본값은 20")),
-                    parameterWithName("orderDate").description("사용자 지정 조회 시작일 (dateRange가 CUSTOM일 때 필수)").optional()
-                        .attributes(key("format").value("yyyy-MM-dd"))
-                        .attributes(key("description").value("dateRange가 CUSTOM일 때 조회 시작 일자")),
-                    parameterWithName("endDate").description("사용자 지정 조회 종료일 (dateRange가 CUSTOM일 때 필수)").optional()
-                        .attributes(key("format").value("yyyy-MM-dd"))
-                        .attributes(key("description").value("dateRange가 CUSTOM일 때 조회 종료 일자. orderDate보다 미래여야 함"))
-                ),
-                responseFields(
-                    fieldWithPath("success").description("요청 성공 여부")
-                        .attributes(key("format").value("Boolean")),
-                    fieldWithPath("data").description("응답 데이터"),
-                    fieldWithPath("data.products").description("주문 목록")
-                        .attributes(key("format").value("Array")),
-                    fieldWithPath("data.products[].id").description("주문 ID")
-                        .attributes(key("format").value("String (UUID)")),
-                    fieldWithPath("data.products[].orderNumber").description("주문 번호")
-                        .attributes(key("format").value("String")),
-                    fieldWithPath("data.products[].content").description("주문 내역 요약")
-                        .attributes(key("format").value("String")),
-                    fieldWithPath("data.products[].orderDate").description("주문 일자")
-                        .attributes(key("format").value("String (ISO 8601: yyyy-MM-dd'T'HH:mm:ss)")),
-                    fieldWithPath("data.products[].status").description("주문 상태")
-                        .attributes(key("format").value("String (ENUM: PENDING, PROCESSING, SHIPPED, DELIVERED, CANCEL, REFUND, EXCHANGE)")),
-                    fieldWithPath("data.products[].pricie").description("주문 원가")
-                        .attributes(key("format").value("Number (Double)")),
-                    fieldWithPath("data.products[].discoutedPrice").description("할인 적용된 최종 가격")
-                        .attributes(key("format").value("Number (Double)")),
-                    fieldWithPath("data.products[].memberName").description("주문자 이름")
-                        .attributes(key("format").value("String")),
-                    fieldWithPath("data.products[].recipient").description("수령인 이름")
-                        .attributes(key("format").value("String")),
-                    fieldWithPath("data.totalElements").description("전체 주문 수")
-                        .attributes(key("format").value("Number (Long)")),
-                    fieldWithPath("data.totalPages").description("전체 페이지 수")
-                        .attributes(key("format").value("Number (Integer)")),
-                    fieldWithPath("error").description("오류 정보").optional()
-                        .attributes(key("format").value("Object (null if success)"))
-                )
+                        RECENT: 최근 생성된 주문부터 정렬
+                        ORDER_STATUS: 주문 상태별로 정렬 후, 각 상태 내에서 생성 일시로 정렬
+                        ALL: 특별한 정렬 기준 없음 (데이터베이스 기본 순서)
+                    """.trimIndent())),
+                        parameterWithName("page").description("페이지 번호 (0부터 시작)").optional()
+                            .attributes(key("format").value("NUMBER (0 이상의 정수)"))
+                            .attributes(key("description").value("조회하고자 하는 페이지 번호. 0부터 시작하며, 음수 입력 시 에러 발생")),
+                        parameterWithName("size").description("페이지 크기").optional()
+                            .attributes(key("format").value("NUMBER (양의 정수)"))
+                            .attributes(key("description").value("한 페이지에 표시할 주문의 수. 1 이상의 정수여야 하며, 기본값은 20")),
+                        parameterWithName("orderStartDate").description("사용자 지정 조회 시작일 (dateRange가 CUSTOM일 때 필수)").optional()
+                            .attributes(key("format").value("yyyy-MM-dd"))
+                            .attributes(key("description").value("dateRange가 CUSTOM일 때 조회 시작 일자")),
+                        parameterWithName("orderEndDate").description("사용자 지정 조회 종료일 (dateRange가 CUSTOM일 때 필수)").optional()
+                            .attributes(key("format").value("yyyy-MM-dd"))
+                            .attributes(key("description").value("dateRange가 CUSTOM일 때 조회 종료 일자. orderStartDate보다 미래여야 함"))
+                    ),
+                    responseFields(
+                        fieldWithPath("success").description("요청 성공 여부")
+                            .attributes(key("format").value("Boolean")),
+                        fieldWithPath("data").description("응답 데이터"),
+                        fieldWithPath("data.products").description("주문 목록")
+                            .attributes(key("format").value("Array")),
+                        fieldWithPath("data.products[].id").description("주문 ID")
+                            .attributes(key("format").value("String (UUID)")),
+                        fieldWithPath("data.products[].orderNumber").description("주문 번호")
+                            .attributes(key("format").value("String")),
+                        fieldWithPath("data.products[].content").description("주문 내역 요약")
+                            .attributes(key("format").value("String")),
+                        fieldWithPath("data.products[].orderDate").description("주문 일자")
+                            .attributes(key("format").value("String (ISO 8601: yyyy-MM-dd'T'HH:mm:ss)")),
+                        fieldWithPath("data.products[].status").description("주문 상태")
+                            .attributes(key("format").value("String (ENUM: PENDING, PROCESSING, SHIPPED, DELIVERED, CANCEL, REFUND, EXCHANGE)")),
+                        fieldWithPath("data.products[].pricie").description("주문 원가")
+                            .attributes(key("format").value("Number (Double)")),
+                        fieldWithPath("data.products[].discoutedPrice").description("할인 적용된 최종 가격")
+                            .attributes(key("format").value("Number (Double)")),
+                        fieldWithPath("data.products[].memberName").description("주문자 이름")
+                            .attributes(key("format").value("String")),
+                        fieldWithPath("data.products[].recipient").description("수령인 이름")
+                            .attributes(key("format").value("String")),
+                        fieldWithPath("data.paginationInfo").description("페이지네이션 정보"),
+                        fieldWithPath("data.paginationInfo.currentPage").description("현재 페이지 번호")
+                            .attributes(key("format").value("Number (Integer)")),
+                        fieldWithPath("data.paginationInfo.totalPage").description("전체 페이지 수")
+                            .attributes(key("format").value("Number (Integer)")),
+                        fieldWithPath("data.paginationInfo.pageSize").description("페이지 크기")
+                            .attributes(key("format").value("Number (Integer)")),
+                        fieldWithPath("data.paginationInfo.totalCount").description("전체 주문 수")
+                            .attributes(key("format").value("Number (Long)")),
+                        fieldWithPath("data.paginationInfo.hasNextPage").description("다음 페이지 존재 여부")
+                            .attributes(key("format").value("Boolean")),
+                        fieldWithPath("data.paginationInfo.hasPreviousPage").description("이전 페이지 존재 여부")
+                            .attributes(key("format").value("Boolean")),
+                        fieldWithPath("error").description("오류 정보").optional()
+                            .attributes(key("format").value("Object (null if success)"))
+                    )
             )
         )
     }

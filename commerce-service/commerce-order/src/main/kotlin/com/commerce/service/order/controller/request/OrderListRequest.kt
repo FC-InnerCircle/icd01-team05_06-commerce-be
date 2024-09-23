@@ -15,12 +15,10 @@ data class OrderListRequest(
     val sortBy: OrderSortOption = OrderSortOption.RECENT,
     val page: Int = 0,
     val size: Int = 20,
-//    @DateTimeFormat(pattern = "yyyy-MM-dd") // 쿼리 파라미터 파싱
-//    var startDate: LocalDateTime? = null, // 주문 생성일
     @DateTimeFormat(pattern = "yyyy-MM-dd") // 쿼리 파라미터 파싱
-    var orderDate: LocalDate? = null,
+    var orderStartDate: LocalDate? = null,
     @DateTimeFormat(pattern = "yyyy-MM-dd") // 쿼리 파라미터 파싱
-    var endDate: LocalDate? = null,
+    var orderEndDate: LocalDate? = null,
 ) : CommonRequest {
 
     // 주문 조회 날짜 범위
@@ -51,13 +49,13 @@ data class OrderListRequest(
 
     override fun validate() {
         if (dateRange == DateRange.CUSTOM) {
-            if (orderDate == null || endDate == null) {
+            if (orderStartDate == null || orderEndDate == null) {
                 throw InvalidInputException("Custom date range requires start and end dates")
             }
-            if (!orderDate!!.isBefore(endDate)) {
+            if (!orderStartDate!!.isBefore(orderEndDate)) {
                 throw InvalidInputException("Start date must be before end date")
             }
-            if (!endDate!!.isAfter(orderDate)) {
+            if (!orderEndDate!!.isAfter(orderStartDate)) {
                 throw InvalidInputException("End date must be after start date")
             }
         }

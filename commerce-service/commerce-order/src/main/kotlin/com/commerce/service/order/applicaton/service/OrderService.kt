@@ -17,7 +17,7 @@ class OrderService (
     private val ordersRepository: OrdersRepository
 ) : OrderUseCase {
     override fun getOrder(request: OrderListRequest, member: Member) : OrderListResponse {
-        val (orderDate, endDate) = request.dateRange.getStartToEnd(request.orderDate, request.endDate)
+        val (orderDate, endDate) = request.dateRange.getStartToEnd(request.orderStartDate, request.orderEndDate)
 
         val ordersPage = ordersRepository.findByMemberIdAndOrderDateBetween(
             member.id, orderDate, endDate, request.status, request.page, request.size, request.sortBy
@@ -25,18 +25,12 @@ class OrderService (
 
         return OrderListResponse(
             products = ordersPage.data.map { it.toOrder().toOrderSummary() },
-            totalElements = ordersPage.pagination.totalCount,
-            totalPages = ordersPage.pagination.totalPage
+            paginationInfo = ordersPage.pagination
         )
     }
 
+    // TODO: 주문 번호로 주문 상세 정보 조회
     override fun getOrderDetail(id: String): OrderDetailResponse {
-//        val order = orderRepository.findById(id).orElseThrow { OrderNotFoundException(id) }
-//        return OrderDetailResponse(
-//            order = order.toOrderDetail(),
-//            items = order.items.map { it.toOrderItem() },
-//            statusHistory = order.statusHistory.map { it.toStatusHistoryItem() }
-//        )
         return OrderDetailResponse(
             order = OrderDetail(
                 id = "1",
@@ -48,18 +42,9 @@ class OrderService (
                 shippingAddress = "123 Main St, Springfield, IL 62701",
                 paymentMethod = "Credit Card"
             ),
+
             items = listOf(),
             statusHistory = listOf()
         )
     }
-//    private fun Order.toOrderDetail() = OrderDetail(
-//        id = this.id,
-//        orderNumber = this.id,
-//        orderDate = this.orderDate,
-//        status = this.status,
-//        totalAmount = this.totalAmount,
-//        customerName = this.customerName,
-//        shippingAddress = this.streetAddress + " " + this.detailAddress,
-//        paymentMethod = "Credit Card" // Example, replace with actual field
-//    )
 }
