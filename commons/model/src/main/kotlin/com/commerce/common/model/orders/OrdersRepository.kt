@@ -1,13 +1,13 @@
 package com.commerce.common.model.orders
 
 import com.commerce.common.model.util.PaginationModel
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 interface OrdersRepository {
     fun findByMemberIdAndOrderDateBetween(
         memberId: Long,
-        orderDate: LocalDateTime,
-        endDate: LocalDateTime,
+        orderDate: LocalDate,
+        endDate: LocalDate,
         status: OrderStatus?,
         page: Int,
         size: Int,

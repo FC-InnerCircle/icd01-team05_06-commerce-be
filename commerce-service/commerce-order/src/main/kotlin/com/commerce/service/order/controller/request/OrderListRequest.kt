@@ -4,13 +4,9 @@ import com.commerce.common.model.orders.OrderSortOption
 import com.commerce.common.model.orders.OrderStatus
 import com.commerce.service.order.applicaton.usecase.exception.InvalidInputException
 import com.commerce.service.order.controller.common.request.CommonRequest
-import com.fasterxml.jackson.annotation.JsonFormat
 import jakarta.validation.constraints.NotNull
 import org.springframework.format.annotation.DateTimeFormat
-import org.springframework.security.core.annotation.AuthenticationPrincipal
-import org.springframework.security.core.userdetails.UserDetails
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 data class OrderListRequest(
     @field:NotNull(message = "Date range is required")
@@ -34,7 +30,23 @@ data class OrderListRequest(
     // - LAST_6_MONTHS: 지난 6개월
     // - CUSTOM: 직접 지정
     enum class DateRange {
-        LAST_WEEK, LAST_MONTH, LAST_3_MONTHS, LAST_6_MONTHS, CUSTOM
+        LAST_WEEK, LAST_MONTH, LAST_3_MONTHS, LAST_6_MONTHS, CUSTOM;
+
+        fun getStartToEnd(startDate: LocalDate?, endDate: LocalDate?): Pair<LocalDate, LocalDate> {
+            val now = LocalDate.now()
+            return when (this) {
+                LAST_WEEK -> now.minusWeeks(1) to now
+                LAST_MONTH -> now.minusMonths(1) to now
+                LAST_3_MONTHS -> now.minusMonths(3) to now
+                LAST_6_MONTHS -> now.minusMonths(6) to now
+                CUSTOM -> {
+                    if (startDate == null || endDate == null) {
+                        throw InvalidInputException("Start date and end date are required for custom date range")
+                    }
+                    startDate to endDate
+                }
+            }
+        }
     }
 
     override fun validate() {

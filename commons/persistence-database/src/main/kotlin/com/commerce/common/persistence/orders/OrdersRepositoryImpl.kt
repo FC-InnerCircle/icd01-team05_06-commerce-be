@@ -1,13 +1,17 @@
 package com.commerce.common.persistence.orders
 
-import com.commerce.common.model.orders.*
+import com.commerce.common.model.orders.OrderSortOption
+import com.commerce.common.model.orders.OrderStatus
+import com.commerce.common.model.orders.Orders
+import com.commerce.common.model.orders.OrdersRepository
 import com.commerce.common.model.util.PaginationInfo
 import com.commerce.common.model.util.PaginationModel
-import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Repository
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 import kotlin.math.ceil
 
 @Repository
@@ -17,8 +21,8 @@ class OrdersRepositoryImpl (
 
     override fun findByMemberIdAndOrderDateBetween(
         memberId: Long,
-        orderDate: LocalDateTime,
-        endDate: LocalDateTime,
+        orderDate: LocalDate,
+        endDate: LocalDate,
         status: OrderStatus?,
         page: Int,
         size: Int,
@@ -33,11 +37,11 @@ class OrdersRepositoryImpl (
 
         val pageResult = if (status != null) {
             ordersJpaRepository.findByMemberIdAndOrderDateBetweenAndStatus(
-                memberId, orderDate, endDate, status.toJpaStatus(), pageable
+                memberId, orderDate.atStartOfDay(), LocalDateTime.of(endDate, LocalTime.MAX), status, pageable
             )
         } else {
             ordersJpaRepository.findByMemberIdAndOrderDateBetween(
-                memberId, orderDate, endDate, pageable
+                memberId, orderDate.atStartOfDay(), LocalDateTime.of(endDate, LocalTime.MAX), pageable
             )
         }
         val orders = pageResult.content.map { it.toOrder() }
