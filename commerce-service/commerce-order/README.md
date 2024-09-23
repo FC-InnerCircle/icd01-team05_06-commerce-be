@@ -1,4 +1,4 @@
-## 주문 목록 조회 API
+# 주문 목록 조회 API
 
 ## 엔드포인트
 
@@ -8,15 +8,15 @@ GET http://localhost:8080/order/v1/orders
 
 ## 요청 파라미터
 
-| 파라미터 | 타입 | 필수   | 설명 |
+| 파라미터 | 타입 | 필수 | 설명 |
 |----------|------|------|------|
-| dateRange | string | 아니오  | 조회 기간 (`LAST_WEEK`, `LAST_MONTH`, `LAST_3_MONTHS`, `LAST_6_MONTHS`, `CUSTOM`) |
-| status | string | 아니오  | 주문 상태 (`PENDING`, `PROCESSING`, `SHIPPED`, `DELIVERED`, `CANCELLED`, `REFUND`, `EXCHANGE`) |
-| sortBy | string | 아니오  | 정렬 옵션 (`RECENT`, `ORDER_STATUS`, `ALL`, 기본값: `RECENT`) |
-| page | integer | 아니오  | 페이지 번호 (기본값: 0) |
-| size | integer | 아니오  | 페이지 크기 (기본값: 20) |
-| orderDate | string | 조건부  | 시작 날짜 (yyyy-MM-dd 형식, `dateRange`가 `CUSTOM`일 때 필수) |
-| endDate | string | 조건부  | 종료 날짜 (yyyy-MM-dd 형식, `dateRange`가 `CUSTOM`일 때 필수) |
+| dateRange | string | 예 | 조회 기간 (`LAST_WEEK`, `LAST_MONTH`, `LAST_3_MONTHS`, `LAST_6_MONTHS`, `CUSTOM`, 기본값: `LAST_WEEK`) |
+| status | string | 아니오 | 주문 상태 (`PENDING`, `PROCESSING`, `SHIPPED`, `DELIVERED`, `CANCELLED`, `REFUND`, `EXCHANGE`) |
+| sortBy | string | 아니오 | 정렬 옵션 (`RECENT`, `ORDER_STATUS`, `ALL`, 기본값: `RECENT`) |
+| page | integer | 아니오 | 페이지 번호 (기본값: 0, 0 이상의 정수) |
+| size | integer | 아니오 | 페이지 크기 (기본값: 20, 양의 정수) |
+| orderStartDate | string | 조건부 | 시작 날짜 (yyyy-MM-dd 형식, `dateRange`가 `CUSTOM`일 때 필수) |
+| orderEndDate | string | 조건부 | 종료 날짜 (yyyy-MM-dd 형식, `dateRange`가 `CUSTOM`일 때 필수) |
 
 ## 인증
 
@@ -34,11 +34,25 @@ GET http://localhost:8080/order/v1/orders
   "data": {
     "products": [
       {
-        // 주문 요약 정보
+        "id": "string",
+        "orderNumber": "string",
+        "content": "string",
+        "orderDate": "string",
+        "status": "string",
+        "pricie": 0,
+        "discoutedPrice": 0,
+        "memberName": "string",
+        "recipient": "string"
       }
     ],
-    "totalElements": 0,
-    "totalPages": 0
+    "paginationInfo": {
+      "currentPage": 0,
+      "totalPage": 0,
+      "pageSize": 0,
+      "totalCount": 0,
+      "hasNextPage": false,
+      "hasPreviousPage": false
+    }
   }
 }
 ```
@@ -50,12 +64,13 @@ GET http://localhost:8080/order/v1/orders
 ```json
 {
   "success": false,
-  "error": [
-    {
-      "code": "string",
-      "message": "string"
-    }
-  ]
+   "error": [
+      {
+         "code": "string",
+         "message": "string"
+      }
+   ]
+
 }
 ```
 
@@ -70,16 +85,17 @@ GET http://localhost:8080/order/v1/orders
 ### 커스텀 날짜 범위 요청
 
 ```
-GET http://localhost:8080/order/v1/orders?dateRange=CUSTOM&orderDate=2024-01-01&endDate=2024-03-31&status=DELIVERED&sortBy=ORDER_STATUS&page=1&size=10
+GET http://localhost:8080/order/v1/orders?dateRange=CUSTOM&orderStartDate=2024-01-01&orderEndDate=2024-03-31&status=DELIVERED&sortBy=ORDER_STATUS&page=1&size=10
 ```
 
 ## 주의사항
 
 0. 기본 요청은 지난 1주일 동안의 모든 주문을 조회합니다.
-1. `dateRange`가 `CUSTOM`일 경우, `orderDate`와 `endDate`는 필수입니다.
+1. `dateRange`가 `CUSTOM`일 경우, `orderStartDate`와 `orderEndDate`는 필수입니다.
 2. `page`는 0 이상의 정수여야 합니다.
 3. `size`는 양의 정수여야 합니다.
-4. `orderDate`는 `endDate`보다 이전이어야 합니다.
+4. `orderStartDate`는 `orderEndDate`보다 이전이어야 합니다.
+5. `dateRange`가 `CUSTOM`이 아닐 경우, `orderStartDate`와 `orderEndDate`는 무시됩니다.
 
 ## 다양한 요청 예시
 
@@ -105,7 +121,7 @@ GET http://localhost:8080/order/v1/orders?dateRange=CUSTOM&orderDate=2024-01-01&
 
 4. 특정 기간 동안의 처리 중인 주문 조회
    ```
-   GET http://localhost:8080/order/v1/orders?dateRange=CUSTOM&orderDate=2024-01-01&endDate=2024-06-30&status=PROCESSING
+   GET http://localhost:8080/order/v1/orders?dateRange=CUSTOM&orderStartDate=2024-01-01&orderEndDate=2024-06-30&status=PROCESSING
    ```
 
 5. 지난 달의 환불 주문 조회 (2페이지, 페이지당 15개 항목)
@@ -120,5 +136,5 @@ GET http://localhost:8080/order/v1/orders?dateRange=CUSTOM&orderDate=2024-01-01&
 
 7. 특정 날짜의 모든 주문 조회
    ```
-   GET http://localhost:8080/order/v1/orders?dateRange=CUSTOM&orderDate=2024-03-15&endDate=2024-03-15
+   GET http://localhost:8080/order/v1/orders?dateRange=CUSTOM&orderStartDate=2024-03-15&orderEndDate=2024-03-15
    ```
