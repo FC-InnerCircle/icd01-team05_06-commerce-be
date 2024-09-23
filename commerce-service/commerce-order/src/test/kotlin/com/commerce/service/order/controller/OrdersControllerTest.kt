@@ -307,6 +307,7 @@ class OrdersControllerTest {
                         .attributes(key("format").value("Object (null if success)"))
                 )
             )
+        )
     }
 
     @Test
