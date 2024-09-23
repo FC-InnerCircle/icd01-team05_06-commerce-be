@@ -214,7 +214,7 @@ class OrdersControllerTest {
     @Test
     fun `주문 목록을 반환해야 한다`() {
         mockMvc.perform(
-            get("/orders")
+            get("/order/v1/orders")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer $testAccessToken")
                 .param("dateRange", sampleListRequest.dateRange.toString())
                 .param("sortBy", sampleListRequest.sortBy.toString())
@@ -314,7 +314,7 @@ class OrdersControllerTest {
     @Test
     fun `주문 상세 정보를 반환해야 한다`() {
         mockMvc.perform(
-            get("/orders/{orderId}", 1)
+            get("/order/v1/orders/{orderId}", 1)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer $testAccessToken")
                 .contentType(MediaType.APPLICATION_JSON)
         )

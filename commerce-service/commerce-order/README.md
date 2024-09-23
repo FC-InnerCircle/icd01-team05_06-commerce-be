@@ -1,9 +1,9 @@
-# 주문 목록 조회 API
+## 주문 목록 조회 API
 
 ## 엔드포인트
 
 ```
-GET http://localhost:8080/orders
+GET http://localhost:8080/order/v1/orders
 ```
 
 ## 요청 파라미터
@@ -64,13 +64,13 @@ GET http://localhost:8080/orders
 ### 기본 요청
 
 ```
-GET http://localhost:8080/orders
+GET http://localhost:8080/order/v1/orders
 ```
 
 ### 커스텀 날짜 범위 요청
 
 ```
-GET http://localhost:8080/orders?dateRange=CUSTOM&orderDate=2024-01-01&endDate=2024-03-31&status=DELIVERED&sortBy=ORDER_STATUS&page=1&size=10
+GET http://localhost:8080/order/v1/orders?dateRange=CUSTOM&orderDate=2024-01-01&endDate=2024-03-31&status=DELIVERED&sortBy=ORDER_STATUS&page=1&size=10
 ```
 
 ## 주의사항
@@ -85,40 +85,40 @@ GET http://localhost:8080/orders?dateRange=CUSTOM&orderDate=2024-01-01&endDate=2
 
 0. 기본 요청 (지난 1주일 동안의 모든 주문 조회)
    ```
-   GET http://localhost:8080/orders
+   GET http://localhost:8080/order/v1/orders
    ```
 
 1. 지난 1주일 동안의 모든 주문 조회
    ```
-   GET http://localhost:8080/orders?dateRange=LAST_WEEK&sortBy=RECENT
+   GET http://localhost:8080/order/v1/orders?dateRange=LAST_WEEK&sortBy=RECENT
    ```
 
 2. 지난 3개월 동안의 배송 완료된 주문 조회
    ```
-   GET http://localhost:8080/orders?dateRange=LAST_3_MONTHS&status=DELIVERED&sortBy=RECENT
+   GET http://localhost:8080/order/v1/orders?dateRange=LAST_3_MONTHS&status=DELIVERED&sortBy=RECENT
    ```
 
 3. 지난 6개월 동안의 취소된 주문 조회 (주문 상태별 정렬)
    ```
-   GET http://localhost:8080/orders?dateRange=LAST_6_MONTHS&status=CANCELLED&sortBy=ORDER_STATUS
+   GET http://localhost:8080/order/v1/orders?dateRange=LAST_6_MONTHS&status=CANCELLED&sortBy=ORDER_STATUS
    ```
 
 4. 특정 기간 동안의 처리 중인 주문 조회
    ```
-   GET http://localhost:8080/orders?dateRange=CUSTOM&orderDate=2024-01-01&endDate=2024-06-30&status=PROCESSING
+   GET http://localhost:8080/order/v1/orders?dateRange=CUSTOM&orderDate=2024-01-01&endDate=2024-06-30&status=PROCESSING
    ```
 
 5. 지난 달의 환불 주문 조회 (2페이지, 페이지당 15개 항목)
    ```
-   GET http://localhost:8080/orders?dateRange=LAST_MONTH&status=REFUND&page=1&size=15
+   GET http://localhost:8080/order/v1/orders?dateRange=LAST_MONTH&status=REFUND&page=1&size=15
    ```
 
 6. 모든 주문 상태를 포함한 최근 1개월 주문 조회 (상태별 정렬)
    ```
-   GET http://localhost:8080/orders?dateRange=LAST_MONTH&sortBy=ORDER_STATUS
+   GET http://localhost:8080/order/v1/orders?dateRange=LAST_MONTH&sortBy=ORDER_STATUS
    ```
 
 7. 특정 날짜의 모든 주문 조회
    ```
-   GET http://localhost:8080/orders?dateRange=CUSTOM&orderDate=2024-03-15&endDate=2024-03-15
+   GET http://localhost:8080/order/v1/orders?dateRange=CUSTOM&orderDate=2024-03-15&endDate=2024-03-15
    ```
