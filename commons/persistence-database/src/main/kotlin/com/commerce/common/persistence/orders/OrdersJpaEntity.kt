@@ -2,7 +2,9 @@ package com.commerce.common.persistence.orders
 
 import com.commerce.common.model.orderProduct.OrderProduct
 import com.commerce.common.model.orders.OrderStatus
+import com.commerce.common.model.orders.Orders
 import com.commerce.common.persistence.orderProduct.OrderProductJpaEntity
+import com.commerce.common.persistence.orderProduct.toOrderProducts
 import jakarta.persistence.*
 import java.math.BigDecimal
 import java.time.LocalDateTime
@@ -59,14 +61,28 @@ data class OrdersJpaEntity(
 ) {
     @OneToMany(mappedBy = "order", cascade = [CascadeType.ALL], orphanRemoval = true)
     val orderProducts: MutableList<OrderProductJpaEntity> = mutableListOf()
-
-    fun addOrderProduct(orderProductJpaEntity: OrderProductJpaEntity) {
-        orderProducts.add(orderProductJpaEntity)
-        orderProductJpaEntity.order = this // OrderProductJpaEntity의 order에 OrdersJpaEntity를 설정
-    }
-
-    fun removeOrderProduct(orderProductJpaEntity: OrderProductJpaEntity) {
-        orderProducts.remove(orderProductJpaEntity)
-        orderProductJpaEntity.order = null // OrderProductJpaEntity의 order를 null로 설정
-    }
 }
+
+fun OrdersJpaEntity.toOrder(): Orders {
+    return Orders(
+        id = this.id,
+        memberId = this.memberId,
+        streetAddress = this.streetAddress,
+        detailAddress = this.detailAddress,
+        postalCode = this.postalCode,
+        orderNumber = this.orderNumber,
+        paymentMethod = this.paymentMethod,
+        recipient  = this.recipient,
+        content = this.content,
+        discountedPrice = this.discountedPrice,
+        price = this.price,
+        status = OrderStatus.valueOf(this.status.name),
+        orderDate = this.orderDate,
+        createdAt = this.createdAt,
+        updatedAt = this.updatedAt,
+        orderProducts = this.orderProducts.map { it.toOrderProducts() }
+    )
+}
+
+
+

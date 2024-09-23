@@ -5,11 +5,8 @@ import com.commerce.common.model.product.ProductRepository
 import com.commerce.common.model.product.SaleStatus
 import com.mock.FakeCategoryRepository
 import com.mock.FakeProductRepository
-import jakarta.persistence.EntityNotFoundException
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
@@ -91,7 +88,7 @@ class ProductServiceTest {
     fun `product id가 없을 시 exception이 발생한다`() {
         // when // then
         assertThatThrownBy{ productRepository.findById(99L) }
-            .isInstanceOf(EntityNotFoundException::class.java)
+            .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("제품이 존재하지 않습니다.")
     }
 }

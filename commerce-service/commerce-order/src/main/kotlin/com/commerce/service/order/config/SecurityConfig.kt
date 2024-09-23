@@ -1,7 +1,6 @@
 package com.commerce.service.order.config
 
 import com.commerce.common.jwt.config.JwtAuthenticationFilter
-import com.commerce.common.model.member.Member
 import com.commerce.common.model.member.MemberRepository
 import com.commerce.common.response.CommonResponse
 import com.commerce.common.response.ErrorCode

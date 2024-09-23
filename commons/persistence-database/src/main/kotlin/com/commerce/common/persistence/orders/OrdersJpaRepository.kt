@@ -7,14 +7,16 @@ import org.springframework.data.jpa.repository.JpaRepository
 import java.time.LocalDateTime
 
 interface OrdersJpaRepository : JpaRepository<OrdersJpaEntity, Long> {
-    fun findByCreatedAtBetween(
-        startDate: LocalDateTime,
+    fun findByMemberIdAndOrderDateBetween(
+        memberId: Long,
+        orderDate: LocalDateTime,
         endDate: LocalDateTime,
         pageable: Pageable
     ): Page<OrdersJpaEntity>
 
-    fun findByCreatedAtBetweenAndStatus(
-        startDate: LocalDateTime,
+    fun findByMemberIdAndOrderDateBetweenAndStatus(
+        memberId: Long,
+        orderDate: LocalDateTime,
         endDate: LocalDateTime,
         status: OrderStatus,
         pageable: Pageable

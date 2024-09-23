@@ -1,163 +1,124 @@
-# 주문 API 명세서
-> 주문 관련 API 명세서입니다. <br />
-> 개발 참고 용도로 작성되었습니다.
-## 공통 응답 구조
+# 주문 목록 조회 API
 
-모든 API 응답은 다음 구조를 따릅니다:
+## 엔드포인트
 
-```json
-{
-  "success": boolean,
-  "data": object | null,
-  "error": {
-    "code": string,
-    "message": string
-  } | null
-}
+```
+GET http://localhost:8080/orders
 ```
 
-## 1. 주문 목록 조회
+## 요청 파라미터
 
-- **엔드포인트**: GET /api/orders
-- **설명**: 주문 목록을 조회합니다. 다양한 필터링, 정렬, 페이징 옵션을 제공합니다.
-- **요청 파라미터**:
-    - `dateRange`: 조회 기간 (LAST_WEEK, LAST_MONTH, LAST_3_MONTHS, LAST_6_MONTHS, CUSTOM)
-    - `startDate`: 시작 날짜 (dateRange가 CUSTOM일 때 필수)
-    - `endDate`: 종료 날짜 (dateRange가 CUSTOM일 때 필수)
-    - `status`: 주문 상태 (옵션)
-    - `sortBy`: 정렬 기준 (RECENT, ORDER_STATUS, ALL)
-    - `page`: 페이지 번호 (기본값: 0)
-    - `size`: 페이지 크기 (기본값: 20)
-- **응답**:
-```json
-{
-  "success": true,
-  "data": {
-    "orders": [
-      {
-        "id": "ORDER123",
-        "orderDate": "2024-06-28T10:30:00",
-        "status": "COMPLETED",
-        "totalAmount": 16200,
-        "customerName": "홍길동"
-      },
-      // ... 더 많은 주문 객체들
-    ],
-    "totalElements": 1354,
-    "totalPages": 68
-  },
-  "error": null
-}
-```
+| 파라미터 | 타입 | 필수   | 설명 |
+|----------|------|------|------|
+| dateRange | string | 아니오  | 조회 기간 (`LAST_WEEK`, `LAST_MONTH`, `LAST_3_MONTHS`, `LAST_6_MONTHS`, `CUSTOM`) |
+| status | string | 아니오  | 주문 상태 (`PENDING`, `PROCESSING`, `SHIPPED`, `DELIVERED`, `CANCELLED`, `REFUND`, `EXCHANGE`) |
+| sortBy | string | 아니오  | 정렬 옵션 (`RECENT`, `ORDER_STATUS`, `ALL`, 기본값: `RECENT`) |
+| page | integer | 아니오  | 페이지 번호 (기본값: 0) |
+| size | integer | 아니오  | 페이지 크기 (기본값: 20) |
+| orderDate | string | 조건부  | 시작 날짜 (yyyy-MM-dd 형식, `dateRange`가 `CUSTOM`일 때 필수) |
+| endDate | string | 조건부  | 종료 날짜 (yyyy-MM-dd 형식, `dateRange`가 `CUSTOM`일 때 필수) |
 
-- **실패 응답 (400 Bad Request)**:
+## 인증
 
-```json
-{
-  "success": false,
-  "data": null,
-  "error": {
-    "code": "E001",
-    "message": "Invalid input parameter: Page number cannot be negative"
-  }
-}
-```
-## 2. 주문 상세 조회
+이 API는 인증된 사용자만 접근 가능합니다. 요청 시 유효한 인증 토큰을 포함해야 합니다.
 
-- **엔드포인트**: GET /api/orders/{id}
-- **설명**: 특정 주문의 상세 정보를 조회합니다.
-- **요청 파라미터**: id: 조회할 주문의 ID
-- **성공 응답 (200 OK)**:
+## 응답
+
+### 성공 응답
+
+**상태 코드:** 200 OK
+
 ```json
 {
   "success": true,
   "data": {
-    "order": {
-      "id": "ORDER123",
-      "orderNumber": "Y0361995652",
-      "orderDate": "2024-06-28T10:30:00",
-      "status": "COMPLETED",
-      "totalAmount": 16200,
-      "customerName": "홍길동",
-      "shippingAddress": "서울시 강남구 테헤란로 123",
-      "paymentMethod": "신용카드"
-    },
-    "items": [
+    "products": [
       {
-        "productId": "BOOK123",
-        "productName": "도서/문구: 은 공부 질대 미투지 마라",
-        "quantity": 1,
-        "price": 16200,
-        "subtotal": 16200
+        // 주문 요약 정보
       }
     ],
-    "statusHistory": [
-      {
-        "status": "주문접수",
-        "timestamp": "2024-06-28T10:30:00"
-      },
-      {
-        "status": "결제완료",
-        "timestamp": "2024-06-28T10:31:00"
-      },
-      {
-        "status": "배송준비중",
-        "timestamp": "2024-06-28T11:00:00"
-      },
-      {
-        "status": "배송중",
-        "timestamp": "2024-06-29T09:00:00"
-      },
-      {
-        "status": "배송완료",
-        "timestamp": "2024-06-30T14:00:00"
-      }
-    ]
-  },
-  "error": null
-}
-```
-
-
-- **실패 응답 (404 Not Found)**:
-
-```json
-{
-  "success": false,
-  "data": null,
-  "error": {
-    "code": "E002",
-    "message": "Order not found: ORDER123"
+    "totalElements": 0,
+    "totalPages": 0
   }
 }
 ```
 
-# sequence-diagram
-```mermaid
-sequenceDiagram
-    participant Client
-    participant OrderController
-    participant OrderService
-    participant OrderRepository
-    participant Database
+### 오류 응답
 
-    %% 주문 목록 조회
-    Client->>OrderController: GET /api/orders (주문 목록 조회)
-    OrderController->>OrderService: getOrders(request)
-    OrderService->>OrderRepository: findByOrderDateBetween(...)
-    OrderRepository->>Database: SQL Query
-    Database-->>OrderRepository: Result Set
-    OrderRepository-->>OrderService: Order List
-    OrderService-->>OrderController: OrderListResponse
-    OrderController-->>Client: 주문 목록 JSON
+**상태 코드:** 400 Bad Request
 
-    %% 주문 상세 조회
-    Client->>OrderController: GET /api/orders/{id} (주문 상세 조회)
-    OrderController->>OrderService: getOrderDetail(id)
-    OrderService->>OrderRepository: findById(id)
-    OrderRepository->>Database: SQL Query
-    Database-->>OrderRepository: Result Set
-    OrderRepository-->>OrderService: Order
-    OrderService-->>OrderController: OrderDetailResponse
-    OrderController-->>Client: 주문 상세 정보 JSON
+```json
+{
+  "success": false,
+  "error": [
+    {
+      "code": "string",
+      "message": "string"
+    }
+  ]
+}
 ```
+
+## 요청 예시
+
+### 기본 요청
+
+```
+GET http://localhost:8080/orders
+```
+
+### 커스텀 날짜 범위 요청
+
+```
+GET http://localhost:8080/orders?dateRange=CUSTOM&orderDate=2024-01-01&endDate=2024-03-31&status=DELIVERED&sortBy=ORDER_STATUS&page=1&size=10
+```
+
+## 주의사항
+
+0. 기본 요청은 지난 1주일 동안의 모든 주문을 조회합니다.
+1. `dateRange`가 `CUSTOM`일 경우, `orderDate`와 `endDate`는 필수입니다.
+2. `page`는 0 이상의 정수여야 합니다.
+3. `size`는 양의 정수여야 합니다.
+4. `orderDate`는 `endDate`보다 이전이어야 합니다.
+
+## 다양한 요청 예시
+
+0. 기본 요청 (지난 1주일 동안의 모든 주문 조회)
+   ```
+   GET http://localhost:8080/orders
+   ```
+
+1. 지난 1주일 동안의 모든 주문 조회
+   ```
+   GET http://localhost:8080/orders?dateRange=LAST_WEEK&sortBy=RECENT
+   ```
+
+2. 지난 3개월 동안의 배송 완료된 주문 조회
+   ```
+   GET http://localhost:8080/orders?dateRange=LAST_3_MONTHS&status=DELIVERED&sortBy=RECENT
+   ```
+
+3. 지난 6개월 동안의 취소된 주문 조회 (주문 상태별 정렬)
+   ```
+   GET http://localhost:8080/orders?dateRange=LAST_6_MONTHS&status=CANCELLED&sortBy=ORDER_STATUS
+   ```
+
+4. 특정 기간 동안의 처리 중인 주문 조회
+   ```
+   GET http://localhost:8080/orders?dateRange=CUSTOM&orderDate=2024-01-01&endDate=2024-06-30&status=PROCESSING
+   ```
+
+5. 지난 달의 환불 주문 조회 (2페이지, 페이지당 15개 항목)
+   ```
+   GET http://localhost:8080/orders?dateRange=LAST_MONTH&status=REFUND&page=1&size=15
+   ```
+
+6. 모든 주문 상태를 포함한 최근 1개월 주문 조회 (상태별 정렬)
+   ```
+   GET http://localhost:8080/orders?dateRange=LAST_MONTH&sortBy=ORDER_STATUS
+   ```
+
+7. 특정 날짜의 모든 주문 조회
+   ```
+   GET http://localhost:8080/orders?dateRange=CUSTOM&orderDate=2024-03-15&endDate=2024-03-15
+   ```

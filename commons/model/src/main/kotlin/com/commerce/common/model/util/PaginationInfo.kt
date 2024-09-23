@@ -1,4 +1,4 @@
-package com.commerce.common.model.product
+package com.commerce.common.model.util
 
 data class PaginationInfo(
     val currentPage: Int,

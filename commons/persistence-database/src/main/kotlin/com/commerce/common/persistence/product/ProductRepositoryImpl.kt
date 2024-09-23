@@ -1,9 +1,9 @@
 package com.commerce.common.persistence.product
 
-import com.commerce.common.model.product.PaginationInfo
 import com.commerce.common.model.product.Product
-import com.commerce.common.model.product.ProductPaginationInfo
 import com.commerce.common.model.product.ProductRepository
+import com.commerce.common.model.util.PaginationInfo
+import com.commerce.common.model.util.PaginationModel
 import com.commerce.common.persistence.category.CategoryJpaRepository
 import com.linecorp.kotlinjdsl.dsl.jpql.jpql
 import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
@@ -47,7 +47,7 @@ class ProductRepositoryImpl (
         return product.toModel(category)
     }
 
-    override fun findBySearchWord(searchWord: String?, categoryId: Long?, page: Int, size: Int): ProductPaginationInfo {
+    override fun findBySearchWord(searchWord: String?, categoryId: Long?, page: Int, size: Int): PaginationModel<Product> {
 
         val jpql = jpql {
             select(
@@ -99,7 +99,7 @@ class ProductRepositoryImpl (
             hasPreviousPage = page > 1,
         )
 
-        return ProductPaginationInfo(
+        return PaginationModel(
             data = resultResult,
             pagination = paginationInfo,
         )

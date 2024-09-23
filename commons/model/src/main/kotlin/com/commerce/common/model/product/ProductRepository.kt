@@ -1,5 +1,7 @@
 package com.commerce.common.model.product
 
+import com.commerce.common.model.util.PaginationModel
+
 
 interface ProductRepository {
 
@@ -7,5 +9,5 @@ interface ProductRepository {
 
     fun findByProductIdIn(ids: List<Long>): List<Product>
 
-    fun findBySearchWord(searchWord: String?, categoryId: Long?, page: Int, size: Int): ProductPaginationInfo
+    fun findBySearchWord(searchWord: String?, categoryId: Long?, page: Int, size: Int): PaginationModel<Product>
 }

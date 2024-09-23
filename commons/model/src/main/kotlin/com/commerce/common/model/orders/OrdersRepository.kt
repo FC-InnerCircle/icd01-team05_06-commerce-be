@@ -1,15 +1,16 @@
 package com.commerce.common.model.orders
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
-import java.time.LocalDateTime
+import com.commerce.common.model.util.PaginationModel
+import java.time.LocalDate
 
 interface OrdersRepository {
-    fun findByCreatedAtBetween(startDate: LocalDateTime, endDate: LocalDateTime, pageable: Pageable): Page<Orders>
-    fun findByCreatedAtBetweenAndStatus(
-        startDate: LocalDateTime,
-        endDate: LocalDateTime,
-        status: OrderStatus,
-        pageable: Pageable
-    ): Page<Orders>
+    fun findByMemberIdAndOrderDateBetween(
+        memberId: Long,
+        orderDate: LocalDate,
+        endDate: LocalDate,
+        status: OrderStatus?,
+        page: Int,
+        size: Int,
+        sortOption: OrderSortOption
+    ): PaginationModel<Orders>
 }
