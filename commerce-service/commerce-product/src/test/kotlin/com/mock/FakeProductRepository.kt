@@ -2,7 +2,8 @@ package com.mock
 
 import com.commerce.common.model.category.CategoryDetail
 import com.commerce.common.model.product.*
-import jakarta.persistence.EntityNotFoundException
+import com.commerce.common.model.util.PaginationInfo
+import com.commerce.common.model.util.PaginationModel
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
@@ -11,7 +12,7 @@ class FakeProductRepository : ProductRepository{
     var autoIncrementId = 1L
     var data: MutableList<Product> = mutableListOf()
 
-    override fun findBySearchWord(searchWord: String?, categoryId: Long?, page: Int, size: Int): ProductPaginationInfo {
+    override fun findBySearchWord(searchWord: String?, categoryId: Long?, page: Int, size: Int): PaginationModel<Product> {
         initData()
         val resultList = data.filter { product ->
             categoryId?.let { it == product.category?.id } ?: true
@@ -27,7 +28,7 @@ class FakeProductRepository : ProductRepository{
             hasPreviousPage = true,
         )
 
-        return ProductPaginationInfo(
+        return PaginationModel(
             data = resultList,
             pagination = pagination
         )
@@ -42,7 +43,7 @@ class FakeProductRepository : ProductRepository{
         var data = data.find { productId == it.id }
 
         if (data == null) {
-            throw EntityNotFoundException("제품이 존재하지 않습니다.")
+            throw IllegalArgumentException("제품이 존재하지 않습니다.")
         }
         return data
     }

@@ -1,10 +1,8 @@
 package com.commerce.service.order.applicaton.service
 
 import com.commerce.common.model.member.Member
-import com.commerce.common.model.orders.Orders
-import com.commerce.common.model.orders.OrdersRepository
-import com.commerce.common.model.orderProduct.OrderProduct
 import com.commerce.common.model.orders.OrderStatus
+import com.commerce.common.model.orders.OrdersRepository
 import com.commerce.service.order.applicaton.usecase.OrderUseCase
 import com.commerce.service.order.applicaton.usecase.converter.toOrder
 import com.commerce.service.order.applicaton.usecase.converter.toOrderSummary
@@ -13,10 +11,6 @@ import com.commerce.service.order.controller.request.OrderListRequest
 import com.commerce.service.order.controller.response.OrderDetail
 import com.commerce.service.order.controller.response.OrderDetailResponse
 import com.commerce.service.order.controller.response.OrderListResponse
-import com.commerce.service.order.controller.response.OrderSummary
-import org.springframework.data.domain.PageRequest
-
-import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -33,34 +27,19 @@ class OrderService (
         val memberId = member.id
 
         val (orderDate, endDate) = getDateRange(request.dateRange, request.orderDate, request.endDate)
-        val sort = when (request.sortBy) {
-            OrderListRequest.SortOption.RECENT -> Sort.by(Sort.Direction.DESC, "orderDate")
-            OrderListRequest.SortOption.ORDER_STATUS -> Sort.by("status", "orderDate")
-            OrderListRequest.SortOption.ALL -> Sort.unsorted()
-        }
-
-        val pageable = PageRequest.of(request.page, request.size, sort)
 
         val status = request.status?.let { OrderStatus.valueOf(it.name) }
 
         val ordersPage = ordersRepository.findByMemberIdAndOrderDateBetween(
-            memberId, orderDate, endDate, status, pageable
+            memberId, orderDate, endDate, status, request.page, request.size, request.sortBy
         )
 
-        if (ordersPage.isEmpty) {
-            return OrderListResponse(
-                products = emptyList(),
-                totalElements = 0,
-                totalPages = 0
-            )
-        }
-
-        val orders = ordersPage.content.map { it.toOrder() }
+        val orders = ordersPage.data.map { it.toOrder() }
 
         return OrderListResponse(
             products = orders.map { it.toOrderSummary() },
-            totalElements = ordersPage.totalElements,
-            totalPages = ordersPage.totalPages
+            totalElements = ordersPage.pagination.totalCount,
+            totalPages = ordersPage.pagination.totalPage
         )
     }
 

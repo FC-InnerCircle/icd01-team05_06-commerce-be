@@ -1,6 +1,6 @@
 package com.commerce.service.product.application.usecase.dto
 
-import com.commerce.common.model.product.PaginationInfo
+import com.commerce.common.model.util.PaginationInfo
 
 data class PaginationInfoDto(
     val currentPage: Int,

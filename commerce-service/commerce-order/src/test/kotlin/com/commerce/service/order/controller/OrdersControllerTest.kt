@@ -6,6 +6,7 @@ import com.commerce.common.jwt.config.JwtAuthenticationFilter
 import com.commerce.common.model.member.Member
 import com.commerce.common.model.member.MemberRepository
 import com.commerce.common.model.orderProduct.OrderProduct
+import com.commerce.common.model.orders.OrderSortOption
 import com.commerce.common.util.ObjectMapperConfig
 import com.commerce.service.order.applicaton.usecase.OrderUseCase
 import com.commerce.service.order.applicaton.usecase.domain.OrderNumber
@@ -101,7 +102,7 @@ class OrdersControllerTest {
         sampleListRequest = OrderListRequest(
             dateRange = OrderListRequest.DateRange.LAST_6_MONTHS,
             status = null,
-            sortBy = OrderListRequest.SortOption.RECENT,
+            sortBy = OrderSortOption.RECENT,
             page = 0,
             size = 20,
             orderDate = null,

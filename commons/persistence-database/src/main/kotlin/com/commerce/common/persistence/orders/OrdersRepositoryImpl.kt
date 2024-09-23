@@ -1,16 +1,14 @@
 package com.commerce.common.persistence.orders
 
-import com.commerce.common.model.orders.Orders
-import com.commerce.common.model.orders.OrdersRepository
-import com.commerce.common.model.orderProduct.OrderProduct
-import com.commerce.common.model.orders.OrderStatus
-import com.commerce.common.model.orders.toJpaStatus
-import com.commerce.common.persistence.orderProduct.OrderProductJpaEntity
-import org.springframework.data.domain.Page
+import com.commerce.common.model.orders.*
+import com.commerce.common.model.util.PaginationInfo
+import com.commerce.common.model.util.PaginationModel
 import org.springframework.data.domain.PageImpl
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime
-import org.springframework.data.domain.Pageable
+import kotlin.math.ceil
 
 @Repository
 class OrdersRepositoryImpl (
@@ -22,9 +20,18 @@ class OrdersRepositoryImpl (
         orderDate: LocalDateTime,
         endDate: LocalDateTime,
         status: OrderStatus?,
-        pageable: Pageable
-    ): Page<Orders> {
-        val orderJpaEntities = if (status != null) {
+        page: Int,
+        size: Int,
+        sortOption: OrderSortOption
+    ): PaginationModel<Orders> {
+        val sort = when (sortOption) {
+            OrderSortOption.RECENT -> Sort.by(Sort.Direction.DESC, "orderDate")
+            OrderSortOption.ORDER_STATUS -> Sort.by("status", "orderDate")
+            OrderSortOption.ALL -> Sort.unsorted()
+        }
+        val pageable = PageRequest.of(page, size, sort)
+
+        val pageResult = if (status != null) {
             ordersJpaRepository.findByMemberIdAndOrderDateBetweenAndStatus(
                 memberId, orderDate, endDate, status.toJpaStatus(), pageable
             )
@@ -33,7 +40,22 @@ class OrdersRepositoryImpl (
                 memberId, orderDate, endDate, pageable
             )
         }
-        val orders = orderJpaEntities.content.map { it.toOrder() }
-        return PageImpl(orders, pageable, orderJpaEntities.totalElements)
+        val orders = pageResult.content.map { it.toOrder() }
+
+        val totalPage = ceil(pageResult.totalElements.toDouble() / size).toInt()
+
+        val paginationInfo = PaginationInfo(
+            currentPage = page,
+            totalCount = pageResult.totalElements,
+            totalPage = totalPage,
+            pageSize = size,
+            hasNextPage = page < totalPage,
+            hasPreviousPage = page > 1,
+        )
+
+        return PaginationModel(
+            data = orders,
+            pagination = paginationInfo
+        )
     }
 }

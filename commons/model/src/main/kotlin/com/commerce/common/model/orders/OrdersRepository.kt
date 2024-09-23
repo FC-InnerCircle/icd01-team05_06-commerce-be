@@ -1,7 +1,6 @@
 package com.commerce.common.model.orders
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
+import com.commerce.common.model.util.PaginationModel
 import java.time.LocalDateTime
 
 interface OrdersRepository {
@@ -10,6 +9,8 @@ interface OrdersRepository {
         orderDate: LocalDateTime,
         endDate: LocalDateTime,
         status: OrderStatus?,
-        pageable: Pageable
-    ): Page<Orders>
+        page: Int,
+        size: Int,
+        sortOption: OrderSortOption
+    ): PaginationModel<Orders>
 }
