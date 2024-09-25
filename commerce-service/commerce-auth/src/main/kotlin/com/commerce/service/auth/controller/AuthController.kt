@@ -15,6 +15,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 
 @RestController
+@RequestMapping("/auth/v1")
 class AuthController(
     private val authUseCase: AuthUseCase
 ) {

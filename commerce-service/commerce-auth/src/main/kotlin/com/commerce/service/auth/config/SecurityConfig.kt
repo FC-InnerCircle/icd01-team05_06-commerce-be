@@ -41,6 +41,7 @@ class SecurityConfig {
                 it.disable()
             }
             .logout {
+                it.logoutUrl("/auth/v1/logout")
                 it.logoutSuccessHandler { _, response, authentication ->
                     val member = authentication?.principal as? Member
                     if (member != null) {
@@ -57,9 +58,9 @@ class SecurityConfig {
                     .requestMatchers(
                         AntPathRequestMatcher("/actuator/**", HttpMethod.GET.name()),
                         AntPathRequestMatcher("/docs/**", HttpMethod.GET.name()),
-                        AntPathRequestMatcher("/login", HttpMethod.POST.name()),
-                        AntPathRequestMatcher("/sign-up", HttpMethod.POST.name()),
-                        AntPathRequestMatcher("/refresh", HttpMethod.POST.name()),
+                        AntPathRequestMatcher("/auth/v1/login", HttpMethod.POST.name()),
+                        AntPathRequestMatcher("/auth/v1/sign-up", HttpMethod.POST.name()),
+                        AntPathRequestMatcher("/auth/v1/refresh", HttpMethod.POST.name()),
                     ).permitAll()
                     .anyRequest().authenticated()
             }

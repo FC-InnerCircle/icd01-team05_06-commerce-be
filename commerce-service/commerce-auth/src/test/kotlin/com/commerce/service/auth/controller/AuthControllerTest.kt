@@ -109,14 +109,14 @@ class AuthControllerTest(
         )
 
         mockMvc.perform(
-            post("/login")
+            post("/auth/v1/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request))
         )
             .andExpect(status().isOk)
             .andDo(
                 document(
-                    "login",
+                    "auth/v1/login",
                     preprocessRequest(prettyPrint()),
                     preprocessResponse(prettyPrint()),
                     requestFields(
@@ -149,14 +149,14 @@ class AuthControllerTest(
         )
 
         mockMvc.perform(
-            post("/sign-up")
+            post("/auth/v1/sign-up")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request))
         )
             .andExpect(status().isOk)
             .andDo(
                 document(
-                    "sign-up",
+                    "auth/v1/sign-up",
                     preprocessRequest(prettyPrint()),
                     preprocessResponse(prettyPrint()),
                     requestFields(
@@ -178,13 +178,13 @@ class AuthControllerTest(
     @Test
     fun info() {
         mockMvc.perform(
-            get("/info")
+            get("/auth/v1/info")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer $testAccessToken")
         )
             .andExpect(status().isOk)
             .andDo(
                 document(
-                    "info",
+                    "auth/v1/info",
                     preprocessRequest(prettyPrint()),
                     preprocessResponse(prettyPrint()),
                     responseFields(
@@ -204,13 +204,13 @@ class AuthControllerTest(
     @Test
     fun logout() {
         mockMvc.perform(
-            post("/logout")
+            post("/auth/v1/logout")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer $testAccessToken")
         )
             .andExpect(status().isOk)
             .andDo(
                 document(
-                    "logout",
+                    "auth/v1/logout",
                     preprocessRequest(prettyPrint()),
                     preprocessResponse(prettyPrint()),
                     responseFields(
@@ -238,13 +238,13 @@ class AuthControllerTest(
         )
 
         mockMvc.perform(
-            post("/refresh")
+            post("/auth/v1/refresh")
                 .header("refresh-token", "Bearer $refreshToken")
         )
             .andExpect(status().isOk)
             .andDo(
                 document(
-                    "refresh",
+                    "auth/v1/refresh",
                     preprocessRequest(prettyPrint()),
                     preprocessResponse(prettyPrint()),
                     responseFields(
@@ -272,7 +272,7 @@ class AuthControllerTest(
         )
 
         mockMvc.perform(
-            put("/update")
+            put("/auth/v1/update")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer $testAccessToken")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request))
@@ -280,7 +280,7 @@ class AuthControllerTest(
             .andExpect(status().isOk)
             .andDo(
                 document(
-                    "update",
+                    "auth/v1/update",
                     preprocessRequest(prettyPrint()),
                     preprocessResponse(prettyPrint()),
                     requestFields(
@@ -301,13 +301,13 @@ class AuthControllerTest(
     @Test
     fun withdrawal() {
         mockMvc.perform(
-            delete("/withdrawal")
+            delete("/auth/v1/withdrawal")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer $testAccessToken")
         )
             .andExpect(status().isOk)
             .andDo(
                 document(
-                    "withdrawal",
+                    "auth/v1/withdrawal",
                     preprocessRequest(prettyPrint()),
                     preprocessResponse(prettyPrint()),
                     responseFields(

@@ -20,61 +20,61 @@ include::{docdir}/common.adoc[]
 [[login]]
 == 로그인
 === Http
-include::{snippets}/login/http-request.adoc[]
+include::{snippets}/auth/v1/login/http-request.adoc[]
 === Request
-include::{snippets}/login/request-fields.adoc[]
+include::{snippets}/auth/v1/login/request-fields.adoc[]
 === Response
-include::{snippets}/login/response-fields.adoc[]
-include::{snippets}/login/response-body.adoc[]
+include::{snippets}/auth/v1/login/response-fields.adoc[]
+include::{snippets}/auth/v1/login/response-body.adoc[]
 
 [[sign-up]]
 == 회원가입
 === Http
-include::{snippets}/sign-up/http-request.adoc[]
+include::{snippets}/auth/v1/sign-up/http-request.adoc[]
 === Request
-include::{snippets}/sign-up/request-fields.adoc[]
+include::{snippets}/auth/v1/sign-up/request-fields.adoc[]
 === Response
-include::{snippets}/sign-up/response-fields.adoc[]
-include::{snippets}/sign-up/response-body.adoc[]
+include::{snippets}/auth/v1/sign-up/response-fields.adoc[]
+include::{snippets}/auth/v1/sign-up/response-body.adoc[]
 
 [[info]]
 == 사용자 정보 조회
 === Http
-include::{snippets}/info/http-request.adoc[]
+include::{snippets}/auth/v1/info/http-request.adoc[]
 === Response
-include::{snippets}/info/response-fields.adoc[]
-include::{snippets}/info/response-body.adoc[]
+include::{snippets}/auth/v1/info/response-fields.adoc[]
+include::{snippets}/auth/v1/info/response-body.adoc[]
 
 [[logout]]
 == 로그아웃
 === Http
-include::{snippets}/logout/http-request.adoc[]
+include::{snippets}/auth/v1/logout/http-request.adoc[]
 === Response
-include::{snippets}/logout/response-fields.adoc[]
-include::{snippets}/logout/response-body.adoc[]
+include::{snippets}/auth/v1/logout/response-fields.adoc[]
+include::{snippets}/auth/v1/logout/response-body.adoc[]
 
 [[refresh]]
 == 액세스 토큰 재발급
 === Http
-include::{snippets}/refresh/http-request.adoc[]
+include::{snippets}/auth/v1/refresh/http-request.adoc[]
 === Response
-include::{snippets}/refresh/response-fields.adoc[]
-include::{snippets}/refresh/response-body.adoc[]
+include::{snippets}/auth/v1/refresh/response-fields.adoc[]
+include::{snippets}/auth/v1/refresh/response-body.adoc[]
 
 [[update]]
 == 사용자 정보 수정
 === Http
-include::{snippets}/update/http-request.adoc[]
+include::{snippets}/auth/v1/update/http-request.adoc[]
 === Request
-include::{snippets}/update/request-fields.adoc[]
+include::{snippets}/auth/v1/update/request-fields.adoc[]
 === Response
-include::{snippets}/update/response-fields.adoc[]
-include::{snippets}/update/response-body.adoc[]
+include::{snippets}/auth/v1/update/response-fields.adoc[]
+include::{snippets}/auth/v1/update/response-body.adoc[]
 
 [[withdrawal]]
 == 회원탈퇴
 === Http
-include::{snippets}/withdrawal/http-request.adoc[]
+include::{snippets}/auth/v1/withdrawal/http-request.adoc[]
 === Response
-include::{snippets}/withdrawal/response-fields.adoc[]
-include::{snippets}/withdrawal/response-body.adoc[]
+include::{snippets}/auth/v1/withdrawal/response-fields.adoc[]
+include::{snippets}/auth/v1/withdrawal/response-body.adoc[]
