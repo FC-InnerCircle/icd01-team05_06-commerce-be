@@ -1,4 +1,4 @@
-package com.commerce.service.order.applicaton.usecase.domain
+package com.commerce.service.order.applicaton.usecase.vo
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter

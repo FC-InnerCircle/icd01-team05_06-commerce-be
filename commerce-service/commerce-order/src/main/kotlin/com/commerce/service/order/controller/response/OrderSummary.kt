@@ -1,7 +1,6 @@
 package com.commerce.service.order.controller.response
 
-import com.commerce.service.order.applicaton.usecase.domain.OrderNumber
-import java.time.LocalDateTime
+import com.commerce.service.order.applicaton.usecase.vo.OrderNumber
 
 data class OrderSummary(
     val id: String,

@@ -3,6 +3,9 @@ package com.commerce.service.order.applicaton.service
 import com.commerce.common.model.member.Member
 import com.commerce.common.model.orders.OrdersRepository
 import com.commerce.service.order.applicaton.usecase.OrderUseCase
+import com.commerce.service.order.applicaton.usecase.component.PaymentHandler
+import com.commerce.service.order.applicaton.usecase.component.ProductHandler
+import com.commerce.service.order.applicaton.usecase.component.ShippingHandler
 import com.commerce.service.order.applicaton.usecase.converter.toOrder
 import com.commerce.service.order.applicaton.usecase.converter.toOrderSummary
 import com.commerce.service.order.controller.request.OrderListRequest
@@ -14,8 +17,26 @@ import java.time.LocalDateTime
 
 @Service
 class OrderService (
-    private val ordersRepository: OrdersRepository
+    private val ordersRepository: OrdersRepository,
+
+    // TODO: 주문 생성, 배송, 결제 로직 추가
+    private val productHandler: ProductHandler,
+    private val shippingHandler: ShippingHandler,
+    private val paymentHandler: PaymentHandler
 ) : OrderUseCase {
+
+    /**
+     * 주문 생성 로직
+     * 1. 상품 관련 처리 (ProductHandler)
+     * 2. 결제 처리 (PaymentHandler)
+     * 3. 상품 재고 업데이트 (ProductHandler)
+     * 4. 배송 처리 (ShippingHandler)
+     * 5. 주문 완료 처리 (ProductHandler)
+     */
+    override fun order() {
+        TODO("Not yet implemented")
+    }
+
     override fun getOrder(request: OrderListRequest, member: Member) : OrderListResponse {
         val (orderDate, endDate) = request.dateRange.getStartToEnd(request.orderStartDate, request.orderEndDate)
 

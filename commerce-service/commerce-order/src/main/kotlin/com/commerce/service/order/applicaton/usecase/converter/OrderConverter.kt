@@ -2,7 +2,7 @@ package com.commerce.service.order.applicaton.usecase.converter
 
 import com.commerce.common.model.orders.OrderStatus
 import com.commerce.common.model.orders.Orders
-import com.commerce.service.order.applicaton.usecase.domain.OrderNumber
+import com.commerce.service.order.applicaton.usecase.vo.OrderNumber
 import com.commerce.service.order.controller.response.OrderSummary
 
 fun Orders.toOrderSummary(): OrderSummary {

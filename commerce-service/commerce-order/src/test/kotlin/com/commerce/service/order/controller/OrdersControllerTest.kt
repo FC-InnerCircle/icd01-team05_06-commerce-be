@@ -11,7 +11,7 @@ import com.commerce.common.model.orders.OrderSortOption
 import com.commerce.common.model.util.PaginationInfo
 import com.commerce.common.util.ObjectMapperConfig
 import com.commerce.service.order.applicaton.usecase.OrderUseCase
-import com.commerce.service.order.applicaton.usecase.domain.OrderNumber
+import com.commerce.service.order.applicaton.usecase.vo.OrderNumber
 import com.commerce.service.order.config.SecurityConfig
 import com.commerce.service.order.controller.request.OrderListRequest
 import com.commerce.service.order.controller.response.*
