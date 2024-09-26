@@ -4,6 +4,8 @@ spring:
     url: jdbc:mysql://inner-circle-commerce.c74w06weohlm.ap-northeast-2.rds.amazonaws.com:3306/commerce
     username: root
     password: b1ALeR4JgTyBICO3T91y
+    hikari:
+      maximum-pool-size: 5
   jpa:
     open-in-view: false
     properties:

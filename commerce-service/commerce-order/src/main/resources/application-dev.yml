@@ -9,6 +9,8 @@ spring:
       username: ENC(ijo4Jc/UZcp0vqbAo3zcYCFx4XXslvVNAJ8ydo2157fcmujzA7tz/rVy8Xmyp+ZS)
       password: ENC(3eqf88zhi8cUIRZ8JpTMv/De/uoQkFwD01xQa/5Bu5SjX52W9/EKFq412vqZZXXZdLxRP+nuP2pxXnq6akoZHQ==)
       driver-class-name: com.mysql.cj.jdbc.Driver
+      hikari:
+        maximum-pool-size: 5
   sql:
     init:
       mode: never
