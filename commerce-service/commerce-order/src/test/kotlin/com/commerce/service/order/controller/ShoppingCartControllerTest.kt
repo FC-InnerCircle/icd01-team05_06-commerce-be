@@ -100,7 +100,7 @@ class ShoppingCartControllerTest {
         )
 
         mockMvc.perform(
-            post("/shopping-carts")
+            post("/order/v1/shopping-carts")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer $testAccessToken")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request))
@@ -108,7 +108,7 @@ class ShoppingCartControllerTest {
             .andExpect(status().isOk)
             .andDo(
                 document(
-                    "shopping-carts-post",
+                    "order/v1/shopping-carts-post",
                     preprocessRequest(prettyPrint()),
                     preprocessResponse(prettyPrint()),
                     requestFields(
@@ -131,7 +131,7 @@ class ShoppingCartControllerTest {
         )
 
         mockMvc.perform(
-            patch("/shopping-carts/{shoppingCartId}", 1)
+            patch("/order/v1/shopping-carts/{shoppingCartId}", 1)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer $testAccessToken")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request))
@@ -139,7 +139,7 @@ class ShoppingCartControllerTest {
             .andExpect(status().isOk)
             .andDo(
                 document(
-                    "shopping-carts-patch",
+                    "order/v1/shopping-carts-patch",
                     preprocessRequest(prettyPrint()),
                     preprocessResponse(prettyPrint()),
                     pathParameters(
@@ -160,13 +160,13 @@ class ShoppingCartControllerTest {
     @Test
     fun deleteTest() {
         mockMvc.perform(
-            delete("/shopping-carts/{shoppingCartId}", 1)
+            delete("/order/v1/shopping-carts/{shoppingCartId}", 1)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer $testAccessToken")
         )
             .andExpect(status().isOk)
             .andDo(
                 document(
-                    "shopping-carts-delete",
+                    "order/v1/shopping-carts-delete",
                     preprocessRequest(prettyPrint()),
                     preprocessResponse(prettyPrint()),
                     pathParameters(
@@ -196,13 +196,13 @@ class ShoppingCartControllerTest {
         ))
 
         mockMvc.perform(
-            get("/shopping-carts")
+            get("/order/v1/shopping-carts")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer $testAccessToken")
         )
             .andExpect(status().isOk)
             .andDo(
                 document(
-                    "shopping-carts",
+                    "order/v1/shopping-carts",
                     preprocessRequest(prettyPrint()),
                     preprocessResponse(prettyPrint()),
                     responseFields(

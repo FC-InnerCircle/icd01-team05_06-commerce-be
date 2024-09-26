@@ -5,5 +5,5 @@ object ApiPaths {
 
     const val ORDERS = "$API_V1/orders"
 
-    const val SHOPPING_CARTS = "/shopping-carts"
+    const val SHOPPING_CARTS = "$API_V1/shopping-carts"
 }
