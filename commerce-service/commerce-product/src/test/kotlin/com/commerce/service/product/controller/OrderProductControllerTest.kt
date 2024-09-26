@@ -73,14 +73,14 @@ class OrderProductControllerTest(
         )
 
         mockMvc.perform(
-            post("/api/v1/products/order/before")
+            post("/product/v1/products/order/before")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request))
         )
             .andExpect(status().isOk)
             .andDo(
                 document(
-                    "api/v1/products/order/before",
+                    "/product/v1/products/order/before",
                     preprocessRequest(prettyPrint()),
                     preprocessResponse(prettyPrint()),
                     requestFields(

@@ -113,7 +113,7 @@ class ProductControllerTest(
         )
 
         mockMvc.perform(
-            get("/api/v1/categories")
+            get("/product/v1/categories")
                 .contentType(MediaType.APPLICATION_JSON)
         )
             .andExpect(status().isOk)
@@ -232,7 +232,7 @@ class ProductControllerTest(
         queryParams["size"] = "20"
 
         mockMvc.perform(
-            get("/api/v1/products")
+            get("/product/v1/products")
                 .params(queryParams)
         )
             .andExpect(status().isOk)
@@ -323,7 +323,7 @@ class ProductControllerTest(
             )
         )
 
-        mockMvc.perform(get("/api/v1/products/{productId}", 1))
+        mockMvc.perform(get("/product/v1/products/{productId}", 1))
             .andExpect(status().isOk)
             .andDo(
                 document(
