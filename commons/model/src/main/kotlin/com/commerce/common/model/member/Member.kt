@@ -1,5 +1,6 @@
 package com.commerce.common.model.member
 
+import com.commerce.common.model.address.Address
 import java.time.LocalDateTime
 
 class Member(
@@ -8,6 +9,7 @@ class Member(
     val password: String,
     val name: String,
     val phone: String,
+    val address: Address,
     val lastLoginDate: LocalDateTime? = null,
     val refreshToken: String? = null,
 ) {
@@ -17,6 +19,7 @@ class Member(
         password = password,
         name = name,
         phone = phone,
+        address = address,
         lastLoginDate = LocalDateTime.now(),
         refreshToken = refreshToken,
     )
@@ -27,6 +30,7 @@ class Member(
         password = password,
         name = name,
         phone = phone,
+        address = address,
         lastLoginDate = LocalDateTime.now(),
         refreshToken = null,
     )
@@ -41,6 +45,7 @@ class Member(
         },
         name = name,
         phone = phone,
+        address = address,
         lastLoginDate = lastLoginDate,
         refreshToken = refreshToken,
     )

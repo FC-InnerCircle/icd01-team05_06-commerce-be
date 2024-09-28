@@ -1,6 +1,7 @@
 package com.commerce.common.persistence.member
 
 import com.commerce.common.model.member.Member
+import com.commerce.common.persistence.address.AddressEmbeddable
 import jakarta.persistence.*
 import org.hibernate.annotations.SQLDelete
 import org.hibernate.annotations.SQLRestriction
@@ -27,6 +28,9 @@ class MemberJpaEntity(
     @Column(nullable = false)
     var phone: String,
 
+    @Embedded
+    var address: AddressEmbeddable,
+
     @Column
     var lastLoginDate: LocalDateTime?,
 
@@ -42,6 +46,7 @@ class MemberJpaEntity(
         password = password,
         name = name,
         phone = phone,
+        address = address.toModel(),
         lastLoginDate = lastLoginDate,
         refreshToken = refreshToken,
     )
@@ -53,6 +58,7 @@ class MemberJpaEntity(
             email = member.email,
             password = member.password,
             phone = member.phone,
+            address = AddressEmbeddable.from(member.address),
             lastLoginDate = member.lastLoginDate,
             refreshToken = member.refreshToken,
         )

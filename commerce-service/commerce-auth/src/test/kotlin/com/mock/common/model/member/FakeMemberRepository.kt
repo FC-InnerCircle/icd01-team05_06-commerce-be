@@ -20,6 +20,7 @@ class FakeMemberRepository : MemberRepository {
                 password = member.password,
                 name = member.name,
                 phone = member.phone,
+                address = member.address,
                 lastLoginDate = member.lastLoginDate
             )
             data.add(newMember)

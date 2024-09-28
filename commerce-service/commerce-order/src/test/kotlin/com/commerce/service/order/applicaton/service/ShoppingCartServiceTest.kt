@@ -1,5 +1,6 @@
 package com.commerce.service.order.applicaton.service
 
+import com.commerce.common.model.address.Address
 import com.commerce.common.model.member.Member
 import com.commerce.common.model.shopping_cart.ShoppingCart
 import com.commerce.common.model.shopping_cart.ShoppingCartRepository
@@ -29,7 +30,13 @@ class ShoppingCartServiceTest {
             email = "jerome.boyd@example.com",
             password = "phasellus",
             name = "Cameron Mayo",
-            phone = "(737) 231-4205"
+            phone = "(737) 231-4205",
+            address = Address(
+                postalCode = "12345",
+                streetAddress = "서울 종로구 테스트동",
+                detailAddress = "123-45"
+            )
+
         )
         val command = PostShoppingCartCommand(
             productId = 2,
@@ -60,7 +67,12 @@ class ShoppingCartServiceTest {
             email = "jerome.boyd@example.com",
             password = "phasellus",
             name = "Cameron Mayo",
-            phone = "(737) 231-4205"
+            phone = "(737) 231-4205",
+            address = Address(
+                postalCode = "12345",
+                streetAddress = "서울 종로구 테스트동",
+                detailAddress = "123-45"
+            )
         )
         val command = PostShoppingCartCommand(
             productId = 2,

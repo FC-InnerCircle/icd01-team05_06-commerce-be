@@ -2,6 +2,7 @@ package com.commerce.service.auth.application.service
 
 import com.commerce.common.jwt.application.service.TokenType
 import com.commerce.common.jwt.application.usecase.TokenUseCase
+import com.commerce.common.model.address.Address
 import com.commerce.common.model.member.Member
 import com.commerce.service.auth.application.usecase.command.LoginCommand
 import com.commerce.service.auth.application.usecase.command.SignUpCommand
@@ -52,7 +53,12 @@ class AuthServiceTest {
             email = "jerome.boyd@example.com",
             password = passwordEncoder.encode("phasellus"),
             name = "Cameron Mayo",
-            phone = "(737) 231-4205"
+            phone = "(737) 231-4205",
+            address = Address(
+                postalCode = "12345",
+                streetAddress = "서울 종로구 테스트동",
+                detailAddress = "123-45"
+            )
         ))
         val command = LoginCommand(
             email = "jerome.boyd@example.com",
@@ -72,7 +78,12 @@ class AuthServiceTest {
             email = "jerome.boyd@example.com",
             password = passwordEncoder.encode("phasellus"),
             name = "Cameron Mayo",
-            phone = "(737) 231-4205"
+            phone = "(737) 231-4205",
+            address = Address(
+                postalCode = "12345",
+                streetAddress = "서울 종로구 테스트동",
+                detailAddress = "123-45"
+            )
         ))
         val command = LoginCommand(
             email = "jerome.boyd@example.com",
@@ -92,7 +103,12 @@ class AuthServiceTest {
             email = "jerome.boyd@example.com",
             password = passwordEncoder.encode("phasellus"),
             name = "Cameron Mayo",
-            phone = "(737) 231-4205"
+            phone = "(737) 231-4205",
+            address = Address(
+                postalCode = "12345",
+                streetAddress = "서울 종로구 테스트동",
+                detailAddress = "123-45"
+            )
         ))
         val command = LoginCommand(
             email = "jerome.boyd@example.com",
@@ -112,7 +128,12 @@ class AuthServiceTest {
             email = "jerome.boyd@example.com",
             password = passwordEncoder.encode("phasellus"),
             name = "Cameron Mayo",
-            phone = "(737) 231-4205"
+            phone = "(737) 231-4205",
+            address = Address(
+                postalCode = "12345",
+                streetAddress = "서울 종로구 테스트동",
+                detailAddress = "123-45"
+            )
         ))
         val command = LoginCommand(
             email = "jerome.boyd@example.com",
@@ -131,7 +152,12 @@ class AuthServiceTest {
             email = "jerome.boyd@example.com",
             password = "phasellus",
             name = "Cameron Mayo",
-            phone = "(737) 231-4205"
+            phone = "(737) 231-4205",
+            address = Address(
+                postalCode = "12345",
+                streetAddress = "서울 종로구 테스트동",
+                detailAddress = "123-45"
+            )
         )
 
         authService.signUp(command)
@@ -150,7 +176,12 @@ class AuthServiceTest {
                 email = "jerome.boyd@example.com",
                 password = "viverra",
                 name = "Krista Wall",
-                phone = "(352) 893-0816"
+                phone = "(352) 893-0816",
+                address = Address(
+                    postalCode = "12345",
+                    streetAddress = "서울 종로구 테스트동",
+                    detailAddress = "123-45"
+                )
             )
         )
 
@@ -158,7 +189,12 @@ class AuthServiceTest {
             email = "jerome.boyd@example.com",
             password = "phasellus",
             name = "Cameron Mayo",
-            phone = "(737) 231-4205"
+            phone = "(737) 231-4205",
+            address = Address(
+                postalCode = "12345",
+                streetAddress = "서울 종로구 테스트동",
+                detailAddress = "123-45"
+            )
         )
 
         assertThatThrownBy {
@@ -174,7 +210,12 @@ class AuthServiceTest {
             email = "jerome.boyd@example.com",
             password = "phasellus",
             name = "Cameron Mayo",
-            phone = "(737) 231-4205"
+            phone = "(737) 231-4205",
+            address = Address(
+                postalCode = "12345",
+                streetAddress = "서울 종로구 테스트동",
+                detailAddress = "123-45"
+            )
         )
 
         authService.signUp(command)
@@ -214,7 +255,12 @@ class AuthServiceTest {
             password = "viverra",
             name = "Krista Wall",
             phone = "(352) 893-0816",
-            refreshToken = "other token"
+            refreshToken = "other token",
+            address = Address(
+                postalCode = "12345",
+                streetAddress = "서울 종로구 테스트동",
+                detailAddress = "123-45"
+            )
         ))
 
         assertThatThrownBy {
@@ -233,6 +279,11 @@ class AuthServiceTest {
             password = "viverra",
             name = "Krista Wall",
             phone = "(352) 893-0816",
+            address = Address(
+                postalCode = "12345",
+                streetAddress = "서울 종로구 테스트동",
+                detailAddress = "123-45"
+            ),
             refreshToken = refreshToken
         ))
 
@@ -248,7 +299,12 @@ class AuthServiceTest {
             email = "jerome.boyd@example.com",
             password = passwordEncoder.encode("phasellus"),
             name = "Cameron Mayo",
-            phone = "(737) 231-4205"
+            phone = "(737) 231-4205",
+            address = Address(
+                postalCode = "12345",
+                streetAddress = "서울 종로구 테스트동",
+                detailAddress = "123-45"
+            )
         ))
 
         val command = UpdateCommand(
@@ -272,7 +328,12 @@ class AuthServiceTest {
             email = "jerome.boyd@example.com",
             password = passwordEncoder.encode("phasellus"),
             name = "Cameron Mayo",
-            phone = "(737) 231-4205"
+            phone = "(737) 231-4205",
+            address = Address(
+                postalCode = "12345",
+                streetAddress = "서울 종로구 테스트동",
+                detailAddress = "123-45"
+            )
         ))
 
         val command = UpdateCommand(
@@ -296,7 +357,12 @@ class AuthServiceTest {
             email = "jerome.boyd@example.com",
             password = "phasellus",
             name = "Cameron Mayo",
-            phone = "(737) 231-4205"
+            phone = "(737) 231-4205",
+            address = Address(
+                postalCode = "12345",
+                streetAddress = "서울 종로구 테스트동",
+                detailAddress = "123-45"
+            )
         ))
 
         authService.withdrawal(member)

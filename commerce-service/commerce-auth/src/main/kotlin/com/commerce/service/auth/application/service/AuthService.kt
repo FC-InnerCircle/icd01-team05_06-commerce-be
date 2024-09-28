@@ -54,7 +54,8 @@ class AuthService(
                 email = command.email,
                 password = passwordEncoder.encode(command.password),
                 name = command.name,
-                phone = command.phone
+                phone = command.phone,
+                address = command.address
             )
         )
     }
