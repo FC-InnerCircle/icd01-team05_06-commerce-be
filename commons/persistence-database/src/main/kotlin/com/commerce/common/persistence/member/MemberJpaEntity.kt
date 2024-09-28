@@ -1,6 +1,7 @@
 package com.commerce.common.persistence.member
 
 import com.commerce.common.model.member.Member
+import com.commerce.common.persistence.BaseTimeEntity
 import com.commerce.common.persistence.address.AddressEmbeddable
 import jakarta.persistence.*
 import org.hibernate.annotations.SQLDelete
@@ -39,7 +40,7 @@ class MemberJpaEntity(
 
     @Column
     var deletedAt: LocalDateTime? = null,
-) {
+) : BaseTimeEntity() {
     fun toModel(): Member = Member(
         id = id,
         email = email,

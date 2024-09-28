@@ -20,20 +20,12 @@ class ShoppingCartJpaEntity(
 
     @Column(nullable = false)
     var quantity: Int,
-
-    createdAt: LocalDateTime? = null,
-    updatedAt: LocalDateTime? = null,
-) : BaseTimeEntity(
-    createdAt = createdAt,
-    updatedAt = updatedAt
-) {
+) : BaseTimeEntity() {
     fun toModel() = ShoppingCart(
         id = id,
         memberId = memberId,
         productId = productId,
         quantity = quantity,
-        createdAt = createdAt,
-        updatedAt = updatedAt,
     )
 
     companion object {
@@ -42,8 +34,6 @@ class ShoppingCartJpaEntity(
             memberId = shoppingCart.memberId,
             productId = shoppingCart.productId,
             quantity = shoppingCart.quantity,
-            createdAt = shoppingCart.createdAt,
-            updatedAt = shoppingCart.updatedAt,
         )
     }
 }
