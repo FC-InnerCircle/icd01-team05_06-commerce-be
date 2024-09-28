@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/v1/products/order")
+@RequestMapping("/product/v1/products/order")
 class OrderProductController(
     private val orderProductUseCase: OrderProductUseCase,
 ) {
