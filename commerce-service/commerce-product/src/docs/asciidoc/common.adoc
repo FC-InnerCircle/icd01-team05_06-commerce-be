@@ -6,7 +6,7 @@
 | 환경 | 도메인 주소
 
 | 개발서버
-| -
+| https://76ztyqn6fe.execute-api.ap-northeast-2.amazonaws.com
 
 | 운영서버
 | -
