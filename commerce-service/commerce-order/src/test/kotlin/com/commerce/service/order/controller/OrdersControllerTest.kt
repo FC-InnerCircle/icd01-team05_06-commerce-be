@@ -13,6 +13,7 @@ import com.commerce.common.util.ObjectMapperConfig
 import com.commerce.service.order.applicaton.usecase.OrderUseCase
 import com.commerce.service.order.applicaton.usecase.vo.OrderNumber
 import com.commerce.service.order.config.SecurityConfig
+import com.commerce.service.order.controller.request.OrderCreateRequest
 import com.commerce.service.order.controller.request.OrderListRequest
 import com.commerce.service.order.controller.response.*
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -33,13 +34,13 @@ import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get
 import org.springframework.restdocs.operation.preprocess.Preprocessors.*
-import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
-import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
+import org.springframework.restdocs.payload.PayloadDocumentation.*
 import org.springframework.restdocs.request.RequestDocumentation.*
 import org.springframework.restdocs.snippet.Attributes.key
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
@@ -377,5 +378,109 @@ class OrdersControllerTest {
                     )
                 )
             )
+    }
+
+    @Test
+    fun `주문 생성을 한다`() {
+        // given
+        val request = OrderCreateRequest(
+            products = listOf(
+                OrderCreateRequest.ProductInfo(id = 1, quantity = 2),
+                OrderCreateRequest.ProductInfo(id = 3, quantity = 1)
+            ),
+            deliveryInfo = OrderCreateRequest.DeliveryInfo(
+                recipient = "홍길동",
+                streetAddress = "서울시 강남구 테헤란로 123",
+                detailAddress = "104동 1201호"
+            ),
+            paymentInfo = OrderCreateRequest.PaymentInfo(
+                method = "CREDIT_CARD",
+                cardNumber = "1234-5678-9012-3456",
+                expirationDate = "12/25",
+                cvv = "123"
+            )
+        )
+
+        val response = OrderCreateResponse(
+            orderId = 12345,
+            orderDate = LocalDateTime.now(),
+            totalAmount = 50000,
+            status = "PENDING",
+            products = listOf(
+                OrderCreateResponse.ProductInfo(1, "Kotlin in Action", 2, 20000),
+                OrderCreateResponse.ProductInfo(3, "Spring Boot in Practice", 1, 10000)
+            ),
+            deliveryInfo = OrderCreateResponse.DeliveryInfo(
+                name = "홍길동",
+                phoneNumber = "010-1234-5678",
+                streetAddress = "서울시 강남구 테헤란로 123",
+                detailAddress = "104동 1201호"
+            ),
+            paymentInfo = OrderCreateResponse.PaymentInfo("CREDIT_CARD", "3456")
+        )
+
+        // JwtAuthenticationFilter
+        given(
+            tokenUseCase.getTokenSubject(
+                testAccessToken,
+                TokenType.ACCESS_TOKEN
+            )
+        ).willReturn(testMember.id.toString())
+        given(memberRepository.findById(testMember.id)).willReturn(testMember)
+
+        `when`(orderUseCase.createOrder(request)).thenReturn(response)
+
+        // when & then
+        mockMvc.post("/order/v1/orders") {
+            header(HttpHeaders.AUTHORIZATION, "Bearer $testAccessToken")
+            contentType = MediaType.APPLICATION_JSON
+            content = objectMapper.writeValueAsString(request)
+        }.andExpect {
+            status { isOk() }
+        }.andDo {
+            handle(
+                document(
+                    "create-order",
+                    preprocessRequest(prettyPrint()),
+                    preprocessResponse(prettyPrint()),
+                    requestFields(
+                        fieldWithPath("products").description("주문할 상품 목록"),
+                        fieldWithPath("products[].id").description("상품 ID"),
+                        fieldWithPath("products[].quantity").description("주문 수량"),
+                        fieldWithPath("deliveryInfo").description("배송 정보"),
+                        fieldWithPath("deliveryInfo.recipient").description("수령인"),
+                        fieldWithPath("deliveryInfo.streetAddress").description("도로명 주소"),
+                        fieldWithPath("deliveryInfo.detailAddress").description("상세 주소"),
+                        fieldWithPath("paymentInfo").description("결제 정보"),
+                        fieldWithPath("paymentInfo.method").description("결제 방법"),
+                        fieldWithPath("paymentInfo.cardNumber").description("카드 번호"),
+                        fieldWithPath("paymentInfo.expirationDate").description("카드 만료일"),
+                        fieldWithPath("paymentInfo.cvv").description("카드 CVV")
+                    ),
+                    responseFields(
+                        fieldWithPath("success").description("요청 성공 여부"),
+                        fieldWithPath("data").description("응답 데이터"),
+                        fieldWithPath("data.orderId").description("주문 ID"),
+                        fieldWithPath("data.orderDate").description("주문 일시"),
+                        fieldWithPath("data.totalAmount").description("총 주문 금액"),
+                        fieldWithPath("data.status").description("주문 상태"),
+                        fieldWithPath("data.products").description("주문한 상품 목록"),
+                        fieldWithPath("data.products[].bookId").description("책 ID"),
+                        fieldWithPath("data.products[].title").description("책 제목"),
+                        fieldWithPath("data.products[].quantity").description("주문 수량"),
+                        fieldWithPath("data.products[].price").description("상품 가격"),
+                        fieldWithPath("data.deliveryInfo").description("배송 정보"),
+                        fieldWithPath("data.deliveryInfo.name").description("수령인 이름"),
+                        fieldWithPath("data.deliveryInfo.phoneNumber").description("수령인 전화번호"),
+                        fieldWithPath("data.deliveryInfo.streetAddress").description("도로명 주소"),
+                        fieldWithPath("data.deliveryInfo.detailAddress").description("상세 주소"),
+                        fieldWithPath("data.paymentInfo").description("결제 정보"),
+                        fieldWithPath("data.paymentInfo.method").description("결제 방법"),
+                        fieldWithPath("data.paymentInfo.lastFourDigits").description("카드 번호 마지막 4자리"),
+                        fieldWithPath("error").description("오류 정보").optional()
+                    )
+                )
+            )
+        }
     }
 }

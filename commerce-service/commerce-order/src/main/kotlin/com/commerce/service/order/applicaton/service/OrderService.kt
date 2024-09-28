@@ -8,7 +8,9 @@ import com.commerce.service.order.applicaton.usecase.component.ProductHandler
 import com.commerce.service.order.applicaton.usecase.component.ShippingHandler
 import com.commerce.service.order.applicaton.usecase.converter.toOrder
 import com.commerce.service.order.applicaton.usecase.converter.toOrderSummary
+import com.commerce.service.order.controller.request.OrderCreateRequest
 import com.commerce.service.order.controller.request.OrderListRequest
+import com.commerce.service.order.controller.response.OrderCreateResponse
 import com.commerce.service.order.controller.response.OrderDetail
 import com.commerce.service.order.controller.response.OrderDetailResponse
 import com.commerce.service.order.controller.response.OrderListResponse
@@ -67,5 +69,9 @@ class OrderService (
             items = listOf(),
             statusHistory = listOf()
         )
+    }
+
+    override fun createOrder(request: OrderCreateRequest): OrderCreateResponse {
+        TODO("Not yet implemented")
     }
 }
