@@ -80,7 +80,7 @@ class OrderProductControllerTest(
             .andExpect(status().isOk)
             .andDo(
                 document(
-                    "/product/v1/products/order/before",
+                    "product/v1/products/order/before",
                     preprocessRequest(prettyPrint()),
                     preprocessResponse(prettyPrint()),
                     requestFields(
