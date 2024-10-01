@@ -2,26 +2,24 @@ package com.commerce.common.persistence.review
 
 import com.commerce.common.model.review.Review
 import com.commerce.common.model.review.ReviewRepository
+import com.commerce.common.model.review.ReviewWithMember
 import com.commerce.common.persistence.member.MemberJpaEntity
-import com.commerce.common.persistence.member.MemberJpaRepository
 import com.linecorp.kotlinjdsl.dsl.jpql.jpql
 import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
 import com.linecorp.kotlinjdsl.support.spring.data.jpa.extension.createQuery
 import jakarta.persistence.EntityManager
 import org.springframework.stereotype.Repository
-import java.math.BigDecimal
 
 @Repository
 class ReviewRepositoryImpl(
-    private val memberJpaRepository: MemberJpaRepository,
     private val reviewJpaRepository: ReviewJpaRepository,
     private val entityManager: EntityManager,
     private val jpqlRenderContext: JpqlRenderContext,
 ) : ReviewRepository{
 
-    override fun findByProductId(productId: Long): List<Review> {
+    override fun findByProductId(productId: Long): List<ReviewWithMember> {
         val jpql = jpql {
-            selectNew<ReviewCustomDto>(
+            selectNew<ReviewWithMember>(
                 path(ReviewJpaEntity::id),
                 path(ReviewJpaEntity::content),
                 path(ReviewJpaEntity::score),
@@ -38,23 +36,10 @@ class ReviewRepositoryImpl(
         }
 
         val query = entityManager.createQuery(jpql, jpqlRenderContext)
-
-        return query.resultList.map { review ->
-            review.toModel()
-        }.toList()
+        return query.resultList
     }
 
-    override fun addReviewToProduct(
-        productId: Long,
-        memberId: Long,
-        content: String,
-        score: BigDecimal,
-        orderProductId: Long?
-    ): Long {
-
-        val newReview = ReviewJpaEntity.of(productId, memberId, content, score, orderProductId)
-        reviewJpaRepository.save(newReview)
-
-        return newReview.id!!
+    override fun save(review: Review): Review {
+        return reviewJpaRepository.save(ReviewJpaEntity.from(review)).toModel()
     }
 }

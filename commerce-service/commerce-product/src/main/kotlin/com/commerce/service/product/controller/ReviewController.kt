@@ -2,14 +2,10 @@ package com.commerce.service.product.controller
 
 import com.commerce.common.response.CommonResponse
 import com.commerce.service.product.application.usecase.ReviewUseCase
-import com.commerce.service.product.application.usecase.dto.ReviewInfoDto
 import com.commerce.service.product.controller.request.ReviewCreateRequest
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import com.commerce.service.product.controller.response.ReviewInfoDto
+import com.commerce.service.product.controller.response.ReviewInfoResponse
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/product/v1/reviews")
@@ -19,8 +15,20 @@ class ReviewController(
 
     // 리뷰 select
     @GetMapping
-    fun getReviewsByProductId(@RequestParam productId: Long): CommonResponse<ReviewInfoDto> {
-        return CommonResponse.ok(reviewUseCase.getProductReviews(productId))
+    fun getReviewsByProductId(@RequestParam productId: Long): CommonResponse<ReviewInfoResponse> {
+        val reviews = reviewUseCase.getProductReviews(productId).map {
+            ReviewInfoDto(
+                reviewId = it.id,
+                content = it.content,
+                score = it.score,
+                email = it.email,
+                productId = it.productId,
+                updatedAt = it.updatedAt,
+                orderProductId = null
+            )
+        }
+
+        return CommonResponse.ok(ReviewInfoResponse(reviews))
     }
 
     // 리뷰 작성
