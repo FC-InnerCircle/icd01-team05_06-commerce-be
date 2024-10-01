@@ -1,8 +1,10 @@
 package com.commerce.service.order.controller.request
 
+import com.commerce.common.model.member.Member
 import com.commerce.common.model.orders.OrderSortOption
 import com.commerce.common.model.orders.OrderStatus
-import com.commerce.service.order.applicaton.usecase.exception.InvalidInputException
+import com.commerce.service.order.application.usecase.command.OrderListCommand
+import com.commerce.service.order.application.usecase.exception.InvalidInputException
 import com.commerce.service.order.controller.common.request.CommonRequest
 import jakarta.validation.constraints.NotNull
 import org.springframework.format.annotation.DateTimeFormat
@@ -47,6 +49,10 @@ data class OrderListRequest(
         }
     }
 
+    init {
+        validate()
+    }
+
     override fun validate() {
         if (dateRange == DateRange.CUSTOM) {
             if (orderStartDate == null || orderEndDate == null) {
@@ -65,5 +71,18 @@ data class OrderListRequest(
         if (size <= 0) {
             throw InvalidInputException("Size must be positive")
         }
+    }
+
+    fun toCommand(member: Member): OrderListCommand {
+        val (orderDate, endDate) = dateRange.getStartToEnd(orderStartDate, orderEndDate)
+        return OrderListCommand(
+            member = member,
+            orderDate = orderDate,
+            endDate = endDate,
+            status = status,
+            sortBy = sortBy,
+            page = page,
+            size = size
+        )
     }
 }

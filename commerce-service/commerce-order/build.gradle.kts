@@ -21,6 +21,7 @@ dependencies {
     testImplementation(project(":commons:test-helper"))
 
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 
     // 접속 정보 암호화
     implementation("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5")

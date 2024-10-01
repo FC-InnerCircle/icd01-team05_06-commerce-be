@@ -1,4 +1,4 @@
-package com.commerce.service.order.applicaton.usecase.converter
+package com.commerce.service.order.application.usecase.converter
 
 import com.commerce.common.model.orderProduct.OrderProduct
 
@@ -9,8 +9,6 @@ fun OrderProduct.toOrderProducts(): OrderProduct {
         productId = this.productId,
         quantity = this.quantity,
         price = this.price,
-        discountedPrice = this.discountedPrice,
-        createdAt = this.createdAt,
-        updatedAt = this.updatedAt
+        discountedPrice = this.discountedPrice
     )
 }

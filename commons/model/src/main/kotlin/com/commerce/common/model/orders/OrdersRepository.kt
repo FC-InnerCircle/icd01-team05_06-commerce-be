@@ -13,4 +13,6 @@ interface OrdersRepository {
         size: Int,
         sortOption: OrderSortOption
     ): PaginationModel<Orders>
+
+    fun save(orders: Orders): Orders
 }

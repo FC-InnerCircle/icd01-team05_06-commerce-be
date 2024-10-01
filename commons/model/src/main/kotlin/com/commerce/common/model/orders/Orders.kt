@@ -18,8 +18,6 @@ data class Orders(
     val price: BigDecimal,
     val status: OrderStatus,
     val orderDate: LocalDateTime,
-    val createdAt: LocalDateTime,
-    val updatedAt: LocalDateTime,
     val orderProducts: List<OrderProduct>
 ) {
 

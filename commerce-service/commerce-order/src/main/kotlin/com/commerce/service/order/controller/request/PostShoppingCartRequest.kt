@@ -1,6 +1,6 @@
 package com.commerce.service.order.controller.request
 
-import com.commerce.service.order.applicaton.usecase.command.PostShoppingCartCommand
+import com.commerce.service.order.application.usecase.command.PostShoppingCartCommand
 import jakarta.validation.constraints.Min
 
 data class PostShoppingCartRequest(

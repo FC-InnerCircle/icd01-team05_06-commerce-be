@@ -1,6 +1,7 @@
 package com.commerce.common.persistence.orderProduct
 
 import com.commerce.common.model.orderProduct.OrderProduct
+import com.commerce.common.persistence.BaseTimeEntity
 import com.commerce.common.persistence.orders.OrdersJpaEntity
 import jakarta.persistence.*
 import java.math.BigDecimal
@@ -26,14 +27,9 @@ data class OrderProductJpaEntity(
     val price: BigDecimal,
 
     @Column(name = "discounted_price")
-    val discountedPrice: BigDecimal,
-
-    @Column(name = "created_at")
-    val createdAt: LocalDateTime = LocalDateTime.now(),
-
-    @Column(name = "updated_at")
-    var updatedAt: LocalDateTime = LocalDateTime.now()
-)
+    val discountedPrice: BigDecimal
+) : BaseTimeEntity() {
+}
 
 fun OrderProductJpaEntity.toOrderProducts(): OrderProduct {
     return OrderProduct(
@@ -42,8 +38,22 @@ fun OrderProductJpaEntity.toOrderProducts(): OrderProduct {
         productId = this.productId,
         quantity = this.quantity,
         price = this.price,
-        discountedPrice = this.discountedPrice,
-        createdAt = this.createdAt,
-        updatedAt = this.updatedAt
+        discountedPrice = this.discountedPrice
     )
+}
+
+// OrderProduct 클래스의 toEntity 확장 함수
+fun OrderProduct.toJpaEntity(order: OrdersJpaEntity): OrderProductJpaEntity {
+    return OrderProductJpaEntity(
+        id = this.id,
+        order = order,
+        productId = this.productId,
+        quantity = this.quantity,
+        price = this.price,
+        discountedPrice = this.discountedPrice
+    )
+}
+
+fun OrdersJpaEntity(id: Long): OrdersJpaEntity {
+    return OrdersJpaEntity(id = id)
 }

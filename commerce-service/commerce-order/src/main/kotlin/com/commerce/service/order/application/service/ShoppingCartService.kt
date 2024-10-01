@@ -1,14 +1,14 @@
-package com.commerce.service.order.applicaton.service
+package com.commerce.service.order.application.service
 
 import com.commerce.common.model.member.Member
 import com.commerce.common.model.shopping_cart.ShoppingCart
 import com.commerce.common.model.shopping_cart.ShoppingCartRepository
 import com.commerce.common.response.CustomException
 import com.commerce.common.response.ErrorCode
-import com.commerce.service.order.applicaton.usecase.ShoppingCartUseCase
-import com.commerce.service.order.applicaton.usecase.command.PatchShoppingCartCommand
-import com.commerce.service.order.applicaton.usecase.command.PostShoppingCartCommand
-import com.commerce.service.order.applicaton.usecase.dto.ShoppingCartListDto
+import com.commerce.service.order.application.usecase.ShoppingCartUseCase
+import com.commerce.service.order.application.usecase.command.PatchShoppingCartCommand
+import com.commerce.service.order.application.usecase.command.PostShoppingCartCommand
+import com.commerce.service.order.application.usecase.dto.ShoppingCartListDto
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 

@@ -21,4 +21,6 @@ interface OrdersJpaRepository : JpaRepository<OrdersJpaEntity, Long> {
         status: OrderStatus,
         pageable: Pageable
     ): Page<OrdersJpaEntity>
+
+    fun save(orders: OrdersJpaEntity): OrdersJpaEntity
 }

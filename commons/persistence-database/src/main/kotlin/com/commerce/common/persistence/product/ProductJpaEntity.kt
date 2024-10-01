@@ -4,6 +4,7 @@ import com.commerce.common.model.category.CategoryDetail
 import com.commerce.common.model.product.Product
 import com.commerce.common.model.product.SaleStatus
 import jakarta.persistence.*
+import org.springframework.data.jpa.domain.AbstractAuditable_.createdBy
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
@@ -74,4 +75,28 @@ class ProductJpaEntity(
          category = category,
      )
     }
+}
+
+fun Product.toJpaEntity(categoryId: Long): ProductJpaEntity {
+    return ProductJpaEntity(
+        id = this.id,
+        title = this.title,
+        author = this.author,
+        price = this.price,
+        discountedPrice = this.discountedPrice,
+        publisher = this.publisher,
+        publishDate = this.publishDate,
+        isbn = this.isbn,
+        description = this.description,
+        pages = this.pages,
+        coverImage = this.coverImage,
+        previewLink = this.previewLink,
+        stockQuantity = this.stockQuantity,
+        rating = this.rating,
+        status = this.status,
+        categoryId = categoryId,
+        createdAt = LocalDateTime.now(),
+        updatedAt = LocalDateTime.now(),
+        deletedAt = LocalDateTime.now(),
+    )
 }

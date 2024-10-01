@@ -9,7 +9,5 @@ data class OrderProduct(
     val productId: Long,
     val quantity: Long,
     val price: BigDecimal,
-    val discountedPrice: BigDecimal,
-    val createdAt: LocalDateTime,
-    val updatedAt: LocalDateTime
+    val discountedPrice: BigDecimal
 )

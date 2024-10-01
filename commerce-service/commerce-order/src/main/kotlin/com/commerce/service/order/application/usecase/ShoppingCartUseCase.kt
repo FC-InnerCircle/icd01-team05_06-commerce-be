@@ -1,9 +1,9 @@
-package com.commerce.service.order.applicaton.usecase
+package com.commerce.service.order.application.usecase
 
 import com.commerce.common.model.member.Member
-import com.commerce.service.order.applicaton.usecase.command.PatchShoppingCartCommand
-import com.commerce.service.order.applicaton.usecase.command.PostShoppingCartCommand
-import com.commerce.service.order.applicaton.usecase.dto.ShoppingCartListDto
+import com.commerce.service.order.application.usecase.command.PatchShoppingCartCommand
+import com.commerce.service.order.application.usecase.command.PostShoppingCartCommand
+import com.commerce.service.order.application.usecase.dto.ShoppingCartListDto
 
 interface ShoppingCartUseCase {
     fun post(member: Member, command: PostShoppingCartCommand)
