@@ -6,6 +6,7 @@ import com.commerce.common.jwt.config.JwtAuthenticationFilter
 import com.commerce.common.model.address.Address
 import com.commerce.common.model.member.Member
 import com.commerce.common.model.member.MemberRepository
+import com.commerce.common.restdocs.RestDocsUtil.Companion.format
 import com.commerce.common.util.ObjectMapperConfig
 import com.commerce.service.auth.application.usecase.AuthUseCase
 import com.commerce.service.auth.application.usecase.dto.LoginInfoDto
@@ -14,7 +15,6 @@ import com.commerce.service.auth.config.SecurityConfig
 import com.commerce.service.auth.controller.request.LoginRequest
 import com.commerce.service.auth.controller.request.SignUpRequest
 import com.commerce.service.auth.controller.request.UpdateRequest
-import com.common.RestDocsUtil.Companion.format
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

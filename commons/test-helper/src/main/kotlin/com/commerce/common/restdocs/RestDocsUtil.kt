@@ -1,4 +1,4 @@
-package com.common
+package com.commerce.common.restdocs
 
 import org.springframework.restdocs.snippet.Attributes
 import org.springframework.restdocs.snippet.Attributes.key

@@ -1,4 +1,4 @@
-package com.mock.common.model.shopping_cart
+package com.commerce.common.model.shopping_cart
 
 import com.commerce.common.model.shopping_cart.ShoppingCart
 import com.commerce.common.model.shopping_cart.ShoppingCartProduct

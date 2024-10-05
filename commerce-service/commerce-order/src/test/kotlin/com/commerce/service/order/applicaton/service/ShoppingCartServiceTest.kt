@@ -2,11 +2,11 @@ package com.commerce.service.order.applicaton.service
 
 import com.commerce.common.model.address.Address
 import com.commerce.common.model.member.Member
+import com.commerce.common.model.shopping_cart.FakeShoppingCartRepository
 import com.commerce.common.model.shopping_cart.ShoppingCart
 import com.commerce.common.model.shopping_cart.ShoppingCartRepository
 import com.commerce.service.order.applicaton.usecase.command.PatchShoppingCartCommand
 import com.commerce.service.order.applicaton.usecase.command.PostShoppingCartCommand
-import com.mock.common.model.shopping_cart.FakeShoppingCartRepository
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

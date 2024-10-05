@@ -1,7 +1,4 @@
-package com.mock.common.model.member
-
-import com.commerce.common.model.member.Member
-import com.commerce.common.model.member.MemberRepository
+package com.commerce.common.model.member
 
 class FakeMemberRepository : MemberRepository {
 

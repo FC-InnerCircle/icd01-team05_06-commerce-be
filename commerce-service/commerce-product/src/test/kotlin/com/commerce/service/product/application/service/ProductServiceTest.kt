@@ -1,10 +1,10 @@
 package com.commerce.service.product.application.service
 
 import com.commerce.common.model.category.CategoryRepository
+import com.commerce.common.model.category.FakeCategoryRepository
+import com.commerce.common.model.product.FakeProductRepository
 import com.commerce.common.model.product.ProductRepository
 import com.commerce.common.model.product.SaleStatus
-import com.mock.FakeCategoryRepository
-import com.mock.FakeProductRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.BeforeEach

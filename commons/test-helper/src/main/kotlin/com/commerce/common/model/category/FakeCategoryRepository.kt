@@ -1,9 +1,6 @@
-package com.mock
+package com.commerce.common.model.category
 
-import com.commerce.common.model.category.Category
-import com.commerce.common.model.category.CategoryRepository
-
-class FakeCategoryRepository : CategoryRepository{
+class FakeCategoryRepository : CategoryRepository {
 
     var autoIncrementId = 1L
     var data: MutableList<Category> = mutableListOf()

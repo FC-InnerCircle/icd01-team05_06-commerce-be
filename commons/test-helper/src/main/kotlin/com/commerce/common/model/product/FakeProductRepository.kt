@@ -1,13 +1,12 @@
-package com.mock
+package com.commerce.common.model.product
 
 import com.commerce.common.model.category.CategoryDetail
-import com.commerce.common.model.product.*
 import com.commerce.common.model.util.PaginationInfo
 import com.commerce.common.model.util.PaginationModel
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
-class FakeProductRepository : ProductRepository{
+class FakeProductRepository : ProductRepository {
 
     var autoIncrementId = 1L
     var data: MutableList<Product> = mutableListOf()
