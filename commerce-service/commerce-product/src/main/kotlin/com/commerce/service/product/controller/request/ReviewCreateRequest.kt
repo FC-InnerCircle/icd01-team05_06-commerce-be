@@ -5,7 +5,7 @@ import java.math.BigDecimal
 
 data class ReviewCreateRequest(
     val productId: Long,
-    val memberId: String,
+    val email: String,
     val content: String,
     val score: BigDecimal,
     val orderProductId: Long?
@@ -13,7 +13,7 @@ data class ReviewCreateRequest(
     fun toCommand(): AddReviewCommand {
         return AddReviewCommand(
             productId = productId,
-            memberId = memberId,
+            email = email,
             content = content,
             score = score,
             orderProductId = orderProductId,

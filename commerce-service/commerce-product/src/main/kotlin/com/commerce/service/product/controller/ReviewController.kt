@@ -3,6 +3,7 @@ package com.commerce.service.product.controller
 import com.commerce.common.response.CommonResponse
 import com.commerce.service.product.application.usecase.ReviewUseCase
 import com.commerce.service.product.controller.request.ReviewCreateRequest
+import com.commerce.service.product.controller.response.ReviewCreateResponse
 import com.commerce.service.product.controller.response.ReviewInfoDto
 import com.commerce.service.product.controller.response.ReviewInfoResponse
 import org.springframework.web.bind.annotation.*
@@ -33,9 +34,9 @@ class ReviewController(
 
     // 리뷰 작성
     @PostMapping
-    fun addReviewToProduct(@RequestBody reviewCreateRequest: ReviewCreateRequest): CommonResponse<Long> {
+    fun addReviewToProduct(@RequestBody reviewCreateRequest: ReviewCreateRequest): CommonResponse<ReviewCreateResponse> {
         val reviewId = reviewUseCase.addReviewToProduct(reviewCreateRequest.toCommand())
-        return CommonResponse.ok(reviewId);
+        return CommonResponse.ok(ReviewCreateResponse.of(reviewId));
     }
 
     // 상품 전체 평점 select

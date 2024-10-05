@@ -4,7 +4,7 @@ import java.math.BigDecimal
 
 data class AddReviewCommand(
     val productId: Long,
-    val memberId: String,
+    val email: String,
     val content: String,
     val score: BigDecimal,
     val orderProductId: Long?

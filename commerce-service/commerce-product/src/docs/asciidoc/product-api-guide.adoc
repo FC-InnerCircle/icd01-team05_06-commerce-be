@@ -53,12 +53,28 @@ include::{snippets}/productDetail/path-parameters.adoc[]
 include::{snippets}/productDetail/response-fields.adoc[]
 include::{snippets}/productDetail/response-body.adoc[]
 
+[[상품리뷰조회]]
+== 상품 리뷰 조회
+=== Http
+include::{snippets}/reviews/v1/reviews/http-request.adoc[]
+=== Response
+include::{snippets}/reviews/v1/reviews/response-fields.adoc[]
+include::{snippets}/reviews/v1/reviews/response-body.adoc[]
+
+[[상품리뷰등록]]
+== 상품 리뷰 등록
+=== Http
+include::{snippets}/reviews/v1/add/http-request.adoc[]
+=== Request
+include::{snippets}/reviews/v1/add/request-body.adoc[]
+=== Response
+include::{snippets}/reviews/v1/add/response-fields.adoc[]
+include::{snippets}/reviews/v1/add/response-body.adoc[]
+
 [[주문전상품조회]]
 == 주문 전 상품 조회
 === Http
 include::{snippets}/product/v1/products/order/before/http-request.adoc[]
-=== Request
-include::{snippets}/product/v1/products/order/before/request-fields.adoc[]
 === Response
 include::{snippets}/product/v1/products/order/before/response-fields.adoc[]
 include::{snippets}/product/v1/products/order/before/response-body.adoc[]

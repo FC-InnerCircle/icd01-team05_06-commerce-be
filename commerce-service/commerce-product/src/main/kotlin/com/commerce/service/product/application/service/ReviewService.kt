@@ -20,11 +20,11 @@ class ReviewService(
         return reviewRepository.findByProductId(productId)
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     override fun addReviewToProduct(addReviewCommand: AddReviewCommand): Long {
 
-        val member = memberRepository.findByEmail(addReviewCommand.memberId)
-            ?: throw IllegalArgumentException("해당 아이디(${addReviewCommand.memberId})를 가진 유저가 존재하지 않습니다.")
+        val member = memberRepository.findByEmail(addReviewCommand.email)
+            ?: throw IllegalArgumentException("해당 아이디(${addReviewCommand.email})를 가진 유저가 존재하지 않습니다.")
 
         val review = Review.byProduct(
             productId = addReviewCommand.productId,
