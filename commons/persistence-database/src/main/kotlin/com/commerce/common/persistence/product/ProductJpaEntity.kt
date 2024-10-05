@@ -39,6 +39,13 @@ class ProductJpaEntity(
     @Column(name = "publish_date")
     val publishDate: LocalDateTime,
 
+    @Column(nullable = false)
+    val isHotNew: Boolean,
+    @Column(nullable = false)
+    val isRecommend: Boolean,
+    @Column(nullable = false)
+    val isBestseller: Boolean,
+
     @Column(name = "created_at")
     val createdAt: LocalDateTime,
     @Column(name = "updated_at")

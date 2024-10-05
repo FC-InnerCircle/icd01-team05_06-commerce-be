@@ -17,6 +17,14 @@ ifndef::snippets-custom[]
 
 include::{docdir}/common.adoc[]
 
+[[홈화면]]
+== 홈화면 상품 조회
+=== Http
+include::{snippets}/product/v1/home/products/http-request.adoc[]
+=== Response
+include::{snippets}/product/v1/home/products/response-fields.adoc[]
+include::{snippets}/product/v1/home/products/response-body.adoc[]
+
 [[상품카테고리]]
 == 상품 카테고리
 === Http

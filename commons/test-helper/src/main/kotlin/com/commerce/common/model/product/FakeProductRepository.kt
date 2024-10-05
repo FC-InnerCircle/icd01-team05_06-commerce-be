@@ -101,4 +101,8 @@ class FakeProductRepository : ProductRepository {
         data.add(command1)
         data.add(command2)
     }
+
+    override fun findByHomeProductType(homeProductType: HomeProductType): List<Product> {
+        TODO("Not yet implemented")
+    }
 }

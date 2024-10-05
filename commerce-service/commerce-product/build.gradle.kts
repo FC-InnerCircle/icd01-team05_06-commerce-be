@@ -18,6 +18,7 @@ dependencies {
     
     runtimeOnly("com.mysql:mysql-connector-j")
 
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
 }
 

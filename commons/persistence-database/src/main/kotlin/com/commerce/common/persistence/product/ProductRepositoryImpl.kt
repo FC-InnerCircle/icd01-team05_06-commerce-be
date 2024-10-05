@@ -1,9 +1,11 @@
 package com.commerce.common.persistence.product
 
+import com.commerce.common.model.product.HomeProductType
 import com.commerce.common.model.product.Product
 import com.commerce.common.model.product.ProductRepository
 import com.commerce.common.model.util.PaginationInfo
 import com.commerce.common.model.util.PaginationModel
+import com.commerce.common.persistence.category.CategoryJpaEntity
 import com.commerce.common.persistence.category.CategoryJpaRepository
 import com.linecorp.kotlinjdsl.dsl.jpql.jpql
 import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
@@ -103,5 +105,30 @@ class ProductRepositoryImpl (
             data = resultResult,
             pagination = paginationInfo,
         )
+    }
+
+    override fun findByHomeProductType(homeProductType: HomeProductType): List<Product> {
+        val jpql = jpql {
+            selectNew<ProductAndCategoryEntities>(
+                entity(ProductJpaEntity::class),
+                entity(CategoryJpaEntity::class)
+            ).from(
+                entity(ProductJpaEntity::class),
+                leftJoin(CategoryJpaEntity::class).on(path(ProductJpaEntity::categoryId).eq(path(CategoryJpaEntity::id)))
+            ).where(
+                when (homeProductType) {
+                    HomeProductType.HOT_NEW -> path(ProductJpaEntity::isHotNew).eq(true)
+                    HomeProductType.RECOMMEND -> path(ProductJpaEntity::isRecommend).eq(true)
+                    HomeProductType.BESTSELLER -> path(ProductJpaEntity::isBestseller).eq(true)
+                }
+            )
+        }
+
+        val query = entityManager.createQuery(jpql, jpqlRenderContext)
+        val result = query.resultList
+
+        return result.map {
+            it.productJpaEntity.toModel(it.categoryJpaEntity?.toProductModel())
+        }
     }
 }
