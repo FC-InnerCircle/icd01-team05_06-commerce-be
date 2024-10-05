@@ -1,0 +1,18 @@
+{
+  "bookList": [
+    {
+      "id": 1,
+      "quantity": 2
+    },
+    {
+      "id": 3,
+      "quantity": 4
+    }
+  ],
+  "deliveryInfo": {
+    "name": "배송 받을 사람",
+    "streetAddress": "배송 받을 도로명 주소",
+    "detailAddress": "배송 받을 상세 주소",
+    "postalCode": "우편번호"
+  }
+}

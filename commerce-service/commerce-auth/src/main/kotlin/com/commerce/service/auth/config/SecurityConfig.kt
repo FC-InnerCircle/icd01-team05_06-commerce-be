@@ -62,7 +62,7 @@ class SecurityConfig {
                         AntPathRequestMatcher("/auth/v1/sign-up", HttpMethod.POST.name()),
                         AntPathRequestMatcher("/auth/v1/refresh", HttpMethod.POST.name()),
                     ).permitAll()
-                    .anyRequest().authenticated()
+                    .anyRequest().permitAll()
             }
             .exceptionHandling {
                 it

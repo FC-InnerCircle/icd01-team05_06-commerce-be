@@ -10,6 +10,7 @@ dependencies {
 
     compileOnly("org.springframework:spring-tx")
 
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")

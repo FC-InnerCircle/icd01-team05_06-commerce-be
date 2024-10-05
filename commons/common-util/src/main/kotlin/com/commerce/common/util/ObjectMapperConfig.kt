@@ -17,6 +17,7 @@ class ObjectMapperConfig {
         objectMapper
             .registerModule(JavaTimeModule())
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            .configure(DeserializationFeature.USE_LONG_FOR_INTS, true)
             .registerModule(KotlinModule.Builder()
                 .withReflectionCacheSize(512)
                 .configure(KotlinFeature.NullToEmptyCollection, false)

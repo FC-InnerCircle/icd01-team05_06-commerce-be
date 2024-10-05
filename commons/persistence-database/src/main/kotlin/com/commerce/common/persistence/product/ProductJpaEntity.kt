@@ -3,8 +3,10 @@ package com.commerce.common.persistence.product
 import com.commerce.common.model.category.CategoryDetail
 import com.commerce.common.model.product.Product
 import com.commerce.common.model.product.SaleStatus
+import com.commerce.common.persistence.BaseTimeEntity
 import jakarta.persistence.*
 import java.math.BigDecimal
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Entity
@@ -26,7 +28,7 @@ class ProductJpaEntity(
     val previewLink: String,
     val price: BigDecimal,
     val title: String,
-    val categoryId: Long? = null,
+    var categoryId: Long? = null,
     val publisher: String,
     val rating: Double,
 
@@ -37,23 +39,19 @@ class ProductJpaEntity(
     val stockQuantity: Int,
 
     @Column(name = "publish_date")
-    val publishDate: LocalDateTime,
+    val publishDate: LocalDate,
 
     @Column(nullable = false)
-    val isHotNew: Boolean,
+    var isHotNew: Boolean,
     @Column(nullable = false)
-    val isRecommend: Boolean,
+    var isRecommend: Boolean,
     @Column(nullable = false)
-    val isBestseller: Boolean,
+    var isBestseller: Boolean,
 
-    @Column(name = "created_at")
-    val createdAt: LocalDateTime,
-    @Column(name = "updated_at")
-    val updatedAt: LocalDateTime,
     @Column(name = "deleted_at")
-    val deletedAt: LocalDateTime,
+    val deletedAt: LocalDateTime?,
 
-    ) {
+    ) : BaseTimeEntity() {
     fun toModel(category: CategoryDetail?): Product {
      return Product(
          id = id,
@@ -62,7 +60,7 @@ class ProductJpaEntity(
          price = price,
          discountedPrice = discountedPrice,
          publisher = publisher,
-         publishDate = publishDate,
+         publishDate = publishDate.atStartOfDay(),
          isbn = isbn,
          description = description,
          pages = pages,

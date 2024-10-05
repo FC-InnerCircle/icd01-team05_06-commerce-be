@@ -1,0 +1,2914 @@
+[
+  {
+    "id": 50,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-02T11:10:28.100Z",
+    "shippingAddress": "91045 Franey Lane",
+    "orderItems": [
+      {
+        "id": 129,
+        "book": {
+          "id": 6,
+          "title": "cuppedia synagoga nostrum",
+          "author": "Lela Treutel"
+        },
+        "quantity": 3,
+        "price": 30173,
+        "discountedPrice": 27873
+      },
+      {
+        "id": 106,
+        "book": {
+          "id": 9,
+          "title": "curso pel teneo",
+          "author": "Adam Larkin"
+        },
+        "quantity": 5,
+        "price": 37332,
+        "discountedPrice": 32870
+      },
+      {
+        "id": 119,
+        "book": {
+          "id": 5,
+          "title": "subvenio triduana aer",
+          "author": "Dr. Nicholas Wisozk"
+        },
+        "quantity": 3,
+        "price": 15946,
+        "discountedPrice": 12681
+      },
+      {
+        "id": 184,
+        "book": {
+          "id": 6,
+          "title": "alienus possimus demo",
+          "author": "Dr. Jamie Auer"
+        },
+        "quantity": 2,
+        "price": 43257,
+        "discountedPrice": 42516
+      }
+    ],
+    "totalPrice": 411531,
+    "totalDiscount": 40487,
+    "finalPrice": 371044,
+    "status": "SHIPPED",
+    "payment": {
+      "id": 50,
+      "order": {
+        "id": 50
+      },
+      "paymentMethod": "PayPal",
+      "paymentDate": "2024-09-03T10:33:31.027Z",
+      "amount": 371044,
+      "status": "PENDING",
+      "transactionId": "13a76832-15f9-4ab6-a14f-ccb168bde6f0",
+      "paymentDetails": "Paid via american_express ending in 1011"
+    }
+  },
+  {
+    "id": 32,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-03T07:16:38.323Z",
+    "shippingAddress": "54199 Dorcas Burgs",
+    "orderItems": [
+      {
+        "id": 112,
+        "book": {
+          "id": 3,
+          "title": "reprehenderit corona comedo",
+          "author": "Rosemarie Grady"
+        },
+        "quantity": 1,
+        "price": 16003,
+        "discountedPrice": 15022
+      }
+    ],
+    "totalPrice": 16003,
+    "totalDiscount": 981,
+    "finalPrice": 15022,
+    "status": "EXCHANGE",
+    "payment": {
+      "id": 32,
+      "order": {
+        "id": 32
+      },
+      "paymentMethod": "Credit Card",
+      "paymentDate": "2024-09-02T19:21:06.160Z",
+      "amount": 15022,
+      "status": "PENDING",
+      "transactionId": "3d193755-df7a-41a3-9309-badc24f5afd9",
+      "paymentDetails": "Paid via discover ending in 4049"
+    }
+  },
+  {
+    "id": 28,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-03T05:46:59.850Z",
+    "shippingAddress": "364 S Market Street",
+    "orderItems": [
+      {
+        "id": 137,
+        "book": {
+          "id": 7,
+          "title": "vulgaris demulceo corrumpo",
+          "author": "Rosa Huels"
+        },
+        "quantity": 4,
+        "price": 49393,
+        "discountedPrice": 49195
+      },
+      {
+        "id": 141,
+        "book": {
+          "id": 9,
+          "title": "cimentarius ante admoneo",
+          "author": "Jane Hamill MD"
+        },
+        "quantity": 1,
+        "price": 12727,
+        "discountedPrice": 8506
+      },
+      {
+        "id": 163,
+        "book": {
+          "id": 3,
+          "title": "coruscus ambitus defluo",
+          "author": "Byron Tillman"
+        },
+        "quantity": 5,
+        "price": 14038,
+        "discountedPrice": 11715
+      }
+    ],
+    "totalPrice": 280489,
+    "totalDiscount": 16628,
+    "finalPrice": 263861,
+    "status": "DELIVERED",
+    "payment": {
+      "id": 28,
+      "order": {
+        "id": 28
+      },
+      "paymentMethod": "Credit Card",
+      "paymentDate": "2024-09-02T13:08:57.225Z",
+      "amount": 263861,
+      "status": "PENDING",
+      "transactionId": "9ec71db5-c020-4884-8d76-16e012ed12de",
+      "paymentDetails": "Paid via discover ending in 9808"
+    }
+  },
+  {
+    "id": 9,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-02T15:41:51.719Z",
+    "shippingAddress": "5480 Kohler Locks",
+    "orderItems": [
+      {
+        "id": 193,
+        "book": {
+          "id": 1,
+          "title": "tot verbum cibus",
+          "author": "Brian Koelpin"
+        },
+        "quantity": 3,
+        "price": 29411,
+        "discountedPrice": 28661
+      }
+    ],
+    "totalPrice": 88233,
+    "totalDiscount": 2250,
+    "finalPrice": 85983,
+    "status": "CANCELLED",
+    "payment": {
+      "id": 9,
+      "order": {
+        "id": 9
+      },
+      "paymentMethod": "Credit Card",
+      "paymentDate": "2024-09-03T02:17:39.735Z",
+      "amount": 85983,
+      "status": "COMPLETED",
+      "transactionId": "950bbf77-1120-4e52-b4fb-fcdb18727754",
+      "paymentDetails": "Paid via jcb ending in 5488"
+    }
+  },
+  {
+    "id": 6,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-03T05:36:59.841Z",
+    "shippingAddress": "26085 Effertz Crossing",
+    "orderItems": [
+      {
+        "id": 182,
+        "book": {
+          "id": 2,
+          "title": "adduco nulla compono",
+          "author": "Vickie Trantow DVM"
+        },
+        "quantity": 1,
+        "price": 24875,
+        "discountedPrice": 24732
+      },
+      {
+        "id": 100,
+        "book": {
+          "id": 3,
+          "title": "crur textor cetera",
+          "author": "Dale Kunze"
+        },
+        "quantity": 5,
+        "price": 18217,
+        "discountedPrice": 13899
+      },
+      {
+        "id": 165,
+        "book": {
+          "id": 8,
+          "title": "templum voluptatem animadverto",
+          "author": "Monique Dibbert"
+        },
+        "quantity": 1,
+        "price": 41269,
+        "discountedPrice": 39689
+      }
+    ],
+    "totalPrice": 157229,
+    "totalDiscount": 23313,
+    "finalPrice": 133916,
+    "status": "CANCELLED",
+    "payment": {
+      "id": 6,
+      "order": {
+        "id": 6
+      },
+      "paymentMethod": "Credit Card",
+      "paymentDate": "2024-09-02T18:52:06.169Z",
+      "amount": 133916,
+      "status": "PENDING",
+      "transactionId": "3b7edbc5-ff1d-46eb-8e48-a6d9462a1643",
+      "paymentDetails": "Paid via jcb ending in 9326"
+    }
+  },
+  {
+    "id": 50,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-02T20:37:53.347Z",
+    "shippingAddress": "882 Carol Canyon",
+    "orderItems": [
+      {
+        "id": 121,
+        "book": {
+          "id": 10,
+          "title": "defluo explicabo cohibeo",
+          "author": "Leigh Nicolas"
+        },
+        "quantity": 1,
+        "price": 11718,
+        "discountedPrice": 8938
+      },
+      {
+        "id": 105,
+        "book": {
+          "id": 2,
+          "title": "tumultus beatae pariatur",
+          "author": "Jonathan Will-Larson"
+        },
+        "quantity": 1,
+        "price": 37842,
+        "discountedPrice": 33386
+      },
+      {
+        "id": 145,
+        "book": {
+          "id": 3,
+          "title": "deinde in pecto",
+          "author": "Terrance Gutmann"
+        },
+        "quantity": 5,
+        "price": 29493,
+        "discountedPrice": 27065
+      }
+    ],
+    "totalPrice": 197025,
+    "totalDiscount": 19376,
+    "finalPrice": 177649,
+    "status": "PROCESSING",
+    "payment": {
+      "id": 50,
+      "order": {
+        "id": 50
+      },
+      "paymentMethod": "PayPal",
+      "paymentDate": "2024-09-03T09:06:58.284Z",
+      "amount": 177649,
+      "status": "PENDING",
+      "transactionId": "b6f73b0d-b872-4137-8865-13f6dc812a0f",
+      "paymentDetails": "Paid via diners_club ending in 8930"
+    }
+  },
+  {
+    "id": 37,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-03T10:47:24.728Z",
+    "shippingAddress": "93859 Wendell Parks",
+    "orderItems": [
+      {
+        "id": 137,
+        "book": {
+          "id": 7,
+          "title": "ubi supellex ea",
+          "author": "Billie Gleichner-Hilll"
+        },
+        "quantity": 3,
+        "price": 39950,
+        "discountedPrice": 35788
+      },
+      {
+        "id": 169,
+        "book": {
+          "id": 5,
+          "title": "victus sodalitas aliqua",
+          "author": "Melinda Green"
+        },
+        "quantity": 2,
+        "price": 43379,
+        "discountedPrice": 39374
+      },
+      {
+        "id": 185,
+        "book": {
+          "id": 5,
+          "title": "taedium tergo sum",
+          "author": "Cheryl Nader I"
+        },
+        "quantity": 4,
+        "price": 45139,
+        "discountedPrice": 40623
+      },
+      {
+        "id": 193,
+        "book": {
+          "id": 2,
+          "title": "asperiores cariosus votum",
+          "author": "Peggy Nitzsche"
+        },
+        "quantity": 1,
+        "price": 34612,
+        "discountedPrice": 34142
+      }
+    ],
+    "totalPrice": 421776,
+    "totalDiscount": 39030,
+    "finalPrice": 382746,
+    "status": "CANCELLED",
+    "payment": {
+      "id": 37,
+      "order": {
+        "id": 37
+      },
+      "paymentMethod": "Credit Card",
+      "paymentDate": "2024-09-02T14:13:01.679Z",
+      "amount": 382746,
+      "status": "COMPLETED",
+      "transactionId": "a987e418-e5c8-4db5-ae88-4b85f2979ff9",
+      "paymentDetails": "Paid via mastercard ending in 2280"
+    }
+  },
+  {
+    "id": 39,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-02T20:38:38.924Z",
+    "shippingAddress": "51852 University Drive",
+    "orderItems": [
+      {
+        "id": 194,
+        "book": {
+          "id": 9,
+          "title": "comprehendo comparo infit",
+          "author": "Arnold Hartmann"
+        },
+        "quantity": 3,
+        "price": 40096,
+        "discountedPrice": 35548
+      },
+      {
+        "id": 191,
+        "book": {
+          "id": 3,
+          "title": "compello quidem bestia",
+          "author": "Dr. Ted Schneider"
+        },
+        "quantity": 3,
+        "price": 49090,
+        "discountedPrice": 46832
+      },
+      {
+        "id": 165,
+        "book": {
+          "id": 8,
+          "title": "claudeo collum vilicus",
+          "author": "Kelly Bashirian"
+        },
+        "quantity": 3,
+        "price": 13843,
+        "discountedPrice": 12982
+      }
+    ],
+    "totalPrice": 309087,
+    "totalDiscount": 23001,
+    "finalPrice": 286086,
+    "status": "SHIPPED",
+    "payment": {
+      "id": 39,
+      "order": {
+        "id": 39
+      },
+      "paymentMethod": "Credit Card",
+      "paymentDate": "2024-09-03T01:26:51.638Z",
+      "amount": 286086,
+      "status": "FAILED",
+      "transactionId": "aad41f29-9b64-436b-acfa-f2db797bb87b",
+      "paymentDetails": "Paid via jcb ending in 6231"
+    }
+  },
+  {
+    "id": 33,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-02T19:26:03.005Z",
+    "shippingAddress": "3790 W 14th Street",
+    "orderItems": [
+      {
+        "id": 100,
+        "book": {
+          "id": 3,
+          "title": "asporto barba speciosus",
+          "author": "Shawn Orn"
+        },
+        "quantity": 1,
+        "price": 12961,
+        "discountedPrice": 10578
+      },
+      {
+        "id": 183,
+        "book": {
+          "id": 10,
+          "title": "aetas tredecim tamisium",
+          "author": "Santiago Langosh"
+        },
+        "quantity": 4,
+        "price": 13609,
+        "discountedPrice": 9474
+      }
+    ],
+    "totalPrice": 67397,
+    "totalDiscount": 18923,
+    "finalPrice": 48474,
+    "status": "DELIVERED",
+    "payment": {
+      "id": 33,
+      "order": {
+        "id": 33
+      },
+      "paymentMethod": "Credit Card",
+      "paymentDate": "2024-09-02T16:42:17.688Z",
+      "amount": 48474,
+      "status": "FAILED",
+      "transactionId": "3eb247d0-4be3-432e-a00f-b30db8d62d19",
+      "paymentDetails": "Paid via jcb ending in 7857"
+    }
+  },
+  {
+    "id": 25,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-02T12:20:53.411Z",
+    "shippingAddress": "4562 Cleveland Street",
+    "orderItems": [
+      {
+        "id": 119,
+        "book": {
+          "id": 4,
+          "title": "ara confido atavus",
+          "author": "Archie Boehm"
+        },
+        "quantity": 4,
+        "price": 30218,
+        "discountedPrice": 28881
+      },
+      {
+        "id": 150,
+        "book": {
+          "id": 5,
+          "title": "odit acerbitas temptatio",
+          "author": "Corey Terry"
+        },
+        "quantity": 2,
+        "price": 15021,
+        "discountedPrice": 12012
+      },
+      {
+        "id": 159,
+        "book": {
+          "id": 9,
+          "title": "depono deputo supellex",
+          "author": "Jody Ritchie"
+        },
+        "quantity": 3,
+        "price": 43517,
+        "discountedPrice": 41442
+      }
+    ],
+    "totalPrice": 281465,
+    "totalDiscount": 17591,
+    "finalPrice": 263874,
+    "status": "DELIVERED",
+    "payment": {
+      "id": 25,
+      "order": {
+        "id": 25
+      },
+      "paymentMethod": "PayPal",
+      "paymentDate": "2024-09-03T04:39:02.949Z",
+      "amount": 263874,
+      "status": "COMPLETED",
+      "transactionId": "b916555b-44c7-43f0-9d1b-3fa1780ea097",
+      "paymentDetails": "Paid via jcb ending in 1129"
+    }
+  },
+  {
+    "id": 23,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-02T18:54:30.199Z",
+    "shippingAddress": "691 Shawna Haven",
+    "orderItems": [
+      {
+        "id": 143,
+        "book": {
+          "id": 7,
+          "title": "angelus aeternus clam",
+          "author": "Michele Pagac MD"
+        },
+        "quantity": 5,
+        "price": 38134,
+        "discountedPrice": 34589
+      },
+      {
+        "id": 178,
+        "book": {
+          "id": 4,
+          "title": "addo aufero sum",
+          "author": "Isaac Bednar"
+        },
+        "quantity": 2,
+        "price": 36102,
+        "discountedPrice": 32727
+      }
+    ],
+    "totalPrice": 262874,
+    "totalDiscount": 24475,
+    "finalPrice": 238399,
+    "status": "REFUND",
+    "payment": {
+      "id": 23,
+      "order": {
+        "id": 23
+      },
+      "paymentMethod": "Credit Card",
+      "paymentDate": "2024-09-02T11:20:23.374Z",
+      "amount": 238399,
+      "status": "FAILED",
+      "transactionId": "49d99fc8-42f9-4553-a884-c2a092dbffdd",
+      "paymentDetails": "Paid via diners_club ending in 5256"
+    }
+  },
+  {
+    "id": 10,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-03T03:14:45.364Z",
+    "shippingAddress": "8841 Larson Mall",
+    "orderItems": [
+      {
+        "id": 171,
+        "book": {
+          "id": 4,
+          "title": "cupressus desolo rerum",
+          "author": "Jeff Monahan"
+        },
+        "quantity": 3,
+        "price": 33312,
+        "discountedPrice": 31909
+      },
+      {
+        "id": 109,
+        "book": {
+          "id": 5,
+          "title": "statua nobis aeternus",
+          "author": "Frances Buckridge"
+        },
+        "quantity": 4,
+        "price": 27939,
+        "discountedPrice": 25099
+      },
+      {
+        "id": 117,
+        "book": {
+          "id": 2,
+          "title": "curto absorbeo supellex",
+          "author": "Sergio Casper"
+        },
+        "quantity": 3,
+        "price": 33367,
+        "discountedPrice": 29564
+      }
+    ],
+    "totalPrice": 311793,
+    "totalDiscount": 26978,
+    "finalPrice": 284815,
+    "status": "SHIPPED",
+    "payment": {
+      "id": 10,
+      "order": {
+        "id": 10
+      },
+      "paymentMethod": "Credit Card",
+      "paymentDate": "2024-09-02T17:46:10.123Z",
+      "amount": 284815,
+      "status": "COMPLETED",
+      "transactionId": "de9f693d-7194-47ff-b6d1-641d06bafdb3",
+      "paymentDetails": "Paid via mastercard ending in 1352"
+    }
+  },
+  {
+    "id": 16,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-02T18:17:05.008Z",
+    "shippingAddress": "215 Tyrique Lodge",
+    "orderItems": [
+      {
+        "id": 191,
+        "book": {
+          "id": 4,
+          "title": "ullam verus vestigium",
+          "author": "Helen Tremblay"
+        },
+        "quantity": 2,
+        "price": 21054,
+        "discountedPrice": 20874
+      },
+      {
+        "id": 199,
+        "book": {
+          "id": 4,
+          "title": "cuppedia versus curia",
+          "author": "Josefina Kohler"
+        },
+        "quantity": 3,
+        "price": 23378,
+        "discountedPrice": 19090
+      },
+      {
+        "id": 118,
+        "book": {
+          "id": 1,
+          "title": "surculus constans vero",
+          "author": "Bill Deckow"
+        },
+        "quantity": 1,
+        "price": 44684,
+        "discountedPrice": 40423
+      },
+      {
+        "id": 148,
+        "book": {
+          "id": 1,
+          "title": "trepide strenuus cruentus",
+          "author": "Darin Gleason"
+        },
+        "quantity": 1,
+        "price": 46202,
+        "discountedPrice": 45002
+      }
+    ],
+    "totalPrice": 203128,
+    "totalDiscount": 18685,
+    "finalPrice": 184443,
+    "status": "REFUND",
+    "payment": {
+      "id": 16,
+      "order": {
+        "id": 16
+      },
+      "paymentMethod": "Bank Transfer",
+      "paymentDate": "2024-09-03T08:11:57.668Z",
+      "amount": 184443,
+      "status": "PENDING",
+      "transactionId": "67a0b5c0-a0e4-4441-8014-35ff3cbaa374",
+      "paymentDetails": "Paid via visa ending in 1316"
+    }
+  },
+  {
+    "id": 14,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-03T05:09:07.334Z",
+    "shippingAddress": "6940 Carroll Dale",
+    "orderItems": [
+      {
+        "id": 148,
+        "book": {
+          "id": 3,
+          "title": "solitudo patrocinor vulgaris",
+          "author": "Neil Mraz"
+        },
+        "quantity": 4,
+        "price": 19800,
+        "discountedPrice": 18015
+      },
+      {
+        "id": 183,
+        "book": {
+          "id": 9,
+          "title": "quos defero suggero",
+          "author": "Winston Wilderman"
+        },
+        "quantity": 5,
+        "price": 13292,
+        "discountedPrice": 10426
+      },
+      {
+        "id": 152,
+        "book": {
+          "id": 9,
+          "title": "thorax delectus curatio",
+          "author": "Veronica Botsford"
+        },
+        "quantity": 1,
+        "price": 44725,
+        "discountedPrice": 44609
+      },
+      {
+        "id": 190,
+        "book": {
+          "id": 8,
+          "title": "timidus velum xiphias",
+          "author": "Sandra Hessel"
+        },
+        "quantity": 5,
+        "price": 36462,
+        "discountedPrice": 35722
+      },
+      {
+        "id": 133,
+        "book": {
+          "id": 10,
+          "title": "quis vespillo sponte",
+          "author": "Emma Glover"
+        },
+        "quantity": 4,
+        "price": 11191,
+        "discountedPrice": 9352
+      }
+    ],
+    "totalPrice": 417459,
+    "totalDiscount": 32642,
+    "finalPrice": 384817,
+    "status": "EXCHANGE",
+    "payment": {
+      "id": 14,
+      "order": {
+        "id": 14
+      },
+      "paymentMethod": "PayPal",
+      "paymentDate": "2024-09-02T19:42:11.610Z",
+      "amount": 384817,
+      "status": "PENDING",
+      "transactionId": "330df737-3e0c-4dc2-babc-bd0071cd2a6d",
+      "paymentDetails": "Paid via diners_club ending in 3491"
+    }
+  },
+  {
+    "id": 23,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-03T02:27:22.282Z",
+    "shippingAddress": "52841 Mayfield Road",
+    "orderItems": [
+      {
+        "id": 169,
+        "book": {
+          "id": 1,
+          "title": "amoveo venustas approbo",
+          "author": "Ms. Michele Maggio"
+        },
+        "quantity": 3,
+        "price": 42659,
+        "discountedPrice": 37930
+      },
+      {
+        "id": 160,
+        "book": {
+          "id": 7,
+          "title": "aedificium tibi creptio",
+          "author": "Gregory Veum"
+        },
+        "quantity": 5,
+        "price": 31865,
+        "discountedPrice": 27640
+      }
+    ],
+    "totalPrice": 287302,
+    "totalDiscount": 35312,
+    "finalPrice": 251990,
+    "status": "PENDING",
+    "payment": {
+      "id": 23,
+      "order": {
+        "id": 23
+      },
+      "paymentMethod": "Bank Transfer",
+      "paymentDate": "2024-09-02T20:30:06.780Z",
+      "amount": 251990,
+      "status": "COMPLETED",
+      "transactionId": "db88b3c5-df8c-4585-acdc-fe1f6cbd58fa",
+      "paymentDetails": "Paid via discover ending in 8125"
+    }
+  },
+  {
+    "id": 19,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-03T08:26:13.396Z",
+    "shippingAddress": "5722 Joaquin Shoal",
+    "orderItems": [
+      {
+        "id": 104,
+        "book": {
+          "id": 6,
+          "title": "odit vero desparatus",
+          "author": "Edna Jacobi"
+        },
+        "quantity": 5,
+        "price": 20870,
+        "discountedPrice": 19755
+      },
+      {
+        "id": 102,
+        "book": {
+          "id": 4,
+          "title": "vita constans derelinquo",
+          "author": "Marcella O'Reilly"
+        },
+        "quantity": 4,
+        "price": 43987,
+        "discountedPrice": 41106
+      },
+      {
+        "id": 118,
+        "book": {
+          "id": 4,
+          "title": "nam civis necessitatibus",
+          "author": "Charlene Sawayn"
+        },
+        "quantity": 1,
+        "price": 48050,
+        "discountedPrice": 46175
+      }
+    ],
+    "totalPrice": 328348,
+    "totalDiscount": 18974,
+    "finalPrice": 309374,
+    "status": "EXCHANGE",
+    "payment": {
+      "id": 19,
+      "order": {
+        "id": 19
+      },
+      "paymentMethod": "PayPal",
+      "paymentDate": "2024-09-03T00:06:57.327Z",
+      "amount": 309374,
+      "status": "FAILED",
+      "transactionId": "f09e5ad6-5dc2-4682-b2f6-b00659fc0c4c",
+      "paymentDetails": "Paid via discover ending in 1879"
+    }
+  },
+  {
+    "id": 3,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-03T07:40:37.682Z",
+    "shippingAddress": "632 Franecki Keys",
+    "orderItems": [
+      {
+        "id": 158,
+        "book": {
+          "id": 9,
+          "title": "patior turpis vociferor",
+          "author": "Jessica Jacobi"
+        },
+        "quantity": 4,
+        "price": 21099,
+        "discountedPrice": 16470
+      }
+    ],
+    "totalPrice": 84396,
+    "totalDiscount": 18516,
+    "finalPrice": 65880,
+    "status": "DELIVERED",
+    "payment": {
+      "id": 3,
+      "order": {
+        "id": 3
+      },
+      "paymentMethod": "PayPal",
+      "paymentDate": "2024-09-03T01:52:08.891Z",
+      "amount": 65880,
+      "status": "PENDING",
+      "transactionId": "057795c7-2506-4471-9795-f64b181bcc8c",
+      "paymentDetails": "Paid via discover ending in 8760"
+    }
+  },
+  {
+    "id": 50,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-02T18:17:43.857Z",
+    "shippingAddress": "580 Hauck Loaf",
+    "orderItems": [
+      {
+        "id": 191,
+        "book": {
+          "id": 9,
+          "title": "voluntarius charisma vitium",
+          "author": "Doug Tillman"
+        },
+        "quantity": 3,
+        "price": 20950,
+        "discountedPrice": 15980
+      },
+      {
+        "id": 144,
+        "book": {
+          "id": 5,
+          "title": "cetera aptus utique",
+          "author": "Olive Runolfsson PhD"
+        },
+        "quantity": 2,
+        "price": 28455,
+        "discountedPrice": 26734
+      },
+      {
+        "id": 132,
+        "book": {
+          "id": 5,
+          "title": "nihil ancilla cibus",
+          "author": "Cesar Beer"
+        },
+        "quantity": 4,
+        "price": 41270,
+        "discountedPrice": 40096
+      },
+      {
+        "id": 133,
+        "book": {
+          "id": 2,
+          "title": "vilitas admoveo communis",
+          "author": "Nadine Walsh DDS"
+        },
+        "quantity": 2,
+        "price": 38983,
+        "discountedPrice": 36693
+      },
+      {
+        "id": 162,
+        "book": {
+          "id": 3,
+          "title": "vulnero sollers aperte",
+          "author": "Beth Hintz"
+        },
+        "quantity": 3,
+        "price": 49475,
+        "discountedPrice": 46575
+      }
+    ],
+    "totalPrice": 511231,
+    "totalDiscount": 36328,
+    "finalPrice": 474903,
+    "status": "PROCESSING",
+    "payment": {
+      "id": 50,
+      "order": {
+        "id": 50
+      },
+      "paymentMethod": "Bank Transfer",
+      "paymentDate": "2024-09-02T12:38:01.744Z",
+      "amount": 474903,
+      "status": "PENDING",
+      "transactionId": "2734e54a-d583-4938-ab52-17d893103ce2",
+      "paymentDetails": "Paid via mastercard ending in 8651"
+    }
+  },
+  {
+    "id": 34,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-03T02:38:03.527Z",
+    "shippingAddress": "259 Braxton Trafficway",
+    "orderItems": [
+      {
+        "id": 145,
+        "book": {
+          "id": 9,
+          "title": "volva aqua atrocitas",
+          "author": "Carlos Heathcote-Wilkinson PhD"
+        },
+        "quantity": 2,
+        "price": 38561,
+        "discountedPrice": 36594
+      },
+      {
+        "id": 191,
+        "book": {
+          "id": 10,
+          "title": "umbra tremo exercitationem",
+          "author": "Vicky Parisian"
+        },
+        "quantity": 5,
+        "price": 48829,
+        "discountedPrice": 48248
+      },
+      {
+        "id": 115,
+        "book": {
+          "id": 4,
+          "title": "concido confugo substantia",
+          "author": "Brandon Gusikowski"
+        },
+        "quantity": 4,
+        "price": 27579,
+        "discountedPrice": 22593
+      },
+      {
+        "id": 187,
+        "book": {
+          "id": 4,
+          "title": "somnus ter arto",
+          "author": "Wesley Green"
+        },
+        "quantity": 4,
+        "price": 38564,
+        "discountedPrice": 36899
+      }
+    ],
+    "totalPrice": 585839,
+    "totalDiscount": 33443,
+    "finalPrice": 552396,
+    "status": "PROCESSING",
+    "payment": {
+      "id": 34,
+      "order": {
+        "id": 34
+      },
+      "paymentMethod": "Bank Transfer",
+      "paymentDate": "2024-09-03T05:56:42.165Z",
+      "amount": 552396,
+      "status": "FAILED",
+      "transactionId": "6acefa2c-f2f0-4399-8aeb-bc436463f38d",
+      "paymentDetails": "Paid via maestro ending in 9118"
+    }
+  },
+  {
+    "id": 21,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-03T00:19:39.794Z",
+    "shippingAddress": "829 Bergstrom Way",
+    "orderItems": [
+      {
+        "id": 115,
+        "book": {
+          "id": 2,
+          "title": "cruciamentum tricesimus tui",
+          "author": "John Bayer"
+        },
+        "quantity": 1,
+        "price": 26677,
+        "discountedPrice": 26600
+      },
+      {
+        "id": 145,
+        "book": {
+          "id": 3,
+          "title": "charisma adimpleo voveo",
+          "author": "Eloise Baumbach"
+        },
+        "quantity": 4,
+        "price": 27663,
+        "discountedPrice": 27485
+      }
+    ],
+    "totalPrice": 137329,
+    "totalDiscount": 789,
+    "finalPrice": 136540,
+    "status": "PENDING",
+    "payment": {
+      "id": 21,
+      "order": {
+        "id": 21
+      },
+      "paymentMethod": "Credit Card",
+      "paymentDate": "2024-09-02T20:49:23.813Z",
+      "amount": 136540,
+      "status": "PENDING",
+      "transactionId": "c3914664-f062-427c-9bc8-d6c90b97e34e",
+      "paymentDetails": "Paid via mastercard ending in 7339"
+    }
+  },
+  {
+    "id": 33,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-02T11:32:51.049Z",
+    "shippingAddress": "75900 Shannon Alley",
+    "orderItems": [
+      {
+        "id": 189,
+        "book": {
+          "id": 10,
+          "title": "valde textus vomica",
+          "author": "Genevieve Mertz"
+        },
+        "quantity": 3,
+        "price": 37150,
+        "discountedPrice": 35939
+      }
+    ],
+    "totalPrice": 111450,
+    "totalDiscount": 3633,
+    "finalPrice": 107817,
+    "status": "SHIPPED",
+    "payment": {
+      "id": 33,
+      "order": {
+        "id": 33
+      },
+      "paymentMethod": "Credit Card",
+      "paymentDate": "2024-09-02T17:46:43.322Z",
+      "amount": 107817,
+      "status": "COMPLETED",
+      "transactionId": "dd9d75e0-50fd-48eb-835a-759c7bd4834b",
+      "paymentDetails": "Paid via visa ending in 0875"
+    }
+  },
+  {
+    "id": 14,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-03T04:40:25.310Z",
+    "shippingAddress": "814 Stehr Creek",
+    "orderItems": [
+      {
+        "id": 149,
+        "book": {
+          "id": 8,
+          "title": "acerbitas auctus adinventitias",
+          "author": "Jerald Marks"
+        },
+        "quantity": 5,
+        "price": 30692,
+        "discountedPrice": 29666
+      },
+      {
+        "id": 133,
+        "book": {
+          "id": 2,
+          "title": "deprimo sublime valeo",
+          "author": "Ethel Wolf"
+        },
+        "quantity": 3,
+        "price": 35902,
+        "discountedPrice": 34489
+      },
+      {
+        "id": 173,
+        "book": {
+          "id": 4,
+          "title": "absens traho tremo",
+          "author": "Nichole Swaniawski"
+        },
+        "quantity": 4,
+        "price": 29993,
+        "discountedPrice": 26645
+      },
+      {
+        "id": 174,
+        "book": {
+          "id": 8,
+          "title": "iusto adimpleo thermae",
+          "author": "Teresa Grant"
+        },
+        "quantity": 1,
+        "price": 30651,
+        "discountedPrice": 29679
+      }
+    ],
+    "totalPrice": 411789,
+    "totalDiscount": 23733,
+    "finalPrice": 388056,
+    "status": "CANCELLED",
+    "payment": {
+      "id": 14,
+      "order": {
+        "id": 14
+      },
+      "paymentMethod": "Bank Transfer",
+      "paymentDate": "2024-09-03T08:45:24.661Z",
+      "amount": 388056,
+      "status": "FAILED",
+      "transactionId": "cf027072-640c-430e-bbb2-106f41388c5d",
+      "paymentDetails": "Paid via diners_club ending in 7789"
+    }
+  },
+  {
+    "id": 41,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-03T09:05:41.819Z",
+    "shippingAddress": "9578 Russel Curve",
+    "orderItems": [
+      {
+        "id": 105,
+        "book": {
+          "id": 9,
+          "title": "comburo calcar addo",
+          "author": "Damon Pollich"
+        },
+        "quantity": 3,
+        "price": 34127,
+        "discountedPrice": 32603
+      }
+    ],
+    "totalPrice": 102381,
+    "totalDiscount": 4572,
+    "finalPrice": 97809,
+    "status": "SHIPPED",
+    "payment": {
+      "id": 41,
+      "order": {
+        "id": 41
+      },
+      "paymentMethod": "Credit Card",
+      "paymentDate": "2024-09-02T15:20:11.830Z",
+      "amount": 97809,
+      "status": "COMPLETED",
+      "transactionId": "40d588a8-5da7-4d2b-9299-ead95b57e43c",
+      "paymentDetails": "Paid via visa ending in 7920"
+    }
+  },
+  {
+    "id": 38,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-03T09:55:15.077Z",
+    "shippingAddress": "338 West Court",
+    "orderItems": [
+      {
+        "id": 174,
+        "book": {
+          "id": 8,
+          "title": "concido articulus antiquus",
+          "author": "Carl Kertzmann"
+        },
+        "quantity": 5,
+        "price": 31132,
+        "discountedPrice": 26690
+      }
+    ],
+    "totalPrice": 155660,
+    "totalDiscount": 22210,
+    "finalPrice": 133450,
+    "status": "SHIPPED",
+    "payment": {
+      "id": 38,
+      "order": {
+        "id": 38
+      },
+      "paymentMethod": "PayPal",
+      "paymentDate": "2024-09-03T10:47:10.315Z",
+      "amount": 133450,
+      "status": "FAILED",
+      "transactionId": "730b2f59-5b61-4c8a-a951-484fb9fb9052",
+      "paymentDetails": "Paid via jcb ending in 7138"
+    }
+  },
+  {
+    "id": 36,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-03T04:54:59.943Z",
+    "shippingAddress": "405 Bauch Square",
+    "orderItems": [
+      {
+        "id": 133,
+        "book": {
+          "id": 10,
+          "title": "vulnus calcar ademptio",
+          "author": "Donna Kautzer I"
+        },
+        "quantity": 2,
+        "price": 38416,
+        "discountedPrice": 35175
+      },
+      {
+        "id": 152,
+        "book": {
+          "id": 4,
+          "title": "ocer circumvenio cilicium",
+          "author": "Pat Leannon"
+        },
+        "quantity": 5,
+        "price": 27629,
+        "discountedPrice": 24845
+      }
+    ],
+    "totalPrice": 214977,
+    "totalDiscount": 20402,
+    "finalPrice": 194575,
+    "status": "REFUND",
+    "payment": {
+      "id": 36,
+      "order": {
+        "id": 36
+      },
+      "paymentMethod": "Credit Card",
+      "paymentDate": "2024-09-02T23:09:01.257Z",
+      "amount": 194575,
+      "status": "COMPLETED",
+      "transactionId": "ed8ffc8b-7d91-4527-860e-b55c667123ff",
+      "paymentDetails": "Paid via discover ending in 7838"
+    }
+  },
+  {
+    "id": 7,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-02T22:27:20.337Z",
+    "shippingAddress": "617 Eldred Coves",
+    "orderItems": [
+      {
+        "id": 123,
+        "book": {
+          "id": 4,
+          "title": "tutis subito exercitationem",
+          "author": "Edwin Bins"
+        },
+        "quantity": 5,
+        "price": 48770,
+        "discountedPrice": 44606
+      },
+      {
+        "id": 112,
+        "book": {
+          "id": 5,
+          "title": "ubi recusandae causa",
+          "author": "Regina Yundt"
+        },
+        "quantity": 2,
+        "price": 12472,
+        "discountedPrice": 11681
+      }
+    ],
+    "totalPrice": 268794,
+    "totalDiscount": 22402,
+    "finalPrice": 246392,
+    "status": "REFUND",
+    "payment": {
+      "id": 7,
+      "order": {
+        "id": 7
+      },
+      "paymentMethod": "Bank Transfer",
+      "paymentDate": "2024-09-03T01:55:42.489Z",
+      "amount": 246392,
+      "status": "FAILED",
+      "transactionId": "8c89e1ff-9691-468b-ba82-7a0f37f48198",
+      "paymentDetails": "Paid via american_express ending in 7857"
+    }
+  },
+  {
+    "id": 16,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-03T10:40:58.051Z",
+    "shippingAddress": "13396 Bryon Underpass",
+    "orderItems": [
+      {
+        "id": 135,
+        "book": {
+          "id": 7,
+          "title": "patria subito sordeo",
+          "author": "Gladys Hickle"
+        },
+        "quantity": 3,
+        "price": 48885,
+        "discountedPrice": 44240
+      },
+      {
+        "id": 117,
+        "book": {
+          "id": 5,
+          "title": "terra valeo aeneus",
+          "author": "Maggie Abernathy"
+        },
+        "quantity": 3,
+        "price": 46330,
+        "discountedPrice": 43576
+      },
+      {
+        "id": 185,
+        "book": {
+          "id": 5,
+          "title": "vomito provident conspergo",
+          "author": "Jo Zemlak"
+        },
+        "quantity": 4,
+        "price": 11248,
+        "discountedPrice": 11165
+      }
+    ],
+    "totalPrice": 330637,
+    "totalDiscount": 22529,
+    "finalPrice": 308108,
+    "status": "SHIPPED",
+    "payment": {
+      "id": 16,
+      "order": {
+        "id": 16
+      },
+      "paymentMethod": "Credit Card",
+      "paymentDate": "2024-09-03T06:31:12.518Z",
+      "amount": 308108,
+      "status": "FAILED",
+      "transactionId": "2698b449-9977-4f7c-b982-8e71cec82b87",
+      "paymentDetails": "Paid via visa ending in 6674"
+    }
+  },
+  {
+    "id": 2,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-02T23:59:25.942Z",
+    "shippingAddress": "839 Reichel Bypass",
+    "orderItems": [
+      {
+        "id": 167,
+        "book": {
+          "id": 9,
+          "title": "copiose eaque vitiosus",
+          "author": "Cheryl Thiel"
+        },
+        "quantity": 2,
+        "price": 41414,
+        "discountedPrice": 38597
+      },
+      {
+        "id": 164,
+        "book": {
+          "id": 6,
+          "title": "vulticulus ullam adficio",
+          "author": "Stella Fahey"
+        },
+        "quantity": 2,
+        "price": 22839,
+        "discountedPrice": 18191
+      },
+      {
+        "id": 140,
+        "book": {
+          "id": 4,
+          "title": "depromo vos vinculum",
+          "author": "Ms. Vera Feest"
+        },
+        "quantity": 4,
+        "price": 43812,
+        "discountedPrice": 42278
+      },
+      {
+        "id": 121,
+        "book": {
+          "id": 6,
+          "title": "venia sto cresco",
+          "author": "Dexter Kunze"
+        },
+        "quantity": 1,
+        "price": 16342,
+        "discountedPrice": 14257
+      },
+      {
+        "id": 155,
+        "book": {
+          "id": 7,
+          "title": "ipsa tribuo reprehenderit",
+          "author": "Traci Langworth"
+        },
+        "quantity": 4,
+        "price": 23895,
+        "discountedPrice": 22183
+      }
+    ],
+    "totalPrice": 415676,
+    "totalDiscount": 29999,
+    "finalPrice": 385677,
+    "status": "PENDING",
+    "payment": {
+      "id": 2,
+      "order": {
+        "id": 2
+      },
+      "paymentMethod": "Credit Card",
+      "paymentDate": "2024-09-02T11:55:06.562Z",
+      "amount": 385677,
+      "status": "PENDING",
+      "transactionId": "c6b8946e-7e66-4e5c-8a85-049ae2ac80cc",
+      "paymentDetails": "Paid via maestro ending in 0804"
+    }
+  },
+  {
+    "id": 29,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-02T14:58:01.434Z",
+    "shippingAddress": "722 Chapel Hill",
+    "orderItems": [
+      {
+        "id": 112,
+        "book": {
+          "id": 3,
+          "title": "eos laborum annus",
+          "author": "Ramiro Olson PhD"
+        },
+        "quantity": 3,
+        "price": 46527,
+        "discountedPrice": 44364
+      },
+      {
+        "id": 152,
+        "book": {
+          "id": 10,
+          "title": "acceptus antiquus exercitationem",
+          "author": "Tyrone Effertz"
+        },
+        "quantity": 5,
+        "price": 23235,
+        "discountedPrice": 20255
+      },
+      {
+        "id": 173,
+        "book": {
+          "id": 7,
+          "title": "subnecto dolorum cognomen",
+          "author": "Leland Durgan I"
+        },
+        "quantity": 4,
+        "price": 40488,
+        "discountedPrice": 36309
+      },
+      {
+        "id": 164,
+        "book": {
+          "id": 1,
+          "title": "altus distinctio amicitia",
+          "author": "Sue Bechtelar"
+        },
+        "quantity": 5,
+        "price": 11195,
+        "discountedPrice": 6411
+      }
+    ],
+    "totalPrice": 473683,
+    "totalDiscount": 62025,
+    "finalPrice": 411658,
+    "status": "REFUND",
+    "payment": {
+      "id": 29,
+      "order": {
+        "id": 29
+      },
+      "paymentMethod": "Bank Transfer",
+      "paymentDate": "2024-09-02T12:02:01.738Z",
+      "amount": 411658,
+      "status": "PENDING",
+      "transactionId": "0ea42597-4cbf-4c08-a3e6-af636cd194f2",
+      "paymentDetails": "Paid via discover ending in 1864"
+    }
+  },
+  {
+    "id": 19,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-03T01:10:27.059Z",
+    "shippingAddress": "30002 Gottlieb Meadow",
+    "orderItems": [
+      {
+        "id": 199,
+        "book": {
+          "id": 8,
+          "title": "pecco decumbo barba",
+          "author": "Marlene Hintz"
+        },
+        "quantity": 1,
+        "price": 23517,
+        "discountedPrice": 18887
+      },
+      {
+        "id": 103,
+        "book": {
+          "id": 2,
+          "title": "desidero terebro amiculum",
+          "author": "Miss Monique Adams"
+        },
+        "quantity": 4,
+        "price": 21253,
+        "discountedPrice": 16381
+      },
+      {
+        "id": 134,
+        "book": {
+          "id": 8,
+          "title": "vulgivagus adsum virga",
+          "author": "Stacey Raynor"
+        },
+        "quantity": 4,
+        "price": 40074,
+        "discountedPrice": 38254
+      },
+      {
+        "id": 140,
+        "book": {
+          "id": 3,
+          "title": "pauci teres utilis",
+          "author": "Henry Spencer"
+        },
+        "quantity": 3,
+        "price": 40540,
+        "discountedPrice": 39061
+      },
+      {
+        "id": 128,
+        "book": {
+          "id": 7,
+          "title": "celer aurum cubicularis",
+          "author": "Martha Beer"
+        },
+        "quantity": 5,
+        "price": 11708,
+        "discountedPrice": 10954
+      }
+    ],
+    "totalPrice": 448985,
+    "totalDiscount": 39605,
+    "finalPrice": 409380,
+    "status": "CANCELLED",
+    "payment": {
+      "id": 19,
+      "order": {
+        "id": 19
+      },
+      "paymentMethod": "Credit Card",
+      "paymentDate": "2024-09-02T21:58:13.487Z",
+      "amount": 409380,
+      "status": "COMPLETED",
+      "transactionId": "d249ab6a-8ab9-4ffe-971c-508bb72633b0",
+      "paymentDetails": "Paid via diners_club ending in 4126"
+    }
+  },
+  {
+    "id": 46,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-03T08:42:58.411Z",
+    "shippingAddress": "4003 Douglas Road",
+    "orderItems": [
+      {
+        "id": 167,
+        "book": {
+          "id": 7,
+          "title": "compello illo currus",
+          "author": "Gwendolyn Kohler"
+        },
+        "quantity": 4,
+        "price": 35353,
+        "discountedPrice": 35051
+      }
+    ],
+    "totalPrice": 141412,
+    "totalDiscount": 1208,
+    "finalPrice": 140204,
+    "status": "PENDING",
+    "payment": {
+      "id": 46,
+      "order": {
+        "id": 46
+      },
+      "paymentMethod": "PayPal",
+      "paymentDate": "2024-09-02T19:12:47.267Z",
+      "amount": 140204,
+      "status": "COMPLETED",
+      "transactionId": "dcc0bab1-9acd-402b-9f3e-51001cb5b9e4",
+      "paymentDetails": "Paid via discover ending in 7108"
+    }
+  },
+  {
+    "id": 41,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-02T17:38:44.524Z",
+    "shippingAddress": "688 Jaiden Spring",
+    "orderItems": [
+      {
+        "id": 129,
+        "book": {
+          "id": 3,
+          "title": "adipisci communis valde",
+          "author": "Caroline Kris"
+        },
+        "quantity": 1,
+        "price": 49367,
+        "discountedPrice": 45294
+      },
+      {
+        "id": 110,
+        "book": {
+          "id": 3,
+          "title": "creator aureus cupressus",
+          "author": "Jon Satterfield"
+        },
+        "quantity": 1,
+        "price": 36632,
+        "discountedPrice": 33050
+      },
+      {
+        "id": 141,
+        "book": {
+          "id": 6,
+          "title": "tepidus clementia thalassinus",
+          "author": "Alison Cronin"
+        },
+        "quantity": 3,
+        "price": 39870,
+        "discountedPrice": 38963
+      },
+      {
+        "id": 122,
+        "book": {
+          "id": 4,
+          "title": "bibo velut subnecto",
+          "author": "Mr. Lee Champlin"
+        },
+        "quantity": 2,
+        "price": 38402,
+        "discountedPrice": 37219
+      }
+    ],
+    "totalPrice": 282413,
+    "totalDiscount": 12742,
+    "finalPrice": 269671,
+    "status": "SHIPPED",
+    "payment": {
+      "id": 41,
+      "order": {
+        "id": 41
+      },
+      "paymentMethod": "PayPal",
+      "paymentDate": "2024-09-03T00:38:13.868Z",
+      "amount": 269671,
+      "status": "FAILED",
+      "transactionId": "4a8add0a-b83c-4714-a804-c9cefb6baed8",
+      "paymentDetails": "Paid via discover ending in 2604"
+    }
+  },
+  {
+    "id": 30,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-03T00:39:39.448Z",
+    "shippingAddress": "41170 Reilly Points",
+    "orderItems": [
+      {
+        "id": 100,
+        "book": {
+          "id": 2,
+          "title": "vel titulus aeger",
+          "author": "Al Rice"
+        },
+        "quantity": 3,
+        "price": 43561,
+        "discountedPrice": 43146
+      },
+      {
+        "id": 115,
+        "book": {
+          "id": 7,
+          "title": "certus audacia paens",
+          "author": "Daniel Treutel"
+        },
+        "quantity": 4,
+        "price": 31821,
+        "discountedPrice": 27369
+      },
+      {
+        "id": 181,
+        "book": {
+          "id": 9,
+          "title": "admitto ciminatio bene",
+          "author": "Antonio Halvorson-Champlin"
+        },
+        "quantity": 1,
+        "price": 49780,
+        "discountedPrice": 44939
+      },
+      {
+        "id": 103,
+        "book": {
+          "id": 3,
+          "title": "compono corrumpo quis",
+          "author": "Krystal Pacocha"
+        },
+        "quantity": 3,
+        "price": 35444,
+        "discountedPrice": 35436
+      },
+      {
+        "id": 133,
+        "book": {
+          "id": 10,
+          "title": "claudeo totam demens",
+          "author": "Adrienne Kessler"
+        },
+        "quantity": 4,
+        "price": 17564,
+        "discountedPrice": 12758
+      }
+    ],
+    "totalPrice": 484335,
+    "totalDiscount": 43142,
+    "finalPrice": 441193,
+    "status": "CANCELLED",
+    "payment": {
+      "id": 30,
+      "order": {
+        "id": 30
+      },
+      "paymentMethod": "Bank Transfer",
+      "paymentDate": "2024-09-03T08:50:42.395Z",
+      "amount": 441193,
+      "status": "PENDING",
+      "transactionId": "05a56d26-57f6-4029-aeb3-e0f307663628",
+      "paymentDetails": "Paid via visa ending in 0604"
+    }
+  },
+  {
+    "id": 27,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-02T15:38:11.099Z",
+    "shippingAddress": "374 The Paddock",
+    "orderItems": [
+      {
+        "id": 126,
+        "book": {
+          "id": 1,
+          "title": "complectus virtus ara",
+          "author": "Mrs. May Streich"
+        },
+        "quantity": 2,
+        "price": 31780,
+        "discountedPrice": 31543
+      },
+      {
+        "id": 165,
+        "book": {
+          "id": 7,
+          "title": "spero barba conor",
+          "author": "Josefina Botsford"
+        },
+        "quantity": 5,
+        "price": 45868,
+        "discountedPrice": 42373
+      },
+      {
+        "id": 191,
+        "book": {
+          "id": 7,
+          "title": "solus tripudio suffragium",
+          "author": "Delbert Quigley"
+        },
+        "quantity": 5,
+        "price": 31686,
+        "discountedPrice": 28119
+      }
+    ],
+    "totalPrice": 451330,
+    "totalDiscount": 35784,
+    "finalPrice": 415546,
+    "status": "CANCELLED",
+    "payment": {
+      "id": 27,
+      "order": {
+        "id": 27
+      },
+      "paymentMethod": "Credit Card",
+      "paymentDate": "2024-09-02T23:47:43.123Z",
+      "amount": 415546,
+      "status": "COMPLETED",
+      "transactionId": "7381f8d1-4316-4b0f-b1fc-e965fb8ce406",
+      "paymentDetails": "Paid via jcb ending in 2301"
+    }
+  },
+  {
+    "id": 27,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-02T23:19:19.166Z",
+    "shippingAddress": "14899 S Park Street",
+    "orderItems": [
+      {
+        "id": 195,
+        "book": {
+          "id": 5,
+          "title": "venustas delibero comptus",
+          "author": "Henrietta Nicolas"
+        },
+        "quantity": 2,
+        "price": 44607,
+        "discountedPrice": 41146
+      }
+    ],
+    "totalPrice": 89214,
+    "totalDiscount": 6922,
+    "finalPrice": 82292,
+    "status": "SHIPPED",
+    "payment": {
+      "id": 27,
+      "order": {
+        "id": 27
+      },
+      "paymentMethod": "Bank Transfer",
+      "paymentDate": "2024-09-02T15:16:34.916Z",
+      "amount": 82292,
+      "status": "PENDING",
+      "transactionId": "b78a9a76-a47c-4916-96d4-b244da932957",
+      "paymentDetails": "Paid via discover ending in 8668"
+    }
+  },
+  {
+    "id": 8,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-02T14:31:20.343Z",
+    "shippingAddress": "1741 Yessenia Route",
+    "orderItems": [
+      {
+        "id": 154,
+        "book": {
+          "id": 6,
+          "title": "cupio articulus curvo",
+          "author": "Ollie Kozey"
+        },
+        "quantity": 4,
+        "price": 33451,
+        "discountedPrice": 29501
+      },
+      {
+        "id": 191,
+        "book": {
+          "id": 8,
+          "title": "demergo casso vere",
+          "author": "Mrs. Mindy Kozey"
+        },
+        "quantity": 3,
+        "price": 13272,
+        "discountedPrice": 9486
+      },
+      {
+        "id": 120,
+        "book": {
+          "id": 9,
+          "title": "aranea ullam delego",
+          "author": "Erma Batz"
+        },
+        "quantity": 2,
+        "price": 47159,
+        "discountedPrice": 45073
+      }
+    ],
+    "totalPrice": 267938,
+    "totalDiscount": 31330,
+    "finalPrice": 236608,
+    "status": "CANCELLED",
+    "payment": {
+      "id": 8,
+      "order": {
+        "id": 8
+      },
+      "paymentMethod": "Credit Card",
+      "paymentDate": "2024-09-03T10:13:34.014Z",
+      "amount": 236608,
+      "status": "FAILED",
+      "transactionId": "d9249960-d752-4d9e-8b52-eb69b2b1d4ed",
+      "paymentDetails": "Paid via visa ending in 2453"
+    }
+  },
+  {
+    "id": 21,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-03T10:47:03.406Z",
+    "shippingAddress": "8306 Vergie Centers",
+    "orderItems": [
+      {
+        "id": 175,
+        "book": {
+          "id": 3,
+          "title": "aeneus tollo omnis",
+          "author": "Willis Bergstrom"
+        },
+        "quantity": 3,
+        "price": 16787,
+        "discountedPrice": 15162
+      },
+      {
+        "id": 187,
+        "book": {
+          "id": 3,
+          "title": "abbas vulticulus abscido",
+          "author": "Maureen Dicki"
+        },
+        "quantity": 4,
+        "price": 32077,
+        "discountedPrice": 27470
+      }
+    ],
+    "totalPrice": 178669,
+    "totalDiscount": 23303,
+    "finalPrice": 155366,
+    "status": "EXCHANGE",
+    "payment": {
+      "id": 21,
+      "order": {
+        "id": 21
+      },
+      "paymentMethod": "Credit Card",
+      "paymentDate": "2024-09-03T10:16:36.314Z",
+      "amount": 155366,
+      "status": "COMPLETED",
+      "transactionId": "d4e5e73d-433b-4857-b2cf-036d8a0b44ff",
+      "paymentDetails": "Paid via american_express ending in 8926"
+    }
+  },
+  {
+    "id": 24,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-03T08:19:42.000Z",
+    "shippingAddress": "1554 Emmy Creek",
+    "orderItems": [
+      {
+        "id": 121,
+        "book": {
+          "id": 9,
+          "title": "solio barba est",
+          "author": "Rosalie Williamson"
+        },
+        "quantity": 4,
+        "price": 22190,
+        "discountedPrice": 20798
+      },
+      {
+        "id": 162,
+        "book": {
+          "id": 5,
+          "title": "corrigo vociferor varietas",
+          "author": "Marie D'Amore"
+        },
+        "quantity": 4,
+        "price": 38768,
+        "discountedPrice": 37149
+      },
+      {
+        "id": 192,
+        "book": {
+          "id": 6,
+          "title": "comptus thymbra deficio",
+          "author": "Glenda Larson"
+        },
+        "quantity": 3,
+        "price": 34564,
+        "discountedPrice": 29922
+      },
+      {
+        "id": 195,
+        "book": {
+          "id": 6,
+          "title": "bestia cerno terminatio",
+          "author": "Tonya Stokes"
+        },
+        "quantity": 1,
+        "price": 40011,
+        "discountedPrice": 39215
+      }
+    ],
+    "totalPrice": 387535,
+    "totalDiscount": 26766,
+    "finalPrice": 360769,
+    "status": "SHIPPED",
+    "payment": {
+      "id": 24,
+      "order": {
+        "id": 24
+      },
+      "paymentMethod": "PayPal",
+      "paymentDate": "2024-09-02T18:55:52.779Z",
+      "amount": 360769,
+      "status": "FAILED",
+      "transactionId": "bdb4c095-1e16-4d79-9758-cb356a14bf3a",
+      "paymentDetails": "Paid via maestro ending in 0604"
+    }
+  },
+  {
+    "id": 44,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-03T07:43:38.607Z",
+    "shippingAddress": "10366 Malika Plains",
+    "orderItems": [
+      {
+        "id": 100,
+        "book": {
+          "id": 1,
+          "title": "amicitia adimpleo credo",
+          "author": "Molly Mann"
+        },
+        "quantity": 2,
+        "price": 40004,
+        "discountedPrice": 38653
+      },
+      {
+        "id": 139,
+        "book": {
+          "id": 7,
+          "title": "centum theatrum defleo",
+          "author": "Yvonne Leannon"
+        },
+        "quantity": 3,
+        "price": 37705,
+        "discountedPrice": 35004
+      },
+      {
+        "id": 143,
+        "book": {
+          "id": 8,
+          "title": "debilito textilis defetiscor",
+          "author": "Dr. Abel Bashirian"
+        },
+        "quantity": 5,
+        "price": 47393,
+        "discountedPrice": 47306
+      }
+    ],
+    "totalPrice": 430088,
+    "totalDiscount": 11240,
+    "finalPrice": 418848,
+    "status": "PROCESSING",
+    "payment": {
+      "id": 44,
+      "order": {
+        "id": 44
+      },
+      "paymentMethod": "Bank Transfer",
+      "paymentDate": "2024-09-02T20:27:39.261Z",
+      "amount": 418848,
+      "status": "PENDING",
+      "transactionId": "310347c9-de3d-4348-b4f1-e959d1874327",
+      "paymentDetails": "Paid via maestro ending in 5226"
+    }
+  },
+  {
+    "id": 30,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-03T07:28:44.896Z",
+    "shippingAddress": "37822 Kavon Coves",
+    "orderItems": [
+      {
+        "id": 126,
+        "book": {
+          "id": 1,
+          "title": "aggredior earum consequuntur",
+          "author": "Anna McLaughlin"
+        },
+        "quantity": 5,
+        "price": 31705,
+        "discountedPrice": 28959
+      },
+      {
+        "id": 137,
+        "book": {
+          "id": 5,
+          "title": "vobis aptus administratio",
+          "author": "Lindsay Greenfelder V"
+        },
+        "quantity": 4,
+        "price": 11560,
+        "discountedPrice": 7387
+      },
+      {
+        "id": 173,
+        "book": {
+          "id": 5,
+          "title": "cultura audentia sint",
+          "author": "Roderick Leuschke"
+        },
+        "quantity": 3,
+        "price": 36186,
+        "discountedPrice": 32452
+      }
+    ],
+    "totalPrice": 313323,
+    "totalDiscount": 41624,
+    "finalPrice": 271699,
+    "status": "PROCESSING",
+    "payment": {
+      "id": 30,
+      "order": {
+        "id": 30
+      },
+      "paymentMethod": "PayPal",
+      "paymentDate": "2024-09-02T12:08:16.686Z",
+      "amount": 271699,
+      "status": "COMPLETED",
+      "transactionId": "ea1e58d8-4360-4cb3-8512-c1374394fb37",
+      "paymentDetails": "Paid via diners_club ending in 8891"
+    }
+  },
+  {
+    "id": 3,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-02T14:40:54.552Z",
+    "shippingAddress": "56888 Krista Ridge",
+    "orderItems": [
+      {
+        "id": 162,
+        "book": {
+          "id": 2,
+          "title": "asporto strues iusto",
+          "author": "Arturo Turner"
+        },
+        "quantity": 4,
+        "price": 15258,
+        "discountedPrice": 12063
+      },
+      {
+        "id": 127,
+        "book": {
+          "id": 2,
+          "title": "congregatio volup cedo",
+          "author": "Mr. Julian Mertz"
+        },
+        "quantity": 1,
+        "price": 18557,
+        "discountedPrice": 15430
+      }
+    ],
+    "totalPrice": 79589,
+    "totalDiscount": 15907,
+    "finalPrice": 63682,
+    "status": "DELIVERED",
+    "payment": {
+      "id": 3,
+      "order": {
+        "id": 3
+      },
+      "paymentMethod": "Bank Transfer",
+      "paymentDate": "2024-09-03T00:01:09.735Z",
+      "amount": 63682,
+      "status": "PENDING",
+      "transactionId": "f4c4160a-bc48-4ef1-9059-0397ed31571d",
+      "paymentDetails": "Paid via discover ending in 1196"
+    }
+  },
+  {
+    "id": 11,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-02T23:36:46.266Z",
+    "shippingAddress": "5177 Johnathon Ways",
+    "orderItems": [
+      {
+        "id": 182,
+        "book": {
+          "id": 1,
+          "title": "ciminatio admitto eum",
+          "author": "Mr. Julian Dietrich"
+        },
+        "quantity": 2,
+        "price": 32706,
+        "discountedPrice": 28123
+      },
+      {
+        "id": 117,
+        "book": {
+          "id": 5,
+          "title": "cubo amaritudo accedo",
+          "author": "Vicky Gleichner"
+        },
+        "quantity": 3,
+        "price": 22218,
+        "discountedPrice": 20503
+      }
+    ],
+    "totalPrice": 132066,
+    "totalDiscount": 14311,
+    "finalPrice": 117755,
+    "status": "DELIVERED",
+    "payment": {
+      "id": 11,
+      "order": {
+        "id": 11
+      },
+      "paymentMethod": "PayPal",
+      "paymentDate": "2024-09-03T03:41:54.848Z",
+      "amount": 117755,
+      "status": "COMPLETED",
+      "transactionId": "74ced2a1-d948-48cf-bf9a-c6d128da6e37",
+      "paymentDetails": "Paid via diners_club ending in 7763"
+    }
+  },
+  {
+    "id": 4,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-03T00:36:57.455Z",
+    "shippingAddress": "22187 Crown Street",
+    "orderItems": [
+      {
+        "id": 153,
+        "book": {
+          "id": 1,
+          "title": "curto asperiores urbanus",
+          "author": "Dr. Jeff Roob"
+        },
+        "quantity": 4,
+        "price": 41117,
+        "discountedPrice": 36272
+      },
+      {
+        "id": 115,
+        "book": {
+          "id": 6,
+          "title": "cilicium debitis sperno",
+          "author": "Nichole Shields"
+        },
+        "quantity": 5,
+        "price": 29197,
+        "discountedPrice": 25960
+      },
+      {
+        "id": 183,
+        "book": {
+          "id": 7,
+          "title": "defetiscor recusandae quisquam",
+          "author": "Mrs. Janie Smith"
+        },
+        "quantity": 2,
+        "price": 23377,
+        "discountedPrice": 20000
+      },
+      {
+        "id": 124,
+        "book": {
+          "id": 9,
+          "title": "caries sublime sortitus",
+          "author": "Lucy Crooks DVM"
+        },
+        "quantity": 3,
+        "price": 47031,
+        "discountedPrice": 46406
+      }
+    ],
+    "totalPrice": 498300,
+    "totalDiscount": 44194,
+    "finalPrice": 454106,
+    "status": "SHIPPED",
+    "payment": {
+      "id": 4,
+      "order": {
+        "id": 4
+      },
+      "paymentMethod": "Bank Transfer",
+      "paymentDate": "2024-09-03T09:49:05.317Z",
+      "amount": 454106,
+      "status": "COMPLETED",
+      "transactionId": "ebd1757e-ea79-48c5-bdc3-e3f09b36d16e",
+      "paymentDetails": "Paid via maestro ending in 8631"
+    }
+  },
+  {
+    "id": 37,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-02T20:24:35.532Z",
+    "shippingAddress": "39717 Darrel Center",
+    "orderItems": [
+      {
+        "id": 127,
+        "book": {
+          "id": 9,
+          "title": "cura tenetur tenus",
+          "author": "Cheryl Fisher DVM"
+        },
+        "quantity": 2,
+        "price": 44419,
+        "discountedPrice": 42656
+      },
+      {
+        "id": 144,
+        "book": {
+          "id": 8,
+          "title": "vulgaris triumphus bonus",
+          "author": "Felipe Fay"
+        },
+        "quantity": 2,
+        "price": 46534,
+        "discountedPrice": 42380
+      },
+      {
+        "id": 193,
+        "book": {
+          "id": 6,
+          "title": "temporibus pauci corroboro",
+          "author": "Michael Wilkinson DVM"
+        },
+        "quantity": 4,
+        "price": 28716,
+        "discountedPrice": 24323
+      }
+    ],
+    "totalPrice": 296770,
+    "totalDiscount": 29406,
+    "finalPrice": 267364,
+    "status": "REFUND",
+    "payment": {
+      "id": 37,
+      "order": {
+        "id": 37
+      },
+      "paymentMethod": "Bank Transfer",
+      "paymentDate": "2024-09-02T16:42:30.956Z",
+      "amount": 267364,
+      "status": "PENDING",
+      "transactionId": "803e62c7-5853-4c25-89b3-3093957a657f",
+      "paymentDetails": "Paid via american_express ending in 9392"
+    }
+  },
+  {
+    "id": 39,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-03T06:10:12.570Z",
+    "shippingAddress": "153 Macejkovic Via",
+    "orderItems": [
+      {
+        "id": 132,
+        "book": {
+          "id": 4,
+          "title": "unde contra eligendi",
+          "author": "Rose Fisher III"
+        },
+        "quantity": 5,
+        "price": 29751,
+        "discountedPrice": 27866
+      },
+      {
+        "id": 131,
+        "book": {
+          "id": 10,
+          "title": "dolore nemo demo",
+          "author": "Mrs. Bonnie O'Kon"
+        },
+        "quantity": 1,
+        "price": 49110,
+        "discountedPrice": 46297
+      },
+      {
+        "id": 190,
+        "book": {
+          "id": 4,
+          "title": "libero soluta succurro",
+          "author": "Karen Borer"
+        },
+        "quantity": 1,
+        "price": 36166,
+        "discountedPrice": 32722
+      },
+      {
+        "id": 188,
+        "book": {
+          "id": 10,
+          "title": "enim conservo crux",
+          "author": "Joshua Ortiz"
+        },
+        "quantity": 2,
+        "price": 26691,
+        "discountedPrice": 25177
+      }
+    ],
+    "totalPrice": 287413,
+    "totalDiscount": 18710,
+    "finalPrice": 268703,
+    "status": "PROCESSING",
+    "payment": {
+      "id": 39,
+      "order": {
+        "id": 39
+      },
+      "paymentMethod": "Credit Card",
+      "paymentDate": "2024-09-03T08:04:32.817Z",
+      "amount": 268703,
+      "status": "FAILED",
+      "transactionId": "7f067fac-cc5c-4cb9-9ce0-f216da181fd8",
+      "paymentDetails": "Paid via american_express ending in 3556"
+    }
+  },
+  {
+    "id": 1,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-02T19:05:30.145Z",
+    "shippingAddress": "853 Marcelino Street",
+    "orderItems": [
+      {
+        "id": 110,
+        "book": {
+          "id": 9,
+          "title": "cursus accusantium cunae",
+          "author": "Wilbert Farrell"
+        },
+        "quantity": 5,
+        "price": 11667,
+        "discountedPrice": 9524
+      },
+      {
+        "id": 171,
+        "book": {
+          "id": 4,
+          "title": "tenetur iusto acies",
+          "author": "Valerie Nitzsche"
+        },
+        "quantity": 2,
+        "price": 40093,
+        "discountedPrice": 37416
+      }
+    ],
+    "totalPrice": 138521,
+    "totalDiscount": 16069,
+    "finalPrice": 122452,
+    "status": "DELIVERED",
+    "payment": {
+      "id": 1,
+      "order": {
+        "id": 1
+      },
+      "paymentMethod": "Credit Card",
+      "paymentDate": "2024-09-02T14:55:37.421Z",
+      "amount": 122452,
+      "status": "COMPLETED",
+      "transactionId": "db1d1eb9-8084-44da-b5aa-18dd48b67e7c",
+      "paymentDetails": "Paid via discover ending in 5911"
+    }
+  },
+  {
+    "id": 28,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-02T19:44:11.492Z",
+    "shippingAddress": "801 Runte Lock",
+    "orderItems": [
+      {
+        "id": 108,
+        "book": {
+          "id": 1,
+          "title": "cotidie recusandae videlicet",
+          "author": "Tammy Funk"
+        },
+        "quantity": 2,
+        "price": 18016,
+        "discountedPrice": 17945
+      },
+      {
+        "id": 124,
+        "book": {
+          "id": 1,
+          "title": "audax terminatio derelinquo",
+          "author": "Dr. Naomi Orn"
+        },
+        "quantity": 5,
+        "price": 30150,
+        "discountedPrice": 25330
+      },
+      {
+        "id": 199,
+        "book": {
+          "id": 5,
+          "title": "cernuus enim canto",
+          "author": "Pauline Vandervort"
+        },
+        "quantity": 5,
+        "price": 27660,
+        "discountedPrice": 26729
+      },
+      {
+        "id": 159,
+        "book": {
+          "id": 7,
+          "title": "traho villa comminor",
+          "author": "Sergio Goldner"
+        },
+        "quantity": 5,
+        "price": 21765,
+        "discountedPrice": 21272
+      },
+      {
+        "id": 171,
+        "book": {
+          "id": 7,
+          "title": "minima aeger cruciamentum",
+          "author": "Shawn Towne"
+        },
+        "quantity": 3,
+        "price": 42696,
+        "discountedPrice": 37961
+      }
+    ],
+    "totalPrice": 561995,
+    "totalDiscount": 45567,
+    "finalPrice": 516428,
+    "status": "PROCESSING",
+    "payment": {
+      "id": 28,
+      "order": {
+        "id": 28
+      },
+      "paymentMethod": "PayPal",
+      "paymentDate": "2024-09-03T04:22:00.263Z",
+      "amount": 516428,
+      "status": "FAILED",
+      "transactionId": "d54f5110-3d45-4c82-9a13-8a2952ecc67d",
+      "paymentDetails": "Paid via american_express ending in 9539"
+    }
+  },
+  {
+    "id": 36,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-03T00:04:38.773Z",
+    "shippingAddress": "5720 Keenan Knoll",
+    "orderItems": [
+      {
+        "id": 165,
+        "book": {
+          "id": 10,
+          "title": "vinco capillus sodalitas",
+          "author": "Ricky Daugherty V"
+        },
+        "quantity": 3,
+        "price": 48442,
+        "discountedPrice": 45521
+      },
+      {
+        "id": 125,
+        "book": {
+          "id": 2,
+          "title": "censura strenuus occaecati",
+          "author": "Wallace Predovic"
+        },
+        "quantity": 3,
+        "price": 46475,
+        "discountedPrice": 41963
+      }
+    ],
+    "totalPrice": 284751,
+    "totalDiscount": 22299,
+    "finalPrice": 262452,
+    "status": "DELIVERED",
+    "payment": {
+      "id": 36,
+      "order": {
+        "id": 36
+      },
+      "paymentMethod": "Bank Transfer",
+      "paymentDate": "2024-09-03T00:28:08.063Z",
+      "amount": 262452,
+      "status": "PENDING",
+      "transactionId": "34d7dd29-bcd5-491a-9285-83dd2bc04fb0",
+      "paymentDetails": "Paid via jcb ending in 2768"
+    }
+  },
+  {
+    "id": 21,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-03T05:46:17.869Z",
+    "shippingAddress": "876 Wisoky Courts",
+    "orderItems": [
+      {
+        "id": 188,
+        "book": {
+          "id": 2,
+          "title": "tricesimus bellum eius",
+          "author": "Brittany O'Keefe"
+        },
+        "quantity": 1,
+        "price": 22153,
+        "discountedPrice": 17516
+      }
+    ],
+    "totalPrice": 22153,
+    "totalDiscount": 4637,
+    "finalPrice": 17516,
+    "status": "PROCESSING",
+    "payment": {
+      "id": 21,
+      "order": {
+        "id": 21
+      },
+      "paymentMethod": "Bank Transfer",
+      "paymentDate": "2024-09-03T04:10:04.966Z",
+      "amount": 17516,
+      "status": "PENDING",
+      "transactionId": "75c9bb12-e0c5-4601-a1fb-494fd44b5758",
+      "paymentDetails": "Paid via visa ending in 0582"
+    }
+  },
+  {
+    "id": 21,
+    "user": {
+      "id": 1,
+      "username": "testUser"
+    },
+    "orderDate": "2024-09-02T20:04:29.119Z",
+    "shippingAddress": "881 Forest Square",
+    "orderItems": [
+      {
+        "id": 164,
+        "book": {
+          "id": 4,
+          "title": "verbum amplitudo illo",
+          "author": "Marlene Beatty"
+        },
+        "quantity": 1,
+        "price": 38937,
+        "discountedPrice": 34694
+      },
+      {
+        "id": 199,
+        "book": {
+          "id": 8,
+          "title": "ex denuncio ullus",
+          "author": "Marty Zboncak"
+        },
+        "quantity": 4,
+        "price": 39590,
+        "discountedPrice": 34793
+      }
+    ],
+    "totalPrice": 197297,
+    "totalDiscount": 23431,
+    "finalPrice": 173866,
+    "status": "EXCHANGE",
+    "payment": {
+      "id": 21,
+      "order": {
+        "id": 21
+      },
+      "paymentMethod": "PayPal",
+      "paymentDate": "2024-09-03T02:42:21.154Z",
+      "amount": 173866,
+      "status": "FAILED",
+      "transactionId": "de87a605-4d8f-4f60-acc7-fef2fd0f924f",
+      "paymentDetails": "Paid via discover ending in 7736"
+    }
+  }
+]
