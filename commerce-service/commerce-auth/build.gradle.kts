@@ -14,6 +14,8 @@ dependencies {
 
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
 
+    testImplementation("com.tngtech.archunit:archunit-junit5:1.3.0")
+
     implementation(project(":commons:common-util"))
     implementation(project(":commons:model"))
     testImplementation(project(":commons:test-helper"))
