@@ -73,18 +73,14 @@ class ProductControllerTest(
     fun getProductCategories() {
         given(productUseCase.getProductCategories()).willReturn(
             ProductCategoryInfoDto(
-                id = 0L,
-                parentId = null,
-                name = "전체",
-                depth = 0,
                 childCategories = listOf(
-                    ProductCategoryInfoDto(
+                    ProductCategoryInfoDto.ProductCategoryChildInfoDto(
                         id = 1L,
                         parentId = 0L,
                         name = "한국도서",
                         depth = 1,
                         childCategories = listOf(
-                            ProductCategoryInfoDto(
+                            ProductCategoryInfoDto.ProductCategoryChildInfoDto(
                                 id = 3L,
                                 parentId = 1L,
                                 name = "문학 소설",
@@ -93,13 +89,13 @@ class ProductControllerTest(
                             )
                         )
                     ),
-                    ProductCategoryInfoDto(
+                    ProductCategoryInfoDto.ProductCategoryChildInfoDto(
                         id = 2L,
                         parentId = 0L,
                         name = "외국도서",
                         depth = 1,
                         childCategories = listOf(
-                            ProductCategoryInfoDto(
+                            ProductCategoryInfoDto.ProductCategoryChildInfoDto(
                                 id = 4L,
                                 parentId = 2L,
                                 name = "문학 소설",
@@ -125,10 +121,6 @@ class ProductControllerTest(
                     responseFields(
                         fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("요청 성공 여부"),
                         fieldWithPath("data").type(JsonFieldType.OBJECT).description("응답 데이터"),
-                        fieldWithPath("data.id").type(JsonFieldType.NUMBER).description("카테고리 id"),
-                        fieldWithPath("data.parentId").type(JsonFieldType.NUMBER).description("부모 카테고리 id").optional(),
-                        fieldWithPath("data.name").type(JsonFieldType.STRING).description("카테고리 이름"),
-                        fieldWithPath("data.depth").type(JsonFieldType.NUMBER).description("뎁스"),
                         fieldWithPath("data.childCategories").type(JsonFieldType.ARRAY).description("자식 카테고리")
                             .optional(),
                         fieldWithPath("data.childCategories[].id").type(JsonFieldType.NUMBER).description("자식 카테고리 id"),
