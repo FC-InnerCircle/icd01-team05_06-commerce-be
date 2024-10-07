@@ -310,7 +310,12 @@ class AuthServiceTest {
         val command = UpdateCommand(
             password = null,
             name = "After Name",
-            phone = "123-4567"
+            phone = "123-4567",
+            address = Address(
+                postalCode = "12345",
+                streetAddress = "서울 종로구 테스트동",
+                detailAddress = "123-45"
+            )
         )
 
         authService.update(member, command)
@@ -339,7 +344,12 @@ class AuthServiceTest {
         val command = UpdateCommand(
             password = "After Password",
             name = "After Name",
-            phone = "123-4567"
+            phone = "123-4567",
+            address = Address(
+                postalCode = "12345",
+                streetAddress = "서울 종로구 테스트동",
+                detailAddress = "123-45"
+            )
         )
 
         authService.update(member, command)

@@ -283,7 +283,10 @@ class AuthControllerTest(
         val request = UpdateRequest(
             password = "123!@#qwe",
             name = "홍길동",
-            phone = "01012345678"
+            phone = "01012345678",
+            postalCode = "12345",
+            streetAddress = "서울 종로구 테스트동",
+            detailAddress = "123-45"
         )
 
         mockMvc.perform(
@@ -299,10 +302,13 @@ class AuthControllerTest(
                     preprocessRequest(prettyPrint()),
                     preprocessResponse(prettyPrint()),
                     requestFields(
-                        fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호"),
+                        fieldWithPath("password").type(JsonFieldType.STRING).optional().description("비밀번호 (없는 경우 기존 유지)"),
                         fieldWithPath("name").type(JsonFieldType.STRING).description("이름"),
                         fieldWithPath("phone").type(JsonFieldType.STRING).description("연락처")
                             .attributes(format("숫자만 입력")),
+                        fieldWithPath("postalCode").type(JsonFieldType.STRING).description("우편번호"),
+                        fieldWithPath("streetAddress").type(JsonFieldType.STRING).description("지번주소"),
+                        fieldWithPath("detailAddress").type(JsonFieldType.STRING).description("상세주소"),
                     ),
                     responseFields(
                         fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("요청 성공 여부"),

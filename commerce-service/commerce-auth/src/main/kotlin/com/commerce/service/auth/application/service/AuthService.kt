@@ -91,6 +91,7 @@ class AuthService(
                 password = command.password?.let { passwordEncoder.encode(it) },
                 name = command.name,
                 phone = command.phone,
+                address = command.address
             )
         )
     }

@@ -35,7 +35,7 @@ class Member(
         refreshToken = null,
     )
 
-    fun update(password: String?, name: String, phone: String) = Member(
+    fun update(password: String?, name: String, phone: String, address: Address) = Member(
         id = id,
         email = email,
         password = if (password.isNullOrBlank()) {
