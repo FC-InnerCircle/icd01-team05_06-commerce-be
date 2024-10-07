@@ -38,6 +38,9 @@ class AuthController(
             name = member.name,
             email = member.email,
             phone = member.phone,
+            postalCode = member.address.postalCode,
+            streetAddress = member.address.streetAddress,
+            detailAddress = member.address.detailAddress
         )
         return CommonResponse.ok(memberInfo)
     }

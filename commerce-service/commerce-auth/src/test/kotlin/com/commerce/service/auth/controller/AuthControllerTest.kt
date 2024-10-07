@@ -206,6 +206,9 @@ class AuthControllerTest(
                         fieldWithPath("data.email").type(JsonFieldType.STRING).description("이메일"),
                         fieldWithPath("data.name").type(JsonFieldType.STRING).description("이름"),
                         fieldWithPath("data.phone").type(JsonFieldType.STRING).description("연락처"),
+                        fieldWithPath("data.postalCode").type(JsonFieldType.STRING).description("우편번호"),
+                        fieldWithPath("data.streetAddress").type(JsonFieldType.STRING).description("지번주소"),
+                        fieldWithPath("data.detailAddress").type(JsonFieldType.STRING).description("상세주소"),
                         fieldWithPath("error").type(JsonFieldType.ARRAY).optional().description("오류 정보")
                     )
                 )

@@ -5,4 +5,7 @@ data class MemberInfoDto(
     val email: String,
     val name: String,
     val phone: String,
+    val postalCode: String,
+    val streetAddress: String,
+    val detailAddress: String,
 )
