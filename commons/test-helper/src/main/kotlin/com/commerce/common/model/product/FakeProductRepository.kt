@@ -64,6 +64,9 @@ class FakeProductRepository : ProductRepository {
             stockQuantity = 100,
             rating = 5.5,
             status = SaleStatus.ON_SALE,
+            isHotNew = false,
+            isRecommend = false,
+            isBestseller = false,
             category = CategoryDetail(
                 id = 2L,
                 name = "국내도서",
@@ -89,6 +92,9 @@ class FakeProductRepository : ProductRepository {
             stockQuantity = 100,
             rating = 5.5,
             status = SaleStatus.ON_SALE,
+            isHotNew = false,
+            isRecommend = false,
+            isBestseller = false,
             category = CategoryDetail(
                 id = 3L,
                 name = "해외도서",
@@ -103,6 +109,10 @@ class FakeProductRepository : ProductRepository {
     }
 
     override fun findByHomeProductType(homeProductType: HomeProductType): List<Product> {
+        TODO("Not yet implemented")
+    }
+
+    override fun save(product: Product): Product {
         TODO("Not yet implemented")
     }
 }

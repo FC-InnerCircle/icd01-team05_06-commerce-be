@@ -5,8 +5,9 @@ import com.commerce.common.model.member.Member
 import com.commerce.common.model.shopping_cart.FakeShoppingCartRepository
 import com.commerce.common.model.shopping_cart.ShoppingCart
 import com.commerce.common.model.shopping_cart.ShoppingCartRepository
-import com.commerce.service.order.applicaton.usecase.command.PatchShoppingCartCommand
-import com.commerce.service.order.applicaton.usecase.command.PostShoppingCartCommand
+import com.commerce.service.order.application.service.ShoppingCartService
+import com.commerce.service.order.application.usecase.command.PatchShoppingCartCommand
+import com.commerce.service.order.application.usecase.command.PostShoppingCartCommand
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
