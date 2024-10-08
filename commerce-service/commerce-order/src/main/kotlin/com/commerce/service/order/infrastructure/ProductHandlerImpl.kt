@@ -91,8 +91,7 @@ override fun createOrder(member: Member, command: CreateOrderCommand): OrdersDto
     // 주문 완료 처리
     override fun completeOrder(order: OrdersDto): OrderCreateResponse {
         // order의 주문상태 완료로 변경
-        // TODO: 주문 완료 처리 (주문 정보 저장)
-        // order.changeOrderStatus(OrderStatus.COMPLETED)
+        order.changeOrderStatus(OrderStatus.COMPLETED)
 
         // 주문 정보 저장
         // Orders, OrderProduct 저장

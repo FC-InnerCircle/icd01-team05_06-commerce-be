@@ -3,6 +3,7 @@ package com.commerce.service.order.controller
 import com.commerce.common.jwt.application.service.TokenType
 import com.commerce.common.jwt.application.usecase.TokenUseCase
 import com.commerce.common.jwt.config.JwtAuthenticationFilter
+import com.commerce.common.model.address.Address
 import com.commerce.common.model.member.Member
 import com.commerce.common.model.member.MemberRepository
 import com.commerce.common.model.orderProduct.OrderProduct
@@ -78,7 +79,12 @@ class OrdersControllerTest {
         email = "commerce@example.com",
         password = "123!@#qwe",
         name = "홍길동",
-        phone = "01012345678"
+        phone = "01012345678",
+        address = Address(
+            postalCode = "12345",
+            streetAddress = "서울 종로구 테스트동",
+            detailAddress = "123-45"
+        )
     )
 
     @BeforeEach
@@ -209,7 +215,7 @@ class OrdersControllerTest {
         )
 
         // Mock 설정
-        `when`(orderUseCase.getOrder(sampleListRequest, testMember)).thenReturn(sampleListResponse)
+        `when`(orderUseCase.getOrder(sampleListRequest.toCommand(testMember))).thenReturn(sampleListResponse)
         `when`(orderUseCase.getOrderDetail("1")).thenReturn(sampleDetailResponse)
     }
 
@@ -414,7 +420,7 @@ class OrdersControllerTest {
         ).willReturn(testMember.id.toString())
         given(memberRepository.findById(testMember.id)).willReturn(testMember)
 
-        `when`(orderUseCase.order(request, testMember)).thenReturn(response)
+        `when`(orderUseCase.order(request.toCommand(testMember))).thenReturn(response)
 
        // when & then
        mockMvc.post("/order/v1/orders") {
