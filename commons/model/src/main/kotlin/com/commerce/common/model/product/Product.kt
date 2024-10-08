@@ -21,4 +21,7 @@ class Product(
     val rating: Double,
     val status: SaleStatus,
     val category: CategoryDetail? = null,
+    val isHotNew: Boolean,
+    val isRecommend: Boolean,
+    val isBestseller: Boolean
 )

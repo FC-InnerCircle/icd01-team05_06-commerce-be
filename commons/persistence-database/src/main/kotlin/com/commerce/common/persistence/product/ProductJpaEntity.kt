@@ -3,6 +3,7 @@ package com.commerce.common.persistence.product
 import com.commerce.common.model.category.CategoryDetail
 import com.commerce.common.model.product.Product
 import com.commerce.common.model.product.SaleStatus
+import com.commerce.common.persistence.BaseTimeEntity
 import jakarta.persistence.*
 import org.springframework.data.jpa.domain.AbstractAuditable_.createdBy
 import java.math.BigDecimal
@@ -46,15 +47,9 @@ class ProductJpaEntity(
     val isRecommend: Boolean,
     @Column(nullable = false)
     val isBestseller: Boolean,
-
-    @Column(name = "created_at")
-    val createdAt: LocalDateTime,
-    @Column(name = "updated_at")
-    val updatedAt: LocalDateTime,
     @Column(name = "deleted_at")
     val deletedAt: LocalDateTime,
-
-    ) {
+    ) : BaseTimeEntity(){
     fun toModel(category: CategoryDetail?): Product {
      return Product(
          id = id,
@@ -73,6 +68,9 @@ class ProductJpaEntity(
          rating = rating,
          status = status,
          category = category,
+        isHotNew = isHotNew,
+        isRecommend = isRecommend,
+        isBestseller = isBestseller
      )
     }
 }
@@ -95,8 +93,9 @@ fun Product.toJpaEntity(categoryId: Long): ProductJpaEntity {
         rating = this.rating,
         status = this.status,
         categoryId = categoryId,
-        createdAt = LocalDateTime.now(),
-        updatedAt = LocalDateTime.now(),
+        isHotNew = this.isHotNew,
+        isRecommend = this.isRecommend,
+        isBestseller = this.isBestseller,
         deletedAt = LocalDateTime.now(),
     )
 }

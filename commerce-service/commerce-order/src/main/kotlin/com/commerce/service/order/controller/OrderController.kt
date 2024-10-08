@@ -37,7 +37,7 @@ class OrderController(
 
     // 주문 생성 API
     @PostMapping
-    fun createOrder(@Valid @RequestBody request: OrderCreateRequest, @AuthenticationPrincipal member: Member): ResponseEntity<CommonResponse<OrderCreateResponse>> {
+    fun createOrder(@Validated @RequestBody request: OrderCreateRequest, @AuthenticationPrincipal member: Member): ResponseEntity<CommonResponse<OrderCreateResponse>> {
         val response = orderUseCase.order(request.toCommand(member))
         return ResponseEntity.ok(CommonResponse.ok(data = response))
     }

@@ -6,16 +6,18 @@ import com.commerce.common.model.orders.OrderStatus
 import com.commerce.service.order.application.usecase.command.OrderListCommand
 import com.commerce.service.order.application.usecase.exception.InvalidInputException
 import com.commerce.service.order.controller.common.request.CommonRequest
-import jakarta.validation.constraints.NotNull
+import jakarta.validation.constraints.*
 import org.springframework.format.annotation.DateTimeFormat
 import java.time.LocalDate
 
 data class OrderListRequest(
-    @field:NotNull(message = "Date range is required")
     val dateRange: DateRange = DateRange.LAST_WEEK,
     val status: OrderStatus? = null,
     val sortBy: OrderSortOption = OrderSortOption.RECENT,
+    @field:Min(value = 0, message = "페이지 번호는 0 이상이어야 합니다")
     val page: Int = 0,
+    @field:Min(value = 1, message = "페이지 크기는 1 이상이어야 합니다")
+    @field:Max(value = 100, message = "페이지 크기는 100 이하여야 합니다")
     val size: Int = 20,
     @DateTimeFormat(pattern = "yyyy-MM-dd") // 쿼리 파라미터 파싱
     var orderStartDate: LocalDate? = null,
@@ -56,20 +58,11 @@ data class OrderListRequest(
     override fun validate() {
         if (dateRange == DateRange.CUSTOM) {
             if (orderStartDate == null || orderEndDate == null) {
-                throw InvalidInputException("Custom date range requires start and end dates")
+                throw InvalidInputException("Start date and end date are required for custom date range")
             }
-            if (!orderStartDate!!.isBefore(orderEndDate)) {
+            if (orderStartDate!!.isAfter(orderEndDate)) {
                 throw InvalidInputException("Start date must be before end date")
             }
-            if (!orderEndDate!!.isAfter(orderStartDate)) {
-                throw InvalidInputException("End date must be after start date")
-            }
-        }
-        if (page < 0) {
-            throw InvalidInputException("Page must be non-negative")
-        }
-        if (size <= 0) {
-            throw InvalidInputException("Size must be positive")
         }
     }
 
