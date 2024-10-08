@@ -74,6 +74,9 @@ class HomeControllerTest(
                     stockQuantity = 2790,
                     rating = 4.5,
                     status = SaleStatus.ON_SALE,
+                    isHotNew = false,
+                    isRecommend = false,
+                    isBestseller = false,
                     category = CategoryDetail(
                         id = 1,
                         name = "국내 도서",
