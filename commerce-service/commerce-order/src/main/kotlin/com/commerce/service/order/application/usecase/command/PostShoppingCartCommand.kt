@@ -1,4 +1,4 @@
-package com.commerce.service.order.applicaton.usecase.command
+package com.commerce.service.order.application.usecase.command
 
 data class PostShoppingCartCommand(
     val productId: Long,

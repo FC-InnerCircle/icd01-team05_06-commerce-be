@@ -12,4 +12,6 @@ interface ProductRepository {
     fun findBySearchWord(searchWord: String?, categoryId: Long?, page: Int, size: Int): PaginationModel<Product>
 
     fun findByHomeProductType(homeProductType: HomeProductType): List<Product>
+
+    fun save(product: Product): Product
 }

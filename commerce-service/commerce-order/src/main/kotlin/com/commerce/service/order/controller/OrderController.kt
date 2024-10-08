@@ -2,10 +2,11 @@ package com.commerce.service.order.controller
 
 import com.commerce.common.model.member.Member
 import com.commerce.common.response.CommonResponse
-import com.commerce.service.order.applicaton.usecase.OrderUseCase
+import com.commerce.service.order.application.usecase.OrderUseCase
 import com.commerce.service.order.config.ApiPaths
+import com.commerce.service.order.controller.request.OrderCreateRequest
 import com.commerce.service.order.controller.request.OrderListRequest
-import com.commerce.service.order.controller.response.OrderDetail
+import com.commerce.service.order.controller.response.OrderCreateResponse
 import com.commerce.service.order.controller.response.OrderDetailResponse
 import com.commerce.service.order.controller.response.OrderListResponse
 import jakarta.validation.Valid
@@ -23,8 +24,7 @@ class OrderController(
     // 주문 조회 API
     @GetMapping
     fun getOrder(@Validated request: OrderListRequest,  @AuthenticationPrincipal member: Member): ResponseEntity<CommonResponse<OrderListResponse>> {
-        request.validate()
-        val response = orderUseCase.getOrder(request, member)
+        val response = orderUseCase.getOrder(request.toCommand(member))
         return ResponseEntity.ok(CommonResponse.ok(data = response))
     }
 
@@ -36,11 +36,9 @@ class OrderController(
     }
 
     // 주문 생성 API
-    @PostMapping("/create")
-    fun createOrder(@Valid @RequestBody request: OrderDetail): ResponseEntity<CommonResponse<OrderDetailResponse>> {
-//        return ResponseEntity.ok(CommonResponse(success = true, data = OrderDetailResponse(order = request)))
-        val response = null;
+    @PostMapping
+    fun createOrder(@Validated @RequestBody request: OrderCreateRequest, @AuthenticationPrincipal member: Member): ResponseEntity<CommonResponse<OrderCreateResponse>> {
+        val response = orderUseCase.order(request.toCommand(member))
         return ResponseEntity.ok(CommonResponse.ok(data = response))
     }
-
 }

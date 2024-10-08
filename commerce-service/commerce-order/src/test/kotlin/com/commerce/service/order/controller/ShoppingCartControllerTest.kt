@@ -8,8 +8,8 @@ import com.commerce.common.model.member.Member
 import com.commerce.common.model.member.MemberRepository
 import com.commerce.common.model.shopping_cart.ShoppingCartProduct
 import com.commerce.common.util.ObjectMapperConfig
-import com.commerce.service.order.applicaton.usecase.ShoppingCartUseCase
-import com.commerce.service.order.applicaton.usecase.dto.ShoppingCartListDto
+import com.commerce.service.order.application.usecase.ShoppingCartUseCase
+import com.commerce.service.order.application.usecase.dto.ShoppingCartListDto
 import com.commerce.service.order.config.SecurityConfig
 import com.commerce.service.order.controller.request.PatchShoppingCartRequest
 import com.commerce.service.order.controller.request.PostShoppingCartRequest

@@ -8,6 +8,7 @@ package com.commerce.common.model.orders
 // CANCELLED: 주문 취소
 // REFUND: 환불
 // EXCHANGE: 교환
+// COMPLETED: 주문 완료
 enum class OrderStatus {
     PENDING,
     PROCESSING,
@@ -15,5 +16,6 @@ enum class OrderStatus {
     DELIVERED,
     CANCELLED,
     REFUND,
-    EXCHANGE
+    EXCHANGE,
+    COMPLETED
 }

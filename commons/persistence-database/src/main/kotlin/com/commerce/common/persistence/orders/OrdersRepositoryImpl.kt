@@ -15,7 +15,7 @@ import java.time.LocalTime
 
 @Repository
 class OrdersRepositoryImpl(
-    private val ordersJpaRepository: OrdersJpaRepository
+    private val ordersJpaRepository: OrdersJpaRepository,
 ) : OrdersRepository {
 
     override fun findByMemberIdAndOrderDateBetween(
@@ -45,5 +45,9 @@ class OrdersRepositoryImpl(
         }
 
         return pageResult.toPaginationModel { it.toOrder() }
+    }
+
+    override fun save(orders: Orders): Orders {
+        return ordersJpaRepository.save(orders.toJpaEntity()).toOrder()
     }
 }

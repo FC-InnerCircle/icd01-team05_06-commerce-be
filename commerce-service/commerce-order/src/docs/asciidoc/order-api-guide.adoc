@@ -45,6 +45,21 @@ include::common.adoc[]
 }
 ----
 
+= 주문 관련 API
+
+[[order-create]]
+== 주문 생성
+
+=== HTTP Request
+include::{snippets}/create-order/http-request.adoc[]
+=== Request Fields
+include::{snippets}/create-order/request-fields.adoc[]
+=== HTTP Response
+include::{snippets}/create-order/http-response.adoc[]
+=== Response Fields
+include::{snippets}/create-order/response-fields.adoc[]
+
+
 [[order-list]]
 == 주문 목록 조회
 link:https://github.com/FC-InnerCircle/icd01-team05_06-commerce-be/tree/main/commerce-service/commerce-order[주문 목록 예시 요청값 정리 자료]

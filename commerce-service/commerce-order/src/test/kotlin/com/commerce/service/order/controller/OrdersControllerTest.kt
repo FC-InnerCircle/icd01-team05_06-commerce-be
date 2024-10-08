@@ -3,16 +3,16 @@ package com.commerce.service.order.controller
 import com.commerce.common.jwt.application.service.TokenType
 import com.commerce.common.jwt.application.usecase.TokenUseCase
 import com.commerce.common.jwt.config.JwtAuthenticationFilter
-import com.commerce.common.model.address.Address
 import com.commerce.common.model.member.Member
 import com.commerce.common.model.member.MemberRepository
 import com.commerce.common.model.orderProduct.OrderProduct
 import com.commerce.common.model.orders.OrderSortOption
 import com.commerce.common.model.util.PaginationInfo
 import com.commerce.common.util.ObjectMapperConfig
-import com.commerce.service.order.applicaton.usecase.OrderUseCase
-import com.commerce.service.order.applicaton.usecase.domain.OrderNumber
+import com.commerce.service.order.application.usecase.OrderUseCase
+import com.commerce.service.order.application.usecase.vo.OrderNumber
 import com.commerce.service.order.config.SecurityConfig
+import com.commerce.service.order.controller.request.OrderCreateRequest
 import com.commerce.service.order.controller.request.OrderListRequest
 import com.commerce.service.order.controller.response.*
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -33,13 +33,13 @@ import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get
 import org.springframework.restdocs.operation.preprocess.Preprocessors.*
-import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
-import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
+import org.springframework.restdocs.payload.PayloadDocumentation.*
 import org.springframework.restdocs.request.RequestDocumentation.*
 import org.springframework.restdocs.snippet.Attributes.key
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
@@ -78,12 +78,7 @@ class OrdersControllerTest {
         email = "commerce@example.com",
         password = "123!@#qwe",
         name = "홍길동",
-        phone = "01012345678",
-        address = Address(
-            postalCode = "12345",
-            streetAddress = "서울 종로구 테스트동",
-            detailAddress = "123-45"
-        )
+        phone = "01012345678"
     )
 
     @BeforeEach
@@ -124,8 +119,8 @@ class OrdersControllerTest {
                     content = "해리 포터와 마법사의 돌 외 2권",
                     orderDate = LocalDateTime.of(2024, 8, 15, 14, 30).toString(),
                     status = "배송완료",
-                    pricie = 45000.0,
-                    discoutedPrice = 40500.0,
+                    price = 45000.0,
+                    discountedPrice = 40500.0,
                     memberName = "김철수",
                     recipient = "김영희"
                 ),
@@ -135,8 +130,8 @@ class OrdersControllerTest {
                     content = "코스모스: 가능한 세계들",
                     orderDate = LocalDateTime.of(2024, 8, 16, 9, 45).toString(),
                     status = "결제완료",
-                    pricie = 22000.0,
-                    discoutedPrice = 19800.0,
+                    price = 22000.0,
+                    discountedPrice = 19800.0,
                     memberName = "이지은",
                     recipient = "이지은"
                 )
@@ -171,8 +166,6 @@ class OrdersControllerTest {
                     quantity = 1,
                     price = BigDecimal("15000.00"),
                     discountedPrice = BigDecimal("13500.00"),
-                    createdAt = LocalDateTime.of(2024, 8, 15, 14, 30),
-                    updatedAt = LocalDateTime.of(2024, 8, 15, 14, 30)
                 ),
                 OrderProduct(
                     id = 2,
@@ -181,8 +174,6 @@ class OrdersControllerTest {
                     quantity = 1,
                     price = BigDecimal("15000.00"),
                     discountedPrice = BigDecimal("13500.00"),
-                    createdAt = LocalDateTime.of(2024, 8, 15, 14, 30),
-                    updatedAt = LocalDateTime.of(2024, 8, 15, 14, 30)
                 ),
                 OrderProduct(
                     id = 3,
@@ -191,8 +182,6 @@ class OrdersControllerTest {
                     quantity = 1,
                     price = BigDecimal("15000.00"),
                     discountedPrice = BigDecimal("13500.00"),
-                    createdAt = LocalDateTime.of(2024, 8, 15, 14, 30),
-                    updatedAt = LocalDateTime.of(2024, 8, 15, 14, 30)
                 )
             ),
             statusHistory = listOf(
@@ -305,9 +294,9 @@ class OrdersControllerTest {
                             .attributes(key("format").value("String (ISO 8601: yyyy-MM-dd'T'HH:mm:ss)")),
                         fieldWithPath("data.products[].status").description("주문 상태")
                             .attributes(key("format").value("String (ENUM: PENDING, PROCESSING, SHIPPED, DELIVERED, CANCEL, REFUND, EXCHANGE)")),
-                        fieldWithPath("data.products[].pricie").description("주문 원가")
+                        fieldWithPath("data.products[].price").description("주문 원가")
                             .attributes(key("format").value("Number (Double)")),
-                        fieldWithPath("data.products[].discoutedPrice").description("할인 적용된 최종 가격")
+                        fieldWithPath("data.products[].discountedPrice").description("할인 적용된 최종 가격")
                             .attributes(key("format").value("Number (Double)")),
                         fieldWithPath("data.products[].memberName").description("주문자 이름")
                             .attributes(key("format").value("String")),
@@ -368,8 +357,6 @@ class OrdersControllerTest {
                         fieldWithPath("data.items[].quantity").description("주문 수량"),
                         fieldWithPath("data.items[].price").description("상품 가격"),
                         fieldWithPath("data.items[].discountedPrice").description("할인된 상품 가격"),
-                        fieldWithPath("data.items[].createdAt").description("생성 일시"),
-                        fieldWithPath("data.items[].updatedAt").description("수정 일시"),
                         fieldWithPath("data.statusHistory").description("주문 상태 이력"),
                         fieldWithPath("data.statusHistory[].status").description("주문 상태"),
                         fieldWithPath("data.statusHistory[].timestamp").description("상태 변경 시간"),
@@ -378,4 +365,106 @@ class OrdersControllerTest {
                 )
             )
     }
+
+   @Test
+    fun `주문 생성을 한다`() {
+        // given
+        val request = OrderCreateRequest(
+            products = listOf(
+                OrderCreateRequest.ProductInfo(id = 1, quantity = 2),
+                OrderCreateRequest.ProductInfo(id = 3, quantity = 1)
+            ),
+            deliveryInfo = OrderCreateRequest.DeliveryInfo(
+                recipient = "홍길동",
+                phoneNumber = "01012345678",
+                email = "hong@example.com",
+                streetAddress = "서울시 강남구 테헤란로 123",
+                detailAddress = "104동 1201호",
+                postalCode = "12345"
+            ),
+            paymentInfo = OrderCreateRequest.PaymentInfo(
+                method = "CREDIT_CARD",
+                totalAmount = BigDecimal(50000),
+                depositorName = "홍길동"
+            ),
+            agreementInfo = OrderCreateRequest.AgreementInfo(
+                termsOfService = true,
+                privacyPolicy = true,
+                ageVerification = true
+            )
+        )
+
+       val response = OrderCreateResponse(
+           orderNumber = "ORD-20240815-001",
+           orderStatus = "PENDING",
+           orderDate = LocalDateTime.now().toString(),
+           totalAmount = BigDecimal(50000),
+           products = listOf(
+               OrderCreateResponse.ProductSummary(id = 1, name = "Kotlin in Action", quantity = 2, price = BigDecimal(20000)),
+               OrderCreateResponse.ProductSummary(id = 3, name = "Spring Boot in Practice", quantity = 1, price = BigDecimal(10000))
+           )
+       )
+
+        // JwtAuthenticationFilter
+        given(
+            tokenUseCase.getTokenSubject(
+                testAccessToken,
+                TokenType.ACCESS_TOKEN
+            )
+        ).willReturn(testMember.id.toString())
+        given(memberRepository.findById(testMember.id)).willReturn(testMember)
+
+        `when`(orderUseCase.order(request, testMember)).thenReturn(response)
+
+       // when & then
+       mockMvc.post("/order/v1/orders") {
+           header(HttpHeaders.AUTHORIZATION, "Bearer $testAccessToken")
+           contentType = MediaType.APPLICATION_JSON
+           content = objectMapper.writeValueAsString(request)
+       }.andExpect {
+           status { isOk() }
+       }.andDo {
+           handle(
+               document(
+                   "create-order",
+                   preprocessRequest(prettyPrint()),
+                   preprocessResponse(prettyPrint()),
+                   requestFields(
+                       fieldWithPath("products").description("주문할 상품 목록"),
+                       fieldWithPath("products[].id").description("상품 ID"),
+                       fieldWithPath("products[].quantity").description("주문 수량"),
+                       fieldWithPath("deliveryInfo").description("배송 정보"),
+                       fieldWithPath("deliveryInfo.recipient").description("수령인"),
+                       fieldWithPath("deliveryInfo.phoneNumber").description("수령인 전화번호"),
+                       fieldWithPath("deliveryInfo.email").description("수령인 이메일"),
+                       fieldWithPath("deliveryInfo.streetAddress").description("도로명 주소"),
+                       fieldWithPath("deliveryInfo.detailAddress").description("상세 주소"),
+                       fieldWithPath("deliveryInfo.postalCode").description("우편번호"),
+                       fieldWithPath("paymentInfo").description("결제 정보"),
+                       fieldWithPath("paymentInfo.method").description("결제 방법"),
+                       fieldWithPath("paymentInfo.totalAmount").description("총 결제 금액"),
+                       fieldWithPath("paymentInfo.depositorName").description("입금자 이름"),
+                       fieldWithPath("agreementInfo").description("동의 정보"),
+                       fieldWithPath("agreementInfo.termsOfService").description("이용 약관 동의 여부"),
+                       fieldWithPath("agreementInfo.privacyPolicy").description("개인정보 처리방침 동의 여부"),
+                       fieldWithPath("agreementInfo.ageVerification").description("연령 확인 동의 여부")
+                   ),
+                   responseFields(
+                       fieldWithPath("success").description("요청 성공 여부"),
+                       fieldWithPath("data").description("응답 데이터"),
+                       fieldWithPath("data.orderNumber").description("주문 번호"),
+                       fieldWithPath("data.orderStatus").description("주문 상태"),
+                       fieldWithPath("data.orderDate").description("주문 일시"),
+                       fieldWithPath("data.totalAmount").description("총 주문 금액"),
+                       fieldWithPath("data.products").description("주문한 상품 목록"),
+                       fieldWithPath("data.products[].id").description("상품 ID"),
+                       fieldWithPath("data.products[].name").description("상품 이름"),
+                       fieldWithPath("data.products[].quantity").description("주문 수량"),
+                       fieldWithPath("data.products[].price").description("상품 가격"),
+                       fieldWithPath("error").description("오류 정보").optional()
+                   )
+               )
+           )
+       }
+   }
 }

@@ -131,4 +131,14 @@ class ProductRepositoryImpl (
             it.productJpaEntity.toModel(it.categoryJpaEntity?.toProductModel())
         }
     }
+
+    override fun save(product: Product): Product {
+        val savedProduct = productJpaRepository.save(product.toJpaEntity(product.id ?: 0))
+        val category = savedProduct.categoryId?.let { categoryId ->
+            categoryJpaRepository.findById(categoryId)
+                .map { it.toProductModel() }
+                .orElse(null)
+        }
+        return savedProduct.toModel(category)
+    }
 }

@@ -1,7 +1,6 @@
 package com.commerce.service.order.controller.response
 
-import com.commerce.service.order.applicaton.usecase.domain.OrderNumber
-import java.time.LocalDateTime
+import com.commerce.service.order.application.usecase.vo.OrderNumber
 
 data class OrderSummary(
     val id: String,
@@ -9,8 +8,8 @@ data class OrderSummary(
     val content: String, // 주문 내역
     val orderDate: String, // 주문 일자
     val status: String, // 주문 상태
-    val pricie: Double, // 가격
-    val discoutedPrice: Double, // 할인된 가격
+    val price: Double, // 가격
+    val discountedPrice: Double, // 할인된 가격
     val memberName: String, // 주문자 이름
     val recipient: String, // 수령인
 )

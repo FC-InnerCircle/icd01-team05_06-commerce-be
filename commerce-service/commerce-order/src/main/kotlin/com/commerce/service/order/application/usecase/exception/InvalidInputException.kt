@@ -1,4 +1,4 @@
-package com.commerce.service.order.applicaton.usecase.exception
+package com.commerce.service.order.application.usecase.exception
 
 import com.commerce.common.response.CustomException
 import com.commerce.common.response.ErrorCode

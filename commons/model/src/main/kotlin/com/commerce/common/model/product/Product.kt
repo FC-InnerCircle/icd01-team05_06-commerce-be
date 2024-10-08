@@ -17,8 +17,11 @@ class Product(
     val pages: Int,
     val coverImage: String,
     val previewLink: String,
-    val stockQuantity: Int,
+    var stockQuantity: Int,
     val rating: Double,
     val status: SaleStatus,
     val category: CategoryDetail? = null,
+    val isHotNew: Boolean,
+    val isRecommend: Boolean,
+    val isBestseller: Boolean
 )

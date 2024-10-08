@@ -2,8 +2,8 @@ package com.commerce.service.order.controller
 
 import com.commerce.common.model.member.Member
 import com.commerce.common.response.CommonResponse
-import com.commerce.service.order.applicaton.usecase.ShoppingCartUseCase
-import com.commerce.service.order.applicaton.usecase.dto.ShoppingCartListDto
+import com.commerce.service.order.application.usecase.ShoppingCartUseCase
+import com.commerce.service.order.application.usecase.dto.ShoppingCartListDto
 import com.commerce.service.order.config.ApiPaths
 import com.commerce.service.order.controller.request.PatchShoppingCartRequest
 import com.commerce.service.order.controller.request.PostShoppingCartRequest
