@@ -70,13 +70,16 @@ class OrderProductServiceTest {
         stockQuantity = 100,
         rating = 5.5,
         status = SaleStatus.ON_SALE,
+        isHotNew = false,
+        isRecommend = false,
+        isBestseller = false,
         category = CategoryDetail(
             id = 2L,
             name = "국내도서",
             parentCategory = CategoryDetail.ParentCategory(
                 id = 0L,
                 name = "전체"
-            )
+            ),
         )
     )
 }
