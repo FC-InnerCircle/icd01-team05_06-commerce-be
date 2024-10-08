@@ -6,6 +6,7 @@ include("commons:model")
 include("commons:persistence-database")
 include("commons:common-web")
 include("commons:common-jwt")
+include("commons:redis-client")
 include("commons:test-helper")
 
 include("commerce-admin")

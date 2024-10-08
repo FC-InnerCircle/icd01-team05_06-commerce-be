@@ -3,6 +3,7 @@ package com.commerce.service.auth.application.service
 import com.commerce.common.jwt.application.service.TokenType
 import com.commerce.common.jwt.application.usecase.TokenUseCase
 import com.commerce.common.model.member.Member
+import com.commerce.common.model.member.MemberPasswordAuthRepository
 import com.commerce.common.model.member.MemberRepository
 import com.commerce.common.response.ErrorCode
 import com.commerce.service.auth.application.usecase.AuthUseCase
@@ -15,10 +16,12 @@ import com.commerce.service.auth.application.usecase.exception.AuthException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.util.*
 
 @Service
 class AuthService(
     private val memberRepository: MemberRepository,
+    private val memberPasswordAuthRepository: MemberPasswordAuthRepository,
     private val passwordEncoder: PasswordEncoder,
     private val tokenUseCase: TokenUseCase
 ) : AuthUseCase {
@@ -85,7 +88,18 @@ class AuthService(
         )
     }
 
-    override fun update(member: Member, command: UpdateCommand) {
+    override fun passwordVerify(member: Member, password: String): String {
+        if (!passwordEncoder.matches(password, member.password)) throw AuthException(ErrorCode.PASSWORD_NOT_MATCH)
+        val token = UUID.randomUUID().toString()
+        memberPasswordAuthRepository.setToken(member.id, token)
+        return token
+    }
+
+    override fun update(member: Member, token: String, command: UpdateCommand) {
+        if (!memberPasswordAuthRepository.exist(member.id, token)) {
+            throw AuthException(ErrorCode.UNAUTHORIZED)
+        }
+
         memberRepository.save(
             member.update(
                 password = command.password?.let { passwordEncoder.encode(it) },

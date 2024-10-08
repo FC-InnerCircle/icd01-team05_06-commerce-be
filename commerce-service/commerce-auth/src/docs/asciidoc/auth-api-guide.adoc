@@ -61,6 +61,16 @@ include::{snippets}/auth/v1/refresh/http-request.adoc[]
 include::{snippets}/auth/v1/refresh/response-fields.adoc[]
 include::{snippets}/auth/v1/refresh/response-body.adoc[]
 
+[[password-verify]]
+== 비밀번호 확인
+=== Http
+include::{snippets}/auth/v1/password-verify/http-request.adoc[]
+=== Request
+include::{snippets}/auth/v1/password-verify/request-fields.adoc[]
+=== Response
+include::{snippets}/auth/v1/password-verify/response-fields.adoc[]
+include::{snippets}/auth/v1/password-verify/response-body.adoc[]
+
 [[update]]
 == 사용자 정보 수정
 === Http

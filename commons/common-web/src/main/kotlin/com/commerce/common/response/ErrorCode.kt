@@ -7,7 +7,9 @@ enum class ErrorCode(val code: String, var message: String) {
     LOGIN_FAILED("E004", "아이디 혹은 비밀번호가 일치하지 않습니다."),
     INSUFFICIENT_STOCK("E005", "Insufficient stock for products"),
     ORDER_CREATION_FAILED("E006", "Order creation failed"),
+    PASSWORD_NOT_MATCH("E007", "비밀번호가 일치하지 않습니다."),
     SHOPPING_CART_NOT_FOUND("E101", "장바구니 상품이 존재하지 않습니다."),
+    UNAUTHORIZED("E401", "인증이 만료되었습니다."),
     PERMISSION_ERROR("E403", "Permission Denied"),
     INTERNAL_SERVER_ERROR("E999", "Internal server error")
 }

@@ -15,6 +15,10 @@ spring:
         highlight_sql: true
     hibernate:
       ddl-auto: none
+  data:
+    redis:
+      host: inner-circle-redis.b7t8ml.ng.0001.apn2.cache.amazonaws.com
+      port: 6379
 
 logging:
   level:

@@ -4,11 +4,20 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.web.bind.MethodArgumentNotValidException
+import org.springframework.web.bind.MissingRequestHeaderException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
 @RestControllerAdvice
 class GlobalExceptionHandler {
+    @ExceptionHandler(MissingRequestHeaderException::class)
+    fun handleMissingRequestHeaderException(ex: MissingRequestHeaderException): ResponseEntity<CommonResponse<Unit>> {
+        val errorResponse = ErrorResponse("HEADER_NOT_FOUND_ERROR", "Invalid Header format")
+        return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(CommonResponse.error(listOf(errorResponse)))
+    }
+
     @ExceptionHandler(HttpMessageNotReadableException::class)
     fun handleJsonParseException(ex: HttpMessageNotReadableException): ResponseEntity<CommonResponse<Unit>> {
         val errorResponse = ErrorResponse("JSON_PARSE_ERROR", "Invalid JSON format")

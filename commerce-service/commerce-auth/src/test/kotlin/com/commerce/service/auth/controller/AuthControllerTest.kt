@@ -13,6 +13,7 @@ import com.commerce.service.auth.application.usecase.dto.LoginInfoDto
 import com.commerce.service.auth.application.usecase.dto.TokenInfoDto
 import com.commerce.service.auth.config.SecurityConfig
 import com.commerce.service.auth.controller.request.LoginRequest
+import com.commerce.service.auth.controller.request.PasswordVerifyRequest
 import com.commerce.service.auth.controller.request.SignUpRequest
 import com.commerce.service.auth.controller.request.UpdateRequest
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -279,6 +280,38 @@ class AuthControllerTest(
     }
 
     @Test
+    fun passwordVerify() {
+        val request = PasswordVerifyRequest(
+            password = "123!@#qwe",
+        )
+        given(authUseCase.passwordVerify(testMember, "123!@#qwe")).willReturn("test-auth-token")
+
+        mockMvc.perform(
+            post("/auth/v1/password-verify")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer $testAccessToken")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request))
+        )
+            .andExpect(status().isOk)
+            .andDo(
+                document(
+                    "auth/v1/password-verify",
+                    preprocessRequest(prettyPrint()),
+                    preprocessResponse(prettyPrint()),
+                    requestFields(
+                        fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호"),
+                    ),
+                    responseFields(
+                        fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("요청 성공 여부"),
+                        fieldWithPath("data").type(JsonFieldType.OBJECT).description("응답 데이터"),
+                        fieldWithPath("data.token").type(JsonFieldType.STRING).description("인증 토큰"),
+                        fieldWithPath("error").type(JsonFieldType.ARRAY).optional().description("오류 정보")
+                    )
+                )
+            )
+    }
+
+    @Test
     fun update() {
         val request = UpdateRequest(
             password = "123!@#qwe",
@@ -292,6 +325,7 @@ class AuthControllerTest(
         mockMvc.perform(
             put("/auth/v1/update")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer $testAccessToken")
+                .header("auth-token", "test-auth-token")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request))
         )
@@ -302,7 +336,8 @@ class AuthControllerTest(
                     preprocessRequest(prettyPrint()),
                     preprocessResponse(prettyPrint()),
                     requestFields(
-                        fieldWithPath("password").type(JsonFieldType.STRING).optional().description("비밀번호 (없는 경우 기존 유지)"),
+                        fieldWithPath("password").type(JsonFieldType.STRING).optional()
+                            .description("비밀번호 (없는 경우 기존 유지)"),
                         fieldWithPath("name").type(JsonFieldType.STRING).description("이름"),
                         fieldWithPath("phone").type(JsonFieldType.STRING).description("연락처")
                             .attributes(format("숫자만 입력")),

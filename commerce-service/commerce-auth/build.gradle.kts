@@ -22,6 +22,7 @@ dependencies {
     implementation(project(":commons:persistence-database"))
     implementation(project(":commons:common-web"))
     implementation(project(":commons:common-jwt"))
+    implementation(project(":commons:redis-client"))
 }
 
 val asciidoctorExt: Configuration by configurations.creating

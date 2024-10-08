@@ -14,7 +14,9 @@ interface AuthUseCase {
 
     fun refresh(refreshToken: String): LoginInfoDto
 
-    fun update(member: Member, command: UpdateCommand)
+    fun passwordVerify(member: Member, password: String): String
+
+    fun update(member: Member, token: String, command: UpdateCommand)
 
     fun withdrawal(member: Member)
 }

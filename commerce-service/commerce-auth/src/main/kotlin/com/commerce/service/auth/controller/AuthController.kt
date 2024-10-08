@@ -8,8 +8,10 @@ import com.commerce.service.auth.application.usecase.dto.LoginInfoDto
 import com.commerce.service.auth.application.usecase.dto.MemberInfoDto
 import com.commerce.service.auth.application.usecase.exception.AuthException
 import com.commerce.service.auth.controller.request.LoginRequest
+import com.commerce.service.auth.controller.request.PasswordVerifyRequest
 import com.commerce.service.auth.controller.request.SignUpRequest
 import com.commerce.service.auth.controller.request.UpdateRequest
+import com.commerce.service.auth.controller.response.PasswordVerifyResponse
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
@@ -57,12 +59,22 @@ class AuthController(
         return CommonResponse.ok(authUseCase.refresh(refreshToken))
     }
 
+    @PostMapping("/password-verify")
+    fun passwordVerify(
+        @AuthenticationPrincipal member: Member,
+        @RequestBody request: PasswordVerifyRequest
+    ): CommonResponse<PasswordVerifyResponse> {
+        val token = authUseCase.passwordVerify(member, request.password)
+        return CommonResponse.ok(PasswordVerifyResponse(token))
+    }
+
     @PutMapping("/update")
     fun update(
         @AuthenticationPrincipal member: Member,
+        @RequestHeader("auth-token") token: String,
         @RequestBody request: UpdateRequest
     ): CommonResponse<Unit> {
-        authUseCase.update(member, request.toCommand())
+        authUseCase.update(member, token, request.toCommand())
         return CommonResponse.ok()
     }
 

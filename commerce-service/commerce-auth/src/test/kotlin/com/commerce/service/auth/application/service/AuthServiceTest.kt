@@ -4,8 +4,10 @@ import com.commerce.common.jwt.application.service.TokenType
 import com.commerce.common.jwt.application.usecase.FakeTokenUseCase
 import com.commerce.common.jwt.application.usecase.TokenUseCase
 import com.commerce.common.model.address.Address
+import com.commerce.common.model.member.FakeMemberPasswordAuthRepository
 import com.commerce.common.model.member.FakeMemberRepository
 import com.commerce.common.model.member.Member
+import com.commerce.common.model.member.MemberPasswordAuthRepository
 import com.commerce.service.auth.application.usecase.command.LoginCommand
 import com.commerce.service.auth.application.usecase.command.SignUpCommand
 import com.commerce.service.auth.application.usecase.command.UpdateCommand
@@ -20,15 +22,17 @@ import org.springframework.security.crypto.password.PasswordEncoder
 class AuthServiceTest {
 
     private lateinit var memberRepository: FakeMemberRepository
+    private lateinit var memberPasswordAuthRepository: MemberPasswordAuthRepository
     private lateinit var passwordEncoder: PasswordEncoder
     private lateinit var tokenUseCase: TokenUseCase
     private val authService by lazy {
-        AuthService(memberRepository, passwordEncoder, tokenUseCase)
+        AuthService(memberRepository, memberPasswordAuthRepository, passwordEncoder, tokenUseCase)
     };
 
     @BeforeEach
     fun setUp() {
         memberRepository = FakeMemberRepository()
+        memberPasswordAuthRepository = FakeMemberPasswordAuthRepository()
         passwordEncoder = FakePasswordEncoder()
         tokenUseCase = FakeTokenUseCase()
     }
@@ -306,6 +310,7 @@ class AuthServiceTest {
                 detailAddress = "123-45"
             )
         ))
+        memberPasswordAuthRepository.setToken(1, "token")
 
         val command = UpdateCommand(
             password = null,
@@ -318,7 +323,7 @@ class AuthServiceTest {
             )
         )
 
-        authService.update(member, command)
+        authService.update(member, "token", command)
 
         val newMember = memberRepository.findById(1)!!
         assertThat(newMember.password).isEqualTo(passwordEncoder.encode("phasellus"))
@@ -340,6 +345,7 @@ class AuthServiceTest {
                 detailAddress = "123-45"
             )
         ))
+        memberPasswordAuthRepository.setToken(1, "token")
 
         val command = UpdateCommand(
             password = "After Password",
@@ -352,7 +358,7 @@ class AuthServiceTest {
             )
         )
 
-        authService.update(member, command)
+        authService.update(member, "token", command)
 
         val newMember = memberRepository.findById(1)!!
         assertThat(newMember.password).isEqualTo(passwordEncoder.encode("After Password"))
