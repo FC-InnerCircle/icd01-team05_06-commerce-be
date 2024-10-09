@@ -11,7 +11,7 @@ import com.commerce.common.model.orders.OrderSortOption
 import com.commerce.common.model.util.PaginationInfo
 import com.commerce.common.util.ObjectMapperConfig
 import com.commerce.service.order.application.usecase.OrderUseCase
-import com.commerce.service.order.application.usecase.vo.OrderNumber
+import com.commerce.common.model.orders.OrderNumber
 import com.commerce.service.order.config.SecurityConfig
 import com.commerce.service.order.controller.request.OrderCreateRequest
 import com.commerce.service.order.controller.request.OrderListRequest
@@ -121,7 +121,7 @@ class OrdersControllerTest {
             products = listOf(
                 OrderSummary(
                     id = "1",
-                    orderNumber = OrderNumber.create("1"),
+                    orderNumber = OrderNumber("ORD-20240815-000001"),
                     content = "해리 포터와 마법사의 돌 외 2권",
                     orderDate = LocalDateTime.of(2024, 8, 15, 14, 30).toString(),
                     status = "배송완료",
@@ -132,7 +132,7 @@ class OrdersControllerTest {
                 ),
                 OrderSummary(
                     id = "2",
-                    orderNumber = OrderNumber.create("2"),
+                    orderNumber = OrderNumber("ORD-20240815-000002"),
                     content = "코스모스: 가능한 세계들",
                     orderDate = LocalDateTime.of(2024, 8, 16, 9, 45).toString(),
                     status = "결제완료",

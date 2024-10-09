@@ -4,7 +4,6 @@ import com.commerce.common.model.orderProduct.OrderProduct
 import com.commerce.common.model.orders.OrderStatus
 import com.commerce.common.model.orders.Orders
 import com.commerce.service.order.application.usecase.dto.OrdersDto
-import com.commerce.service.order.application.usecase.vo.OrderNumber
 import com.commerce.service.order.controller.response.OrderSummary
 import java.math.BigDecimal
 import java.time.LocalDateTime
@@ -12,7 +11,7 @@ import java.time.LocalDateTime
 fun Orders.toOrderSummary(): OrderSummary {
     return OrderSummary(
         id = this.id.toString(),
-        orderNumber = OrderNumber.create(this.id.toString()), // 주문 번호 ("ORD-20240815-001")
+        orderNumber = this.orderNumber,
         content = this.content,
         orderDate = this.orderDate.toString(),
         status = this.status.toString(),
@@ -49,7 +48,7 @@ fun OrdersDto.toOrder(): Orders {
         streetAddress = this.deliveryInfo.streetAddress,
         detailAddress = this.deliveryInfo.detailAddress,
         postalCode = this.deliveryInfo.postalCode,
-        orderNumber = this.orderNumber.toString(),
+        orderNumber = this.orderNumber,
         paymentMethod = this.paymentInfo.method,
         recipient = this.deliveryInfo.recipient,
         content = this.ordersInfo.content,

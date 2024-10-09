@@ -3,7 +3,7 @@ package com.commerce.service.order.application.usecase.dto
 import com.commerce.common.model.member.Member
 import com.commerce.common.model.orders.OrderStatus
 import com.commerce.common.model.product.Product
-import com.commerce.service.order.application.usecase.vo.OrderNumber
+import com.commerce.common.model.orders.OrderNumber
 import java.math.BigDecimal
 
 // 주문정보, 배송정보, 결제정보 포함된 주문 결과 dto

@@ -1,6 +1,7 @@
 package com.commerce.common.persistence.orders
 
 import com.commerce.common.model.orderProduct.OrderProduct
+import com.commerce.common.model.orders.OrderNumber
 import com.commerce.common.model.orders.OrderStatus
 import com.commerce.common.model.orders.Orders
 import com.commerce.common.persistence.BaseTimeEntity
@@ -67,7 +68,7 @@ fun OrdersJpaEntity.toOrder(): Orders {
         streetAddress = this.streetAddress,
         detailAddress = this.detailAddress,
         postalCode = this.postalCode,
-        orderNumber = this.orderNumber,
+        orderNumber = OrderNumber(this.orderNumber),
         paymentMethod = this.paymentMethod,
         recipient  = this.recipient,
         content = this.content,
@@ -88,7 +89,7 @@ fun Orders.toJpaEntity(): OrdersJpaEntity {
         streetAddress = this.streetAddress,
         detailAddress = this.detailAddress,
         postalCode = this.postalCode,
-        orderNumber = this.orderNumber,
+        orderNumber = this.orderNumber.value,
         paymentMethod = this.paymentMethod,
         recipient = this.recipient,
         content = this.content,

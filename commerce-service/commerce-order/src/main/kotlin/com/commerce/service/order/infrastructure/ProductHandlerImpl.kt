@@ -15,8 +15,8 @@ import com.commerce.service.order.application.usecase.dto.OrdersDto
 import com.commerce.service.order.application.usecase.exception.InsufficientStockException
 import com.commerce.service.order.application.usecase.exception.OrderCreationException
 import com.commerce.service.order.application.usecase.exception.ProductNotFoundException
-import com.commerce.service.order.application.usecase.vo.OrderNumber
-import com.commerce.service.order.controller.request.OrderCreateRequest
+import com.commerce.common.model.orders.OrderNumber
+import com.commerce.common.model.orders.OrderNumberRepository
 import com.commerce.service.order.controller.response.OrderCreateResponse
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
@@ -27,6 +27,7 @@ class ProductHandlerImpl(
     private val memberRepository: MemberRepository,
     private val shoppingCartRepository: ShoppingCartRepository,
     private val ordersRepository: OrdersRepository,
+    private val orderNumberRepository: OrderNumberRepository,
     private val orderProductRepository: OrderProductRepository
 ) : ProductHandler {
 
@@ -48,7 +49,7 @@ override fun createOrder(member: Member, command: CreateOrderCommand): OrdersDto
         val order = OrdersDto(
             member = customer,
             customer = command.deliveryInfo.recipient ?: customer.name,
-            orderNumber = OrderNumber.createOrderNumber(),
+            orderNumber = OrderNumber.createOrderNumber(orderNumberRepository),
             products = command.products.map { productInfo ->
                 val product = productRepository.findById(productInfo.id)
                     ?: throw ProductNotFoundException(productInfo.id)

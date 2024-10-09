@@ -1,10 +1,10 @@
 package com.commerce.service.order.controller.response
 
-import com.commerce.service.order.application.usecase.vo.OrderNumber
+import com.commerce.common.model.orders.OrderNumber
 
 data class OrderSummary(
     val id: String,
-    val orderNumber: OrderNumber = OrderNumber.create(id), // 주문 번호 ("ORD-20240815-001")
+    val orderNumber: OrderNumber, // 주문 번호
     val content: String, // 주문 내역
     val orderDate: String, // 주문 일자
     val status: String, // 주문 상태

@@ -10,7 +10,7 @@ data class Orders(
     val streetAddress: String,
     val detailAddress: String,
     val postalCode: String,
-    val orderNumber: String,
+    val orderNumber: OrderNumber,
     val paymentMethod: String,
     val recipient: String,
     val content: String,

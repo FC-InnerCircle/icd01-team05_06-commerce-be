@@ -28,6 +28,10 @@ spring:
           fetch_size: 50
           lob:
             non_contextual_creation: true
+  data:
+    redis:
+      host: inner-circle-redis.b7t8ml.ng.0001.apn2.cache.amazonaws.com
+      port: 6379
 
 jasypt:
   encryptor:
