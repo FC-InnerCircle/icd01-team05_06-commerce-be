@@ -7,5 +7,4 @@ data class AddReviewCommand(
     val email: String,
     val content: String,
     val score: BigDecimal,
-    val orderProductId: Long?
 )

@@ -57,6 +57,8 @@ include::{snippets}/productDetail/response-body.adoc[]
 == 상품 리뷰 조회
 === Http
 include::{snippets}/reviews/v1/reviews/http-request.adoc[]
+=== Request
+include::{snippets}/reviews/v1/reviews/query-parameters.adoc[]
 === Response
 include::{snippets}/reviews/v1/reviews/response-fields.adoc[]
 include::{snippets}/reviews/v1/reviews/response-body.adoc[]

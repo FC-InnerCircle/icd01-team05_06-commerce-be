@@ -8,6 +8,7 @@ import com.commerce.service.product.application.usecase.ReviewUseCase
 import com.commerce.service.product.application.usecase.command.AddReviewCommand
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDateTime
 
 @Service
 class ReviewService(
@@ -31,7 +32,7 @@ class ReviewService(
             memberId = member.id,
             content = addReviewCommand.content,
             score = addReviewCommand.score,
-            orderProductId = addReviewCommand.orderProductId
+            lastModifiedByUserAt = LocalDateTime.now(),
         )
 
         return reviewRepository.save(review).id

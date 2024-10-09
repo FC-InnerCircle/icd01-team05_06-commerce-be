@@ -12,6 +12,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
+import java.time.LocalDateTime
 
 class ReviewServiceTest {
 
@@ -49,6 +50,7 @@ class ReviewServiceTest {
                 content = "정말 재미있어요",
                 score = BigDecimal(5),
                 memberId = 1L,
+                lastModifiedByUserAt = LocalDateTime.now(),
             )
         )
 
@@ -88,7 +90,6 @@ class ReviewServiceTest {
             email = "abc@naver.com",
             content = "재미있는 책이에요",
             score = BigDecimal(5),
-            orderProductId = 1L,
         )
         reviewService.addReviewToProduct(addReviewCommand)
 

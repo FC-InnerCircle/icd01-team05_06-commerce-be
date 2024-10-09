@@ -4,6 +4,7 @@ import com.commerce.common.model.review.Review
 import com.commerce.common.persistence.BaseTimeEntity
 import jakarta.persistence.*
 import java.math.BigDecimal
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "review")
@@ -17,6 +18,7 @@ class ReviewJpaEntity(
     val memberId: Long,
     val productId: Long,
     val orderProductId: Long? = null,
+    val lastModifiedByUserAt: LocalDateTime,
 ) : BaseTimeEntity() {
     fun toModel() = Review(
         id = id,
@@ -24,9 +26,7 @@ class ReviewJpaEntity(
         score = score,
         memberId = memberId,
         productId = productId,
-        orderProductId = orderProductId,
-        createdAt = createdAt,
-        updatedAt = updatedAt,
+        lastModifiedByUserAt = lastModifiedByUserAt,
     )
 
     companion object {
@@ -36,7 +36,7 @@ class ReviewJpaEntity(
             score = review.score,
             memberId = review.memberId,
             productId = review.productId,
-            orderProductId = review.orderProductId,
+            lastModifiedByUserAt = review.lastModifiedByUserAt,
         )
     }
 

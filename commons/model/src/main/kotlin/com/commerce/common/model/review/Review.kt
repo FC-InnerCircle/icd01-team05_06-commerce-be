@@ -9,9 +9,7 @@ class Review(
     val score: BigDecimal,
     val memberId: Long,
     val productId: Long,
-    val orderProductId: Long? = null,
-    val createdAt: LocalDateTime? = null,
-    val updatedAt: LocalDateTime? = null,
+    val lastModifiedByUserAt: LocalDateTime,
 ) {
     companion object {
         fun byProduct(
@@ -19,13 +17,13 @@ class Review(
             memberId: Long,
             content: String,
             score: BigDecimal,
-            orderProductId: Long?
+            lastModifiedByUserAt: LocalDateTime,
         ) = Review(
             content = content,
             score = score,
             memberId = memberId,
             productId = productId,
-            orderProductId = orderProductId,
+            lastModifiedByUserAt = lastModifiedByUserAt,
         )
     }
 }

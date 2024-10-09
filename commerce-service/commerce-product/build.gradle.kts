@@ -5,13 +5,15 @@ plugins {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
-
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    testImplementation("org.springframework.security:spring-security-test")
     compileOnly("org.springframework:spring-tx")
 
     implementation(project(":commons:common-util"))
     implementation(project(":commons:model"))
     implementation(project(":commons:persistence-database"))
     implementation(project(":commons:common-web"))
+    implementation(project(":commons:common-jwt"))
     testImplementation(project(":commons:test-helper"))
 
     implementation("org.springframework.boot:spring-boot-starter-actuator")
