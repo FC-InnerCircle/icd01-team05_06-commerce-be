@@ -1,4 +1,4 @@
-package com.commerce.service.auth.config
+package com.commerce.service.product.config
 
 import com.commerce.common.jwt.config.JwtAuthenticationFilter
 import com.commerce.common.model.member.Member
@@ -41,27 +41,14 @@ class SecurityConfig {
                 it.disable()
             }
             .logout {
-                it.logoutUrl("/auth/v1/logout")
-                it.logoutSuccessHandler { _, response, authentication ->
-                    val member = authentication?.principal as? Member
-                    if (member != null) {
-                        memberRepository.save(member.logout())
-                    }
-
-                    response.contentType = MediaType.APPLICATION_JSON_VALUE
-                    response.characterEncoding = Charsets.UTF_8.name()
-                    response.writer.write(objectMapper.writeValueAsString(CommonResponse.ok(null)))
-                }
+                it.disable()
             }
             .authorizeHttpRequests {
                 it
                     .requestMatchers(
                         AntPathRequestMatcher("/actuator/**", HttpMethod.GET.name()),
                         AntPathRequestMatcher("/docs/**", HttpMethod.GET.name()),
-                        AntPathRequestMatcher("/auth/v1/login", HttpMethod.POST.name()),
-                        AntPathRequestMatcher("/auth/v1/sign-up", HttpMethod.POST.name()),
-                        AntPathRequestMatcher("/auth/v1/refresh", HttpMethod.POST.name()),
-                        AntPathRequestMatcher("/product/v1/reviews", HttpMethod.GET.name()),
+                        AntPathRequestMatcher("/**", HttpMethod.GET.name()),
                     ).permitAll()
                     .anyRequest().authenticated()
             }

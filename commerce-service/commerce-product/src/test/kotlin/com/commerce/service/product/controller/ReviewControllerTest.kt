@@ -9,7 +9,7 @@ import com.commerce.common.model.member.MemberRepository
 import com.commerce.common.model.review.ReviewRepository
 import com.commerce.common.model.review.ReviewWithMember
 import com.commerce.common.util.ObjectMapperConfig
-import com.commerce.service.auth.config.SecurityConfig
+import com.commerce.service.product.config.SecurityConfig
 import com.commerce.service.product.application.usecase.ReviewUseCase
 import com.commerce.service.product.application.usecase.command.AddReviewCommand
 import com.commerce.service.product.controller.request.ReviewCreateRequest
