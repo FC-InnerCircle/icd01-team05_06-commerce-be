@@ -3,6 +3,8 @@ package com.commerce.service.order.infrastructure
 import com.commerce.common.model.member.Member
 import com.commerce.common.model.member.MemberRepository
 import com.commerce.common.model.orderProduct.OrderProductRepository
+import com.commerce.common.model.orders.OrderNumber
+import com.commerce.common.model.orders.OrderNumberRepository
 import com.commerce.common.model.orders.OrderStatus
 import com.commerce.common.model.orders.OrdersRepository
 import com.commerce.common.model.product.Product
@@ -10,13 +12,11 @@ import com.commerce.common.model.product.ProductRepository
 import com.commerce.common.model.shopping_cart.ShoppingCartRepository
 import com.commerce.service.order.application.usecase.command.CreateOrderCommand
 import com.commerce.service.order.application.usecase.component.ProductHandler
-import com.commerce.service.order.application.usecase.converter.toOrder
+import com.commerce.service.order.application.usecase.converter.createOrder
 import com.commerce.service.order.application.usecase.dto.OrdersDto
 import com.commerce.service.order.application.usecase.exception.InsufficientStockException
 import com.commerce.service.order.application.usecase.exception.OrderCreationException
 import com.commerce.service.order.application.usecase.exception.ProductNotFoundException
-import com.commerce.common.model.orders.OrderNumber
-import com.commerce.common.model.orders.OrderNumberRepository
 import com.commerce.service.order.controller.response.OrderCreateResponse
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
@@ -96,7 +96,7 @@ override fun createOrder(member: Member, command: CreateOrderCommand): OrdersDto
 
         // 주문 정보 저장
         // Orders, OrderProduct 저장
-        ordersRepository.save(order.toOrder())
+        ordersRepository.save(order.createOrder())
 
         // 주문 완료 응답 생성
         return OrderCreateResponse(

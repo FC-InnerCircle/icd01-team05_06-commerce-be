@@ -1,6 +1,5 @@
 package com.commerce.service.order.application.service
 
-import com.commerce.common.model.member.Member
 import com.commerce.common.model.orders.OrdersRepository
 import com.commerce.service.order.application.usecase.OrderUseCase
 import com.commerce.service.order.application.usecase.command.CreateOrderCommand
@@ -8,10 +7,7 @@ import com.commerce.service.order.application.usecase.command.OrderListCommand
 import com.commerce.service.order.application.usecase.component.PaymentHandler
 import com.commerce.service.order.application.usecase.component.ProductHandler
 import com.commerce.service.order.application.usecase.component.ShippingHandler
-import com.commerce.service.order.application.usecase.converter.toOrder
 import com.commerce.service.order.application.usecase.converter.toOrderSummary
-import com.commerce.service.order.controller.request.OrderCreateRequest
-import com.commerce.service.order.controller.request.OrderListRequest
 import com.commerce.service.order.controller.response.OrderCreateResponse
 import com.commerce.service.order.controller.response.OrderDetail
 import com.commerce.service.order.controller.response.OrderDetailResponse
@@ -79,7 +75,7 @@ class OrderService (
         )
 
         return OrderListResponse(
-            products = ordersPage.data.map { it.toOrder().toOrderSummary() },
+            products = ordersPage.data.map { it.toOrderSummary() },
             paginationInfo = ordersPage.pagination
         )
     }

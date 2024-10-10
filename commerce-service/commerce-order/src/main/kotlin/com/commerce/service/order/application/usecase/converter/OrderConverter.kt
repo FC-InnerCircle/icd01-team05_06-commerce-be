@@ -1,7 +1,6 @@
 package com.commerce.service.order.application.usecase.converter
 
 import com.commerce.common.model.orderProduct.OrderProduct
-import com.commerce.common.model.orders.OrderStatus
 import com.commerce.common.model.orders.Orders
 import com.commerce.service.order.application.usecase.dto.OrdersDto
 import com.commerce.service.order.controller.response.OrderSummary
@@ -22,26 +21,7 @@ fun Orders.toOrderSummary(): OrderSummary {
     )
 }
 
-fun Orders.toOrder(): Orders {
-    return Orders(
-        id = this.id,
-        memberId = this.memberId,
-        streetAddress = this.streetAddress,
-        detailAddress = this.detailAddress,
-        postalCode = this.postalCode,
-        orderNumber = this.orderNumber,
-        paymentMethod = this.paymentMethod,
-        recipient = this.recipient,
-        content = this.content,
-        discountedPrice = this.discountedPrice,
-        price = this.price,
-        status = OrderStatus.valueOf(this.status.name),
-        orderDate = this.orderDate,
-        orderProducts = this.orderProducts.map { it.toOrderProducts() }
-    )
-}
-
-fun OrdersDto.toOrder(): Orders {
+fun OrdersDto.createOrder(): Orders {
     return Orders(
         id = 0, // Assuming new order, set id to 0 or handle as needed
         memberId = this.member.id,
