@@ -74,17 +74,6 @@ include::{snippets}/get-orders/http-response.adoc[]
 === Response Fields
 include::{snippets}/get-orders/response-fields.adoc[]
 
-[[order-detail]]
-== 주문 상세 조회 - 미개발 (예정)
-=== Http Request
-include::{snippets}/get-order-detail/http-request.adoc[]
-=== Path Parameters
-include::{snippets}/get-order-detail/path-parameters.adoc[]
-=== Http Response
-include::{snippets}/get-order-detail/http-response.adoc[]
-=== Response Fields
-include::{snippets}/get-order-detail/response-fields.adoc[]
-
 ---
 
 = 장바구니 관련 API
