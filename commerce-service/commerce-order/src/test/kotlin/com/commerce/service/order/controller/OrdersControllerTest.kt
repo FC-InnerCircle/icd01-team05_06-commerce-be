@@ -12,6 +12,7 @@ import com.commerce.common.model.util.PaginationInfo
 import com.commerce.common.util.ObjectMapperConfig
 import com.commerce.service.order.application.usecase.OrderUseCase
 import com.commerce.common.model.orders.OrderNumber
+import com.commerce.common.model.orders.OrderStatus
 import com.commerce.service.order.config.SecurityConfig
 import com.commerce.service.order.controller.request.OrderCreateRequest
 import com.commerce.service.order.controller.request.OrderListRequest
@@ -120,22 +121,22 @@ class OrdersControllerTest {
         sampleListResponse = OrderListResponse(
             products = listOf(
                 OrderSummary(
-                    id = "1",
+                    id = 1,
                     orderNumber = OrderNumber("ORD-20240815-000001"),
                     content = "해리 포터와 마법사의 돌 외 2권",
                     orderDate = LocalDateTime.of(2024, 8, 15, 14, 30).toString(),
-                    status = "배송완료",
+                    status = OrderStatus.SHIPPED,
                     price = 45000.0,
                     discountedPrice = 40500.0,
                     memberName = "김철수",
                     recipient = "김영희"
                 ),
                 OrderSummary(
-                    id = "2",
+                    id = 2,
                     orderNumber = OrderNumber("ORD-20240815-000002"),
                     content = "코스모스: 가능한 세계들",
                     orderDate = LocalDateTime.of(2024, 8, 16, 9, 45).toString(),
-                    status = "결제완료",
+                    status = OrderStatus.PENDING,
                     price = 22000.0,
                     discountedPrice = 19800.0,
                     memberName = "이지은",
@@ -380,17 +381,21 @@ class OrdersControllerTest {
                 OrderCreateRequest.ProductInfo(id = 1, quantity = 2),
                 OrderCreateRequest.ProductInfo(id = 3, quantity = 1)
             ),
+            ordererInfo = OrderCreateRequest.OrdererInfo(
+                name = "김오더",
+                phoneNumber = "01022334455",
+                email = "test@emaill.com"
+            ),
             deliveryInfo = OrderCreateRequest.DeliveryInfo(
                 recipient = "홍길동",
                 phoneNumber = "01012345678",
-                email = "hong@example.com",
                 streetAddress = "서울시 강남구 테헤란로 123",
                 detailAddress = "104동 1201호",
-                postalCode = "12345"
+                postalCode = "12345",
+                memo = "배송메모"
             ),
             paymentInfo = OrderCreateRequest.PaymentInfo(
                 method = "CREDIT_CARD",
-                totalAmount = BigDecimal(50000),
                 depositorName = "홍길동"
             ),
             agreementInfo = OrderCreateRequest.AgreementInfo(
@@ -401,13 +406,26 @@ class OrdersControllerTest {
         )
 
        val response = OrderCreateResponse(
+           id = 1,
            orderNumber = "ORD-20240815-001",
            orderStatus = "PENDING",
            orderDate = LocalDateTime.now().toString(),
-           totalAmount = BigDecimal(50000),
            products = listOf(
-               OrderCreateResponse.ProductSummary(id = 1, name = "Kotlin in Action", quantity = 2, price = BigDecimal(20000)),
-               OrderCreateResponse.ProductSummary(id = 3, name = "Spring Boot in Practice", quantity = 1, price = BigDecimal(10000))
+               OrderCreateResponse.ProductSummary(
+                   id = 1,
+                   name = "Kotlin in Action",
+                   quantity = 2,
+                   price = BigDecimal(20000),
+                   discountedPrice = BigDecimal(19000),
+               ),
+               OrderCreateResponse.ProductSummary(
+                   id = 3,
+                   name = "Spring Boot in Practice",
+                   quantity = 1,
+                   price = BigDecimal(10000),
+                   discountedPrice = BigDecimal(9000),
+               )
+
            )
        )
 
@@ -439,16 +457,19 @@ class OrdersControllerTest {
                        fieldWithPath("products").description("주문할 상품 목록"),
                        fieldWithPath("products[].id").description("상품 ID"),
                        fieldWithPath("products[].quantity").description("주문 수량"),
+                       fieldWithPath("ordererInfo").description("주문자 정보"),
+                       fieldWithPath("ordererInfo.name").description("이름"),
+                       fieldWithPath("ordererInfo.phoneNumber").description("연락처"),
+                       fieldWithPath("ordererInfo.email").description("이메일"),
                        fieldWithPath("deliveryInfo").description("배송 정보"),
                        fieldWithPath("deliveryInfo.recipient").description("수령인"),
                        fieldWithPath("deliveryInfo.phoneNumber").description("수령인 전화번호"),
-                       fieldWithPath("deliveryInfo.email").description("수령인 이메일"),
                        fieldWithPath("deliveryInfo.streetAddress").description("도로명 주소"),
                        fieldWithPath("deliveryInfo.detailAddress").description("상세 주소"),
                        fieldWithPath("deliveryInfo.postalCode").description("우편번호"),
+                       fieldWithPath("deliveryInfo.memo").optional().description("배송메모"),
                        fieldWithPath("paymentInfo").description("결제 정보"),
                        fieldWithPath("paymentInfo.method").description("결제 방법"),
-                       fieldWithPath("paymentInfo.totalAmount").description("총 결제 금액"),
                        fieldWithPath("paymentInfo.depositorName").description("입금자 이름"),
                        fieldWithPath("agreementInfo").description("동의 정보"),
                        fieldWithPath("agreementInfo.termsOfService").description("이용 약관 동의 여부"),
@@ -458,15 +479,16 @@ class OrdersControllerTest {
                    responseFields(
                        fieldWithPath("success").description("요청 성공 여부"),
                        fieldWithPath("data").description("응답 데이터"),
+                       fieldWithPath("data.id").description("주문 아이디"),
                        fieldWithPath("data.orderNumber").description("주문 번호"),
                        fieldWithPath("data.orderStatus").description("주문 상태"),
                        fieldWithPath("data.orderDate").description("주문 일시"),
-                       fieldWithPath("data.totalAmount").description("총 주문 금액"),
                        fieldWithPath("data.products").description("주문한 상품 목록"),
                        fieldWithPath("data.products[].id").description("상품 ID"),
                        fieldWithPath("data.products[].name").description("상품 이름"),
                        fieldWithPath("data.products[].quantity").description("주문 수량"),
                        fieldWithPath("data.products[].price").description("상품 가격"),
+                       fieldWithPath("data.products[].discountedPrice").description("상품 할인된 가격"),
                        fieldWithPath("error").description("오류 정보").optional()
                    )
                )

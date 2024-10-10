@@ -7,11 +7,7 @@ import com.commerce.service.order.application.usecase.command.OrderListCommand
 import com.commerce.service.order.application.usecase.component.PaymentHandler
 import com.commerce.service.order.application.usecase.component.ProductHandler
 import com.commerce.service.order.application.usecase.component.ShippingHandler
-import com.commerce.service.order.application.usecase.converter.toOrderSummary
-import com.commerce.service.order.controller.response.OrderCreateResponse
-import com.commerce.service.order.controller.response.OrderDetail
-import com.commerce.service.order.controller.response.OrderDetailResponse
-import com.commerce.service.order.controller.response.OrderListResponse
+import com.commerce.service.order.controller.response.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.springframework.stereotype.Service
@@ -37,16 +33,16 @@ class OrderService (
     override fun order(command: CreateOrderCommand): OrderCreateResponse {
 
         // 1. 상품 및 재고 확인 (다수의 상품을 한번에 확인)
-        val products = productHandler.getProducts(command.products.map { it.id })
+        val products = productHandler.getProducts(command.products)
 
         // 2. 상품이 존재하지 않거나 재고가 부족한 경우(다수의 상품을 한번에 확인)
-        productHandler.checkAvailableProducts(products, command.products)
+        productHandler.checkAvailableProducts(products)
 
         // 3. 고객 정보 조회
         // 4. (고객 또는 주문자 정보 기반)으로 주문 생성 (주문번호 생성)
         // 주문번호는 ("ORD-20240815-001") 이와 같이 "ORD-날짜-랜덤숫자3자리" 형태로 생성된다.
         // [주문상태] PENDING: 주문 생성
-        val order = productHandler.createOrder(command.member, command)
+        val order = productHandler.createOrder(command, products)
 
         // 5. 결제 처리 (임시 처리)
         // [주문상태] PROCESSING: 주문 처리중
@@ -75,7 +71,19 @@ class OrderService (
         )
 
         return OrderListResponse(
-            products = ordersPage.data.map { it.toOrderSummary() },
+            products = ordersPage.data.map {
+                OrderSummary(
+                    id = it.id,
+                    orderNumber = it.orderNumber,
+                    content = it.content,
+                    orderDate = it.orderDate.toString(),
+                    status = it.status,
+                    price = it.price.toDouble(),
+                    discountedPrice = it.discountedPrice.toDouble(),
+                    memberName = command.member.name,
+                    recipient = it.deliveryInfo.recipient
+                )
+            },
             paginationInfo = ordersPage.pagination
         )
     }

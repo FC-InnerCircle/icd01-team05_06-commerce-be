@@ -1,16 +1,18 @@
 package com.commerce.service.order.controller.request
 
+import com.commerce.common.model.address.Address
 import com.commerce.common.model.member.Member
 import com.commerce.service.order.application.usecase.command.CreateOrderCommand
 import com.commerce.service.order.application.usecase.exception.InvalidInputException
 import com.commerce.service.order.controller.common.request.CommonRequest
 import jakarta.validation.Valid
 import jakarta.validation.constraints.*
-import java.math.BigDecimal
 
 data class OrderCreateRequest(
     @field:Valid @field:NotEmpty(message = "상품 목록은 비어있을 수 없습니다")
     val products: List<ProductInfo>,
+    @field:Valid
+    val ordererInfo: OrdererInfo,
     @field:Valid
     val deliveryInfo: DeliveryInfo,
     @field:Valid
@@ -25,28 +27,35 @@ data class OrderCreateRequest(
         val quantity: Int
     )
 
+    data class OrdererInfo(
+        @field:NotBlank(message = "주문자 이름은 비어있을 수 없습니다")
+        val name: String,
+        @field:Pattern(regexp = "\\d+", message = "전화번호는 숫자만 포함해야 합니다")
+        @field:NotBlank(message = "전화번호는 비어있을 수 없습니다")
+        val phoneNumber: String,
+        @field:Email(message = "유효하지 않은 이메일 형식입니다")
+        @field:NotBlank(message = "이메일은 비어있을 수 없습니다")
+        val email: String
+    )
+
     data class DeliveryInfo(
         @field:NotBlank(message = "수령인 이름은 비어있을 수 없습니다")
         val recipient: String,
         @field:Pattern(regexp = "\\d+", message = "전화번호는 숫자만 포함해야 합니다")
         @field:NotBlank(message = "전화번호는 비어있을 수 없습니다")
         val phoneNumber: String,
-        @field:Email(message = "유효하지 않은 이메일 형식입니다")
-        @field:NotBlank(message = "이메일은 비어있을 수 없습니다")
-        val email: String,
         @field:NotBlank(message = "도로명 주소는 비어있을 수 없습니다")
         val streetAddress: String,
         @field:NotBlank(message = "상세 주소는 비어있을 수 없습니다")
         val detailAddress: String,
         @field:NotBlank(message = "우편번호는 비어있을 수 없습니다")
-        val postalCode: String
+        val postalCode: String,
+        val memo: String?
     )
 
     data class PaymentInfo(
         @field:NotBlank(message = "결제 방법은 비어있을 수 없습니다")
         val method: String,
-        @field:Positive(message = "총 금액은 양수여야 합니다")
-        val totalAmount: BigDecimal,
         @field:NotBlank(message = "입금자명은 비어있을 수 없습니다")
         val depositorName: String
     )
@@ -63,17 +72,23 @@ data class OrderCreateRequest(
     fun toCommand(member: Member) = CreateOrderCommand(
         member = member,
         products = products.map { CreateOrderCommand.ProductInfo(it.id, it.quantity) },
+        ordererInfo = CreateOrderCommand.OrdererInfo(
+            ordererInfo.name,
+            ordererInfo.phoneNumber,
+            ordererInfo.email,
+        ),
         deliveryInfo = CreateOrderCommand.DeliveryInfo(
             deliveryInfo.recipient,
             deliveryInfo.phoneNumber,
-            deliveryInfo.email,
-            deliveryInfo.streetAddress,
-            deliveryInfo.detailAddress,
-            deliveryInfo.postalCode
+            address = Address(
+                deliveryInfo.postalCode,
+                deliveryInfo.streetAddress,
+                deliveryInfo.detailAddress
+            ),
+            deliveryInfo.memo
         ),
         paymentInfo = CreateOrderCommand.PaymentInfo(
             paymentInfo.method,
-            paymentInfo.totalAmount,
             paymentInfo.depositorName
         ),
         agreementInfo = CreateOrderCommand.AgreementInfo(

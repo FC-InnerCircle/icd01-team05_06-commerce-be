@@ -1,11 +1,11 @@
 package com.commerce.service.order.application.usecase.component
 
-import com.commerce.service.order.application.usecase.dto.OrdersDto
+import com.commerce.common.model.orders.OrdersDetailInfo
 
 /**
  * ShippingHandler
  * - 배송 준비
  */
 interface ShippingHandler {
-    fun arrangeShipping(order: OrdersDto)
+    fun arrangeShipping(order: OrdersDetailInfo)
 }

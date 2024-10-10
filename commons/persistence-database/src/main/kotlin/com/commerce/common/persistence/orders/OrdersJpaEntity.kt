@@ -1,6 +1,5 @@
 package com.commerce.common.persistence.orders
 
-import com.commerce.common.model.orderProduct.OrderProduct
 import com.commerce.common.model.orders.OrderNumber
 import com.commerce.common.model.orders.OrderStatus
 import com.commerce.common.model.orders.Orders
@@ -21,24 +20,17 @@ data class OrdersJpaEntity(
     @Column(name = "member_id")
     val memberId: Long,
 
-    //TODO: Address 묶어서?? 3가지
-    @Column(name = "street_address")
-    val streetAddress: String,
-
-    @Column(name = "detail_address")
-    val detailAddress: String,
-
-    @Column(name = "postal_code")
-    val postalCode: String,
-
     @Column(name = "order_number")
     val orderNumber: String,
 
-    @Column(name = "payment_method")
-    val paymentMethod: String,
+    @Embedded
+    val ordererInfo: OrdererInfoEmbeddable,
 
-    @Column(name = "recipient")
-    val recipient: String,
+    @Embedded
+    val deliveryInfo: DeliveryInfoEmbeddable,
+
+    @Embedded
+    val paymentInfo: PaymentInfoEmbeddable,
 
     @Column(name = "content")
     val content: String,
@@ -65,12 +57,10 @@ fun OrdersJpaEntity.toOrder(): Orders {
     return Orders(
         id = this.id,
         memberId = this.memberId,
-        streetAddress = this.streetAddress,
-        detailAddress = this.detailAddress,
-        postalCode = this.postalCode,
         orderNumber = OrderNumber(this.orderNumber),
-        paymentMethod = this.paymentMethod,
-        recipient  = this.recipient,
+        ordererInfo = this.ordererInfo.toModel(),
+        deliveryInfo = this.deliveryInfo.toModel(),
+        paymentInfo = this.paymentInfo.toModel(),
         content = this.content,
         discountedPrice = this.discountedPrice,
         price = this.price,
@@ -80,18 +70,16 @@ fun OrdersJpaEntity.toOrder(): Orders {
     )
 }
 
-// Orders 클��스의 toEntity 확장 함수
+// Orders 클래스의 toEntity 확장 함수
 // TODO: 함수명 from() 으로 변경
 fun Orders.toJpaEntity(): OrdersJpaEntity {
     return OrdersJpaEntity(
         id = this.id,
         memberId = this.memberId,
-        streetAddress = this.streetAddress,
-        detailAddress = this.detailAddress,
-        postalCode = this.postalCode,
         orderNumber = this.orderNumber.value,
-        paymentMethod = this.paymentMethod,
-        recipient = this.recipient,
+        ordererInfo = OrdererInfoEmbeddable.from(this.ordererInfo),
+        deliveryInfo = DeliveryInfoEmbeddable.from(this.deliveryInfo),
+        paymentInfo = PaymentInfoEmbeddable.from(this.paymentInfo),
         content = this.content,
         discountedPrice = this.discountedPrice,
         price = this.price,

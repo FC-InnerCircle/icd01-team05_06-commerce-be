@@ -1,10 +1,8 @@
 package com.commerce.service.order.application.usecase.component
 
-import com.commerce.common.model.member.Member
-import com.commerce.common.model.product.Product
+import com.commerce.common.model.orders.OrdersDetailInfo
+import com.commerce.common.model.product.ProductWithQuantity
 import com.commerce.service.order.application.usecase.command.CreateOrderCommand
-import com.commerce.service.order.application.usecase.dto.OrdersDto
-import com.commerce.service.order.controller.request.OrderCreateRequest
 import com.commerce.service.order.controller.response.OrderCreateResponse
 
 /**
@@ -16,9 +14,9 @@ import com.commerce.service.order.controller.response.OrderCreateResponse
  * - 상품이 존재하지 않거나 재고가 부족한 경우(다수의 상품을 한번에 확인)
  */
 interface ProductHandler {
-    fun getProducts(productIds: List<Long>): List<Product>
-    fun createOrder(member: Member, command: CreateOrderCommand): OrdersDto
-    fun updateStock(order: OrdersDto)
-    fun completeOrder(order: OrdersDto): OrderCreateResponse
-    fun checkAvailableProducts(products: List<Product>, command: List<CreateOrderCommand.ProductInfo>)
+    fun getProducts(productInfos: List<CreateOrderCommand.ProductInfo>): List<ProductWithQuantity>
+    fun createOrder(command: CreateOrderCommand, productInfos: List<ProductWithQuantity>): OrdersDetailInfo
+    fun updateStock(orderInfo: OrdersDetailInfo)
+    fun completeOrder(orderInfo: OrdersDetailInfo): OrderCreateResponse
+    fun checkAvailableProducts(productInfos: List<ProductWithQuantity>)
 }
