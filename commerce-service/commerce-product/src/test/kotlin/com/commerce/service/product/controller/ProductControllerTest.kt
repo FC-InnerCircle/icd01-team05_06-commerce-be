@@ -1,7 +1,13 @@
 package com.commerce.service.product.controller
 
+import com.commerce.common.jwt.application.service.TokenType
+import com.commerce.common.jwt.application.usecase.TokenUseCase
+import com.commerce.common.jwt.config.JwtAuthenticationFilter
+import com.commerce.common.model.address.Address
 import com.commerce.common.model.category.CategoryDetail
 import com.commerce.common.model.category.CategoryRepository
+import com.commerce.common.model.member.Member
+import com.commerce.common.model.member.MemberRepository
 import com.commerce.common.model.product.ProductRepository
 import com.commerce.common.model.product.SaleStatus
 import com.commerce.common.util.ObjectMapperConfig
@@ -11,6 +17,7 @@ import com.commerce.service.product.application.usecase.dto.ProductCategoryInfoD
 import com.commerce.service.product.application.usecase.dto.ProductInfoDto
 import com.commerce.service.product.application.usecase.dto.ProductPaginationInfoDto
 import com.commerce.service.product.application.usecase.query.SelectQuery
+import com.commerce.service.product.config.SecurityConfig
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -31,6 +38,8 @@ import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
 import org.springframework.restdocs.request.RequestDocumentation.*
+import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
@@ -40,14 +49,21 @@ import org.springframework.web.context.WebApplicationContext
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
-@Import(ProductController::class, ObjectMapperConfig::class)
+@Import(ProductController::class, ObjectMapperConfig::class, JwtAuthenticationFilter::class)
 @ExtendWith(RestDocumentationExtension::class)
+@ContextConfiguration(classes = [SecurityConfig::class])
 @WebMvcTest(controllers = [ProductController::class])
 class ProductControllerTest(
     @Autowired
     private val objectMapper: ObjectMapper
 ) {
     private lateinit var mockMvc: MockMvc
+
+    @MockBean
+    private lateinit var tokenUseCase: TokenUseCase
+
+    @MockBean
+    private lateinit var memberRepository: MemberRepository
 
     @MockBean
     private lateinit var productUseCase: ProductUseCase
@@ -58,15 +74,39 @@ class ProductControllerTest(
     @MockBean
     private lateinit var categoryRepository: CategoryRepository
 
+    private val testAccessToken =
+        "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzI0NTIwNDc5LCJleHAiOjE3MjU3MzAwNzl9.i1WjcNXU2wBYjikGu5u0r41XmciafAfaMF3nNheb9cc7TUpai-tnMZCg3NUcTWP9"
+    private val testMember = Member(
+        id = 1,
+        email = "commerce@example.com",
+        password = "123!@#qwe",
+        name = "홍길동",
+        phone = "01012345678",
+        address = Address(
+            postalCode = "12345",
+            streetAddress = "서울 종로구 테스트동",
+            detailAddress = "123-45"
+        )
+    )
+
     @BeforeEach
     fun setUp(
         applicationContext: WebApplicationContext,
         restDocumentation: RestDocumentationContextProvider
     ) {
         mockMvc = MockMvcBuilders.webAppContextSetup(applicationContext)
-
+            .apply<DefaultMockMvcBuilder>(springSecurity())
             .apply<DefaultMockMvcBuilder>(documentationConfiguration(restDocumentation))
             .build()
+
+        // JwtAuthenticationFilter
+        given(
+            tokenUseCase.getTokenSubject(
+                testAccessToken,
+                TokenType.ACCESS_TOKEN
+            )
+        ).willReturn(testMember.id.toString())
+        given(memberRepository.findById(testMember.id)).willReturn(testMember)
     }
 
     @Test

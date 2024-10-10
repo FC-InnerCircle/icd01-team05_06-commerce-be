@@ -29,6 +29,7 @@ class ProductServiceTest {
     fun `카테고리 전체 리스트를 출력한다`() {
         // given
         // when
+
         val categories = categoryRepository.findAll()
         // then
         assertThat(categories).hasSize(2)
