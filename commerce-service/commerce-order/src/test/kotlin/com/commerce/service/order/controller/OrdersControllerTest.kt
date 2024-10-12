@@ -163,6 +163,9 @@ class OrdersControllerTest {
             id = 6,
             memberId = 1,
             orderNumber = OrderNumber("ORD-20241012-000005"),
+            price = BigDecimal("31672"),
+            discountedPrice = BigDecimal("28778"),
+            orderDate = LocalDateTime.now(),
             orderer = OrdererInfo(
                 name = "주문자2",
                 phoneNumber = "01012345002",
@@ -339,6 +342,7 @@ class OrdersControllerTest {
                         fieldWithPath("data").description("응답 데이터"),
                         fieldWithPath("data.id").description("주문 ID"),
                         fieldWithPath("data.orderNumber").description("주문 번호"),
+                        fieldWithPath("data.orderDate").description("주문 일시"),
                         fieldWithPath("data.orderer").description("주문자 정보"),
                         fieldWithPath("data.orderer.name").description("이름"),
                         fieldWithPath("data.orderer.phoneNumber").description("연락처"),
@@ -362,6 +366,8 @@ class OrdersControllerTest {
                         fieldWithPath("data.paymentInfo").description("결제 정보"),
                         fieldWithPath("data.paymentInfo.method").description("결제 방법"),
                         fieldWithPath("data.paymentInfo.depositorName").description("입금자 이름"),
+                        fieldWithPath("data.paymentInfo.price").type(JsonFieldType.NUMBER).description("주문 금액"),
+                        fieldWithPath("data.paymentInfo.discountedPrice").type(JsonFieldType.NUMBER).description("주문 할인된 금액"),
                         fieldWithPath("data.orderStatus").description("주문 상태")
                             .attributes(RestDocsUtil.format(OrderStatus.entries.joinToString(", ") { "$it : ${it.title}" })),
                         fieldWithPath("error").description("오류 정보").optional()

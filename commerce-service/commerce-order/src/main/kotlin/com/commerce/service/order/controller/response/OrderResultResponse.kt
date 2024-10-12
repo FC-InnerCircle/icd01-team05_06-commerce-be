@@ -3,10 +3,12 @@ package com.commerce.service.order.controller.response
 import com.commerce.common.model.orders.OrderStatus
 import com.commerce.common.model.orders.OrdersResult
 import java.math.BigDecimal
+import java.time.LocalDateTime
 
 data class OrderResultResponse(
     val id: Long,
     val orderNumber: String,
+    val orderDate: LocalDateTime,
     val orderer: OrdererInfo, // 주문자
     val products: List<ProductInfo>,
     val deliveryInfo: DeliveryInfo, // 배송정보
@@ -41,7 +43,9 @@ data class OrderResultResponse(
 
     data class PaymentInfo(
         val method: String,
-        val depositorName: String
+        val depositorName: String,
+        val price: BigDecimal,
+        val discountedPrice: BigDecimal
     )
 
     companion object {
@@ -50,6 +54,7 @@ data class OrderResultResponse(
                 OrderResultResponse(
                     id = id,
                     orderNumber = orderNumber.value,
+                    orderDate = orderDate,
                     orderer = OrdererInfo(
                         name = orderer.name,
                         phoneNumber = orderer.phoneNumber,
@@ -77,7 +82,9 @@ data class OrderResultResponse(
                     ),
                     paymentInfo = PaymentInfo(
                         method = paymentInfo.method,
-                        depositorName = paymentInfo.depositorName
+                        depositorName = paymentInfo.depositorName,
+                        price = price,
+                        discountedPrice = discountedPrice,
                     ),
                     orderStatus = orderStatus
                 )

@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Repository
+import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -25,6 +26,9 @@ class OrdersRepositoryImpl(
                 id = id,
                 memberId = memberId,
                 orderNumber = orderNumber,
+                price = price,
+                discountedPrice = discountedPrice,
+                orderDate = orderDate,
                 orderer = ordererInfo,
                 products = orderProducts.map {
                     OrderProductWithInfo(
