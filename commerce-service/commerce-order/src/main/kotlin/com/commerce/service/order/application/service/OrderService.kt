@@ -1,7 +1,8 @@
 package com.commerce.service.order.application.service
 
+import com.commerce.common.model.member.Member
 import com.commerce.common.model.orders.OrdersRepository
-import com.commerce.common.model.product.Product
+import com.commerce.common.model.orders.OrdersResult
 import com.commerce.common.model.product.ProductRepository
 import com.commerce.service.order.application.usecase.OrderUseCase
 import com.commerce.service.order.application.usecase.command.CreateOrderCommand
@@ -9,14 +10,16 @@ import com.commerce.service.order.application.usecase.command.OrderListCommand
 import com.commerce.service.order.application.usecase.component.PaymentHandler
 import com.commerce.service.order.application.usecase.component.ProductHandler
 import com.commerce.service.order.application.usecase.component.ShippingHandler
-import com.commerce.service.order.controller.response.*
+import com.commerce.service.order.application.usecase.exception.OrderNotFoundException
+import com.commerce.service.order.controller.response.OrderCreateResponse
+import com.commerce.service.order.controller.response.OrderListResponse
+import com.commerce.service.order.controller.response.OrderSummary
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.springframework.stereotype.Service
-import java.time.LocalDateTime
 
 @Service
-class OrderService (
+class OrderService(
     private val ordersRepository: OrdersRepository,
     private val productRepository: ProductRepository,
 
@@ -94,22 +97,7 @@ class OrderService (
         )
     }
 
-    // TODO: 주문 번호로 주문 상세 정보 조회
-    override fun getOrderDetail(id: String): OrderDetailResponse {
-        return OrderDetailResponse(
-            order = OrderDetail(
-                id = "1",
-                orderNumber = "1",
-                orderDate = LocalDateTime.now(),
-                status = "Order Placed",
-                totalAmount = 100.0,
-                customerName = "John Doe",
-                shippingAddress = "123 Main St, Springfield, IL 62701",
-                paymentMethod = "Credit Card"
-            ),
-
-            items = listOf(),
-            statusHistory = listOf()
-        )
+    override fun getOrderResult(member: Member, id: Long): OrdersResult {
+        return ordersRepository.findResultByIdAndMemberId(id, member.id) ?: throw OrderNotFoundException(id)
     }
 }

@@ -1,13 +1,13 @@
 package com.commerce.common.persistence.orders
 
-import com.commerce.common.model.orders.OrderSortOption
-import com.commerce.common.model.orders.OrderStatus
-import com.commerce.common.model.orders.Orders
-import com.commerce.common.model.orders.OrdersRepository
+import com.commerce.common.model.orderProduct.OrderProductWithInfo
+import com.commerce.common.model.orders.*
+import com.commerce.common.model.product.ProductRepository
 import com.commerce.common.model.util.PaginationModel
 import com.commerce.common.persistence.util.toPaginationModel
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Repository
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -16,7 +16,28 @@ import java.time.LocalTime
 @Repository
 class OrdersRepositoryImpl(
     private val ordersJpaRepository: OrdersJpaRepository,
+    private val productRepository: ProductRepository,
 ) : OrdersRepository {
+    override fun findResultByIdAndMemberId(id: Long, memberId: Long): OrdersResult? {
+        val orders = ordersJpaRepository.findByIdAndMemberId(id, memberId)?.toOrder() ?: return null
+        return with(orders) {
+            OrdersResult(
+                id = id,
+                memberId = memberId,
+                orderNumber = orderNumber,
+                orderer = ordererInfo,
+                products = orderProducts.map {
+                    OrderProductWithInfo(
+                        product = productRepository.findById(it.productId),
+                        orderProduct = it
+                    )
+                },
+                deliveryInfo = deliveryInfo,
+                paymentInfo = paymentInfo,
+                orderStatus = status
+            )
+        }
+    }
 
     override fun findByMemberIdAndOrderDateBetween(
         memberId: Long,

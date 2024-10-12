@@ -7,17 +7,20 @@ import com.commerce.common.model.address.Address
 import com.commerce.common.model.member.Member
 import com.commerce.common.model.member.MemberRepository
 import com.commerce.common.model.orderProduct.OrderProduct
-import com.commerce.common.model.orders.OrderSortOption
+import com.commerce.common.model.orderProduct.OrderProductWithInfo
+import com.commerce.common.model.orders.*
+import com.commerce.common.model.product.Product
+import com.commerce.common.model.product.SaleStatus
 import com.commerce.common.model.util.PaginationInfo
+import com.commerce.common.restdocs.RestDocsUtil
 import com.commerce.common.util.ObjectMapperConfig
 import com.commerce.service.order.application.usecase.OrderUseCase
-import com.commerce.common.model.orders.OrderNumber
-import com.commerce.common.model.orders.OrderStatus
-import com.commerce.common.restdocs.RestDocsUtil
 import com.commerce.service.order.config.SecurityConfig
 import com.commerce.service.order.controller.request.OrderCreateRequest
 import com.commerce.service.order.controller.request.OrderListRequest
-import com.commerce.service.order.controller.response.*
+import com.commerce.service.order.controller.response.OrderCreateResponse
+import com.commerce.service.order.controller.response.OrderListResponse
+import com.commerce.service.order.controller.response.OrderSummary
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -36,6 +39,7 @@ import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get
 import org.springframework.restdocs.operation.preprocess.Preprocessors.*
+import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation.*
 import org.springframework.restdocs.request.RequestDocumentation.*
 import org.springframework.restdocs.snippet.Attributes.key
@@ -72,7 +76,7 @@ class OrdersControllerTest {
 
     private lateinit var sampleListRequest: OrderListRequest
     private lateinit var sampleListResponse: OrderListResponse
-    private lateinit var sampleDetailResponse: OrderDetailResponse
+    private lateinit var sampleResult: OrdersResult
 
     private val testAccessToken =
         "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzI0NTIwNDc5LCJleHAiOjE3MjU3MzAwNzl9.i1WjcNXU2wBYjikGu5u0r41XmciafAfaMF3nNheb9cc7TUpai-tnMZCg3NUcTWP9"
@@ -155,70 +159,67 @@ class OrdersControllerTest {
         )
 
         // 주문 상세 샘플 데이터
-        sampleDetailResponse = OrderDetailResponse(
-            order = OrderDetail(
-                id = "1",
-                orderNumber = "ORD-20240815-001",
-                orderDate = LocalDateTime.of(2024, 8, 15, 14, 30),
-                status = "배송완료",
-                totalAmount = 45000.0,
-                customerName = "김철수",
-                shippingAddress = "서울특별시 강남구 테헤란로 123 우리집 아파트 101동 1001호",
-                paymentMethod = "신용카드"
+        sampleResult = OrdersResult(
+            id = 6,
+            memberId = 1,
+            orderNumber = OrderNumber("ORD-20241012-000005"),
+            orderer = OrdererInfo(
+                name = "주문자2",
+                phoneNumber = "01012345002",
+                email = "chadwick.madden@example.com"
             ),
-            items = listOf(
-                OrderProduct(
-                    id = 1,
-                    orderId = 1,
-                    productId = 101,
-                    quantity = 1,
-                    price = BigDecimal("15000.00"),
-                    discountedPrice = BigDecimal("13500.00"),
-                ),
-                OrderProduct(
-                    id = 2,
-                    orderId = 1,
-                    productId = 102,
-                    quantity = 1,
-                    price = BigDecimal("15000.00"),
-                    discountedPrice = BigDecimal("13500.00"),
-                ),
-                OrderProduct(
-                    id = 3,
-                    orderId = 1,
-                    productId = 103,
-                    quantity = 1,
-                    price = BigDecimal("15000.00"),
-                    discountedPrice = BigDecimal("13500.00"),
+            products = listOf(
+                OrderProductWithInfo(
+                    orderProduct = OrderProduct(
+                        id = 2,
+                        orderId = 6,
+                        productId = 3,
+                        quantity = 1,
+                        price = BigDecimal("31672"),
+                        discountedPrice = BigDecimal("28778")
+                    ), product = Product(
+                        id = 3,
+                        title = "The Challenge of Greatness (The Legacy of Great Teachers)",
+                        author = "Gose, Michael",
+                        price = BigDecimal("31672"),
+                        discountedPrice = BigDecimal("28778"),
+                        publisher = "국내총판도서",
+                        publishDate = LocalDateTime.now(),
+                        isbn = "9781610480901",
+                        description = "설명~~",
+                        pages = 123,
+                        coverImage = "https://shopping-phinf.pstatic.net/main_3247428/32474284194.20220520074619.jpg",
+                        previewLink = "https://search.shopping.naver.com/book/catalog/32474284194",
+                        stockQuantity = 33,
+                        rating = 4.5,
+                        status = SaleStatus.CLOSE,
+                        category = null,
+                        isHotNew = false,
+                        isRecommend = false,
+                        isBestseller = false
+                    )
                 )
             ),
-            statusHistory = listOf(
-                StatusHistoryItem(
-                    status = "주문접수",
-                    timestamp = LocalDateTime.of(2024, 8, 15, 14, 30)
+            deliveryInfo = DeliveryInfo(
+                recipient = "수령인2",
+                phoneNumber = "01054321002",
+                address = Address(
+                    postalCode = "12002",
+                    streetAddress = "서울 종로구 종로3가 2",
+                    detailAddress = "종로아파트 2호",
                 ),
-                StatusHistoryItem(
-                    status = "결제완료",
-                    timestamp = LocalDateTime.of(2024, 8, 15, 14, 35)
-                ),
-                StatusHistoryItem(
-                    status = "배송준비중",
-                    timestamp = LocalDateTime.of(2024, 8, 15, 16, 0)
-                ),
-                StatusHistoryItem(
-                    status = "배송중",
-                    timestamp = LocalDateTime.of(2024, 8, 16, 9, 0)
-                ),
-                StatusHistoryItem(
-                    status = "배송완료",
-                    timestamp = LocalDateTime.of(2024, 8, 17, 14, 0)
-                )
-            )
+                memo = "배송메모2"
+            ),
+            paymentInfo = PaymentInfo(
+                method = "CREDIT_CARD",
+                depositorName = "예금주2"
+            ),
+            orderStatus = OrderStatus.COMPLETED
         )
 
         // Mock 설정
         `when`(orderUseCase.getOrder(sampleListRequest.toCommand(testMember))).thenReturn(sampleListResponse)
-        `when`(orderUseCase.getOrderDetail("1")).thenReturn(sampleDetailResponse)
+        `when`(orderUseCase.getOrderResult(testMember, 6)).thenReturn(sampleResult)
     }
 
     @Test
@@ -320,7 +321,7 @@ class OrdersControllerTest {
     @Test
     fun `주문 상세 정보를 반환해야 한다`() {
         mockMvc.perform(
-            get("/order/v1/orders/{orderId}", 1)
+            get("/order/v1/orders/{orderId}", 6)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer $testAccessToken")
                 .contentType(MediaType.APPLICATION_JSON)
         )
@@ -336,25 +337,33 @@ class OrdersControllerTest {
                     responseFields(
                         fieldWithPath("success").description("요청 성공 여부"),
                         fieldWithPath("data").description("응답 데이터"),
-                        fieldWithPath("data.order").description("주문 상세 정보"),
-                        fieldWithPath("data.order.id").description("주문 ID"),
-                        fieldWithPath("data.order.orderNumber").description("주문 번호"),
-                        fieldWithPath("data.order.orderDate").description("주문 일시"),
-                        fieldWithPath("data.order.status").description("주문 상태"),
-                        fieldWithPath("data.order.totalAmount").description("총 주문 금액"),
-                        fieldWithPath("data.order.customerName").description("주문자 이름"),
-                        fieldWithPath("data.order.shippingAddress").description("배송 주소"),
-                        fieldWithPath("data.order.paymentMethod").description("결제 방법"),
-                        fieldWithPath("data.items").description("주문 상품 목록"),
-                        fieldWithPath("data.items[].id").description("주문 상품 ID"),
-                        fieldWithPath("data.items[].orderId").description("주문 ID"),
-                        fieldWithPath("data.items[].productId").description("상품 ID"),
-                        fieldWithPath("data.items[].quantity").description("주문 수량"),
-                        fieldWithPath("data.items[].price").description("상품 가격"),
-                        fieldWithPath("data.items[].discountedPrice").description("할인된 상품 가격"),
-                        fieldWithPath("data.statusHistory").description("주문 상태 이력"),
-                        fieldWithPath("data.statusHistory[].status").description("주문 상태"),
-                        fieldWithPath("data.statusHistory[].timestamp").description("상태 변경 시간"),
+                        fieldWithPath("data.id").description("주문 ID"),
+                        fieldWithPath("data.orderNumber").description("주문 번호"),
+                        fieldWithPath("data.orderer").description("주문자 정보"),
+                        fieldWithPath("data.orderer.name").description("이름"),
+                        fieldWithPath("data.orderer.phoneNumber").description("연락처"),
+                        fieldWithPath("data.orderer.email").description("이메일"),
+                        fieldWithPath("data.products").description("주문 상품 목록"),
+                        fieldWithPath("data.products[].id").description("상품 ID"),
+                        fieldWithPath("data.products[].title").description("상품 이름"),
+                        fieldWithPath("data.products[].author").description("상품 저자"),
+                        fieldWithPath("data.products[].publisher").description("상품 출판사"),
+                        fieldWithPath("data.products[].coverImage").type(JsonFieldType.STRING).description("상품 이미지"),
+                        fieldWithPath("data.products[].quantity").type(JsonFieldType.NUMBER).description("수량"),
+                        fieldWithPath("data.products[].price").type(JsonFieldType.NUMBER).description("상품 금액"),
+                        fieldWithPath("data.products[].discountedPrice").type(JsonFieldType.NUMBER).description("상품 할인된 금액"),
+                        fieldWithPath("data.deliveryInfo").description("배송 정보"),
+                        fieldWithPath("data.deliveryInfo.recipient").description("수령인"),
+                        fieldWithPath("data.deliveryInfo.phoneNumber").description("수령인 전화번호"),
+                        fieldWithPath("data.deliveryInfo.streetAddress").description("도로명 주소"),
+                        fieldWithPath("data.deliveryInfo.detailAddress").description("상세 주소"),
+                        fieldWithPath("data.deliveryInfo.postalCode").description("우편번호"),
+                        fieldWithPath("data.deliveryInfo.memo").optional().description("배송메모"),
+                        fieldWithPath("data.paymentInfo").description("결제 정보"),
+                        fieldWithPath("data.paymentInfo.method").description("결제 방법"),
+                        fieldWithPath("data.paymentInfo.depositorName").description("입금자 이름"),
+                        fieldWithPath("data.orderStatus").description("주문 상태")
+                            .attributes(RestDocsUtil.format(OrderStatus.entries.joinToString(", ") { "$it : ${it.title}" })),
                         fieldWithPath("error").description("오류 정보").optional()
                     )
                 )

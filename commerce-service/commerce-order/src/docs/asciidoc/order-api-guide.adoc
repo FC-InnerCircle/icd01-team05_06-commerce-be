@@ -74,6 +74,16 @@ include::{snippets}/get-orders/http-response.adoc[]
 === Response Fields
 include::{snippets}/get-orders/response-fields.adoc[]
 
+[[order-detail]]
+== 주문 상세 조회
+=== Http
+include::{snippets}/get-order-detail/http-request.adoc[]
+=== Path Variable
+include::{snippets}/get-order-detail/path-parameters.adoc[]
+=== Response
+include::{snippets}/get-order-detail/response-fields.adoc[]
+include::{snippets}/get-order-detail/response-body.adoc[]
+
 ---
 
 = 장바구니 관련 API

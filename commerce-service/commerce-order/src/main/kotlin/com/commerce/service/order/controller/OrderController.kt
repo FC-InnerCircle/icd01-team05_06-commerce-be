@@ -7,9 +7,8 @@ import com.commerce.service.order.config.ApiPaths
 import com.commerce.service.order.controller.request.OrderCreateRequest
 import com.commerce.service.order.controller.request.OrderListRequest
 import com.commerce.service.order.controller.response.OrderCreateResponse
-import com.commerce.service.order.controller.response.OrderDetailResponse
 import com.commerce.service.order.controller.response.OrderListResponse
-import jakarta.validation.Valid
+import com.commerce.service.order.controller.response.OrderResultResponse
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.validation.annotation.Validated
@@ -30,9 +29,9 @@ class OrderController(
 
     // 주문 상세 조회 API
     @GetMapping("/{orderId}")
-    fun getOrderDetail(@PathVariable orderId: String): ResponseEntity<CommonResponse<OrderDetailResponse>> {
-        val response = orderUseCase.getOrderDetail(orderId)
-        return ResponseEntity.ok(CommonResponse.ok(data = response))
+    fun getOrderDetail(@AuthenticationPrincipal member: Member, @PathVariable orderId: Long): ResponseEntity<CommonResponse<OrderResultResponse>> {
+        val ordersResult = orderUseCase.getOrderResult(member, orderId)
+        return ResponseEntity.ok(CommonResponse.ok(data = OrderResultResponse.from(ordersResult)))
     }
 
     // 주문 생성 API
