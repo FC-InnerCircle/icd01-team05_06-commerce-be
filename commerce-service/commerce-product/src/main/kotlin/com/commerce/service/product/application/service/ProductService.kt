@@ -31,6 +31,7 @@ class ProductService(
         val products = productRepository.findBySearchWord(
             searchWord = query.searchWord,
             categoryId = query.categoryId,
+            homeProductType = query.homeProductType,
             page = query.page,
             size = query.size,
         )

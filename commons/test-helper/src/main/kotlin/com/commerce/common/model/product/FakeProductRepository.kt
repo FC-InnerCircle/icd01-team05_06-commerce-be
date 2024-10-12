@@ -11,12 +11,20 @@ class FakeProductRepository : ProductRepository {
     var autoIncrementId = 1L
     var data: MutableList<Product> = mutableListOf()
 
-    override fun findBySearchWord(searchWord: String?, categoryId: Long?, page: Int, size: Int): PaginationModel<Product> {
+    override fun findBySearchWord(searchWord: String?, categoryId: Long?, homeProductType: HomeProductType?, page: Int, size: Int): PaginationModel<Product> {
         initData()
         val resultList = data.filter { product ->
             categoryId?.let { it == product.category?.id } ?: true
         }.filter { product ->
             searchWord?.let { product.title.contains(it) } ?: true
+        }.filter { product ->
+            homeProductType?.let {
+                when (homeProductType) {
+                    HomeProductType.HOT_NEW -> product.isHotNew
+                    HomeProductType.RECOMMEND -> product.isRecommend
+                    HomeProductType.BESTSELLER -> product.isBestseller
+                }
+            } ?: true
         }
         val pagination = PaginationInfo(
             currentPage = 0,
@@ -64,9 +72,9 @@ class FakeProductRepository : ProductRepository {
             stockQuantity = 100,
             rating = 5.5,
             status = SaleStatus.ON_SALE,
-            isHotNew = false,
-            isRecommend = false,
-            isBestseller = false,
+            isHotNew = true,
+            isRecommend = true,
+            isBestseller = true,
             category = CategoryDetail(
                 id = 2L,
                 name = "국내도서",
@@ -92,9 +100,9 @@ class FakeProductRepository : ProductRepository {
             stockQuantity = 100,
             rating = 5.5,
             status = SaleStatus.ON_SALE,
-            isHotNew = false,
-            isRecommend = false,
-            isBestseller = false,
+            isHotNew = true,
+            isRecommend = true,
+            isBestseller = true,
             category = CategoryDetail(
                 id = 3L,
                 name = "해외도서",
