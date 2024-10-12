@@ -8,6 +8,7 @@ import com.commerce.common.model.member.Member
 import com.commerce.common.model.member.MemberRepository
 import com.commerce.common.model.review.ReviewRepository
 import com.commerce.common.model.review.ReviewWithMember
+import com.commerce.common.model.review.ReviewWithProduct
 import com.commerce.common.util.ObjectMapperConfig
 import com.commerce.service.product.config.SecurityConfig
 import com.commerce.service.product.application.usecase.ReviewUseCase
@@ -33,8 +34,7 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.pos
 import org.springframework.restdocs.operation.preprocess.Preprocessors.*
 import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation.*
-import org.springframework.restdocs.request.RequestDocumentation.parameterWithName
-import org.springframework.restdocs.request.RequestDocumentation.queryParameters
+import org.springframework.restdocs.request.RequestDocumentation.*
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
@@ -211,6 +211,69 @@ class ReviewControllerTest(
                         fieldWithPath("data.reviewId").type(JsonFieldType.NUMBER).description("생성된 리뷰 ID"),
                         fieldWithPath("error").type(JsonFieldType.ARRAY).optional().description("오류 정보"),
                     )
+                )
+            )
+    }
+
+    @Test
+    fun getReviewsByMember() {
+        val memberId = 1L
+        given(reviewUseCase.getReviewsByMemberId(memberId))
+            .willReturn(
+                listOf(
+                    ReviewWithProduct(
+                        id = 1,
+                        content = "이 책 너무 재밌어요",
+                        score = BigDecimal(5),
+                        productId = 1L,
+                        productTitle = "상품1",
+                        productAuthor = "작성자1",
+                        productPublisher = "출판사1",
+                        productCoverImage = "https://image1.com",
+                        createdAt = LocalDateTime.now(),
+                        lastModifiedByUserAt = LocalDateTime.now()
+                    ),
+                    ReviewWithProduct(
+                        id = 2,
+                        content = "이 책 재밌긴 한데 아쉬워요",
+                        score = BigDecimal(5),
+                        productId = 2L,
+                        productTitle = "상품2",
+                        productAuthor = "작성자2",
+                        productPublisher = "출판사2",
+                        productCoverImage = "https://image2.com",
+                        createdAt = LocalDateTime.now(),
+                        lastModifiedByUserAt = LocalDateTime.now()
+                    ),
+                )
+            )
+
+        mockMvc.perform(get("/product/v1/reviews/member/{memberId}", memberId))
+            .andExpect(status().isOk)
+            .andDo(
+                document(
+                    "reviews/v1/reviews/member",
+                    preprocessRequest(prettyPrint()),
+                    preprocessResponse(prettyPrint()),
+                    pathParameters(
+                        parameterWithName("memberId").description("사용자 ID"),
+                    ),
+                    responseFields(
+                        fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("요청 성공 여부"),
+                        fieldWithPath("data").type(JsonFieldType.OBJECT).description("응답 데이터"),
+                        fieldWithPath("data.reviews").type(JsonFieldType.ARRAY).description("리뷰 리스트"),
+                        fieldWithPath("data.reviews[].reviewId").type(JsonFieldType.NUMBER).description("리뷰 아이디"),
+                        fieldWithPath("data.reviews[].content").type(JsonFieldType.STRING).description("리뷰 내용"),
+                        fieldWithPath("data.reviews[].score").type(JsonFieldType.NUMBER).description("작성자 상품 리뷰 평점"),
+                        fieldWithPath("data.reviews[].productId").type(JsonFieldType.NUMBER).description("상품 ID"),
+                        fieldWithPath("data.reviews[].productTitle").type(JsonFieldType.STRING).description("상품 이름"),
+                        fieldWithPath("data.reviews[].productAuthor").type(JsonFieldType.STRING).description("상품 저자"),
+                        fieldWithPath("data.reviews[].productPublisher").type(JsonFieldType.STRING).description("상품 출판사"),
+                        fieldWithPath("data.reviews[].productCoverImage").type(JsonFieldType.STRING).description("상품 이미지"),
+                        fieldWithPath("data.reviews[].createdAt").type(JsonFieldType.STRING).description("리뷰 작성일"),
+                        fieldWithPath("data.reviews[].lastModifiedByUserAt").type(JsonFieldType.STRING).description("리뷰 최종 수정일"),
+                        fieldWithPath("error").type(JsonFieldType.ARRAY).optional().description("오류 정보")
+                    ),
                 )
             )
     }

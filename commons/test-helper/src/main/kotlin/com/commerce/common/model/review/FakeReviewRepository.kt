@@ -30,4 +30,22 @@ class FakeReviewRepository(
         data.add(review)
         return data.last()
     }
+
+    override fun findByMemberId(memberId: Long): List<ReviewWithProduct> {
+        return data.filter { it.memberId == memberId }
+            .map {
+                ReviewWithProduct(
+                    id = autoIncrementId++,
+                    content = it.content,
+                    score = it.score,
+                    productId = it.productId,
+                    productTitle = "상품${it.productId}",
+                    productAuthor = "작성자${it.productId}",
+                    productPublisher = "출판사${it.productId}",
+                    productCoverImage = "https://image${it.productId}.com",
+                    createdAt = LocalDateTime.now(),
+                    lastModifiedByUserAt = LocalDateTime.now()
+                )
+            }
+    }
 }

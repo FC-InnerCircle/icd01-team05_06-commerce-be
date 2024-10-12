@@ -4,6 +4,7 @@ import com.commerce.common.model.member.MemberRepository
 import com.commerce.common.model.review.Review
 import com.commerce.common.model.review.ReviewRepository
 import com.commerce.common.model.review.ReviewWithMember
+import com.commerce.common.model.review.ReviewWithProduct
 import com.commerce.service.product.application.usecase.ReviewUseCase
 import com.commerce.service.product.application.usecase.command.AddReviewCommand
 import org.springframework.stereotype.Service
@@ -36,5 +37,9 @@ class ReviewService(
         )
 
         return reviewRepository.save(review).id
+    }
+
+    override fun getReviewsByMemberId(memberId: Long): List<ReviewWithProduct> {
+        return reviewRepository.findByMemberId(memberId)
     }
 }

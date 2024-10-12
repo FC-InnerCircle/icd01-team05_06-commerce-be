@@ -4,6 +4,7 @@ import com.commerce.common.model.member.Member
 import com.commerce.common.response.CommonResponse
 import com.commerce.service.product.application.usecase.ReviewUseCase
 import com.commerce.service.product.controller.request.ReviewCreateRequest
+import com.commerce.service.product.controller.response.ReviewByMemberResponse
 import com.commerce.service.product.controller.response.ReviewCreateResponse
 import com.commerce.service.product.controller.response.ReviewInfoDto
 import com.commerce.service.product.controller.response.ReviewInfoResponse
@@ -38,5 +39,25 @@ class ReviewController(
     fun addReviewToProduct(@AuthenticationPrincipal member: Member, @RequestBody reviewCreateRequest: ReviewCreateRequest): CommonResponse<ReviewCreateResponse> {
         val reviewId = reviewUseCase.addReviewToProduct(reviewCreateRequest.toCommand(member.email))
         return CommonResponse.ok(ReviewCreateResponse.of(reviewId))
+    }
+
+    @GetMapping("/member/{memberId}")
+    fun getReviewsByMember(@PathVariable memberId: Long): CommonResponse<ReviewByMemberResponse> {
+        val reviews = reviewUseCase.getReviewsByMemberId(memberId).map {
+            ReviewByMemberResponse.ReviewByMemberDto(
+                reviewId = it.id,
+                content = it.content,
+                score = it.score,
+                productId = it.productId,
+                productTitle = it.productTitle,
+                productAuthor = it.productAuthor,
+                productPublisher = it.productPublisher,
+                productCoverImage = it.productCoverImage,
+                createdAt = it.createdAt,
+                lastModifiedByUserAt = it.lastModifiedByUserAt
+            )
+        }
+
+        return CommonResponse.ok(ReviewByMemberResponse(reviews))
     }
 }
