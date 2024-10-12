@@ -1,6 +1,7 @@
 package com.commerce.service.order.application.service
 
 import com.commerce.common.model.member.Member
+import com.commerce.common.model.orders.OrderNumber
 import com.commerce.common.model.orders.OrdersRepository
 import com.commerce.common.model.orders.OrdersResult
 import com.commerce.common.model.product.ProductRepository
@@ -97,7 +98,7 @@ class OrderService(
         )
     }
 
-    override fun getOrderResult(member: Member, id: Long): OrdersResult {
-        return ordersRepository.findResultByIdAndMemberId(id, member.id) ?: throw OrderNotFoundException(id)
+    override fun getOrderResult(member: Member, orderNumber: OrderNumber): OrdersResult {
+        return ordersRepository.findResultByOrderNumberAndMemberId(orderNumber, member.id) ?: throw OrderNotFoundException(orderNumber)
     }
 }

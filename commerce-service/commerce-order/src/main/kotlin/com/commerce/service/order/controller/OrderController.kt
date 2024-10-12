@@ -1,6 +1,7 @@
 package com.commerce.service.order.controller
 
 import com.commerce.common.model.member.Member
+import com.commerce.common.model.orders.OrderNumber
 import com.commerce.common.response.CommonResponse
 import com.commerce.service.order.application.usecase.OrderUseCase
 import com.commerce.service.order.config.ApiPaths
@@ -28,9 +29,9 @@ class OrderController(
     }
 
     // 주문 상세 조회 API
-    @GetMapping("/{orderId}")
-    fun getOrderDetail(@AuthenticationPrincipal member: Member, @PathVariable orderId: Long): ResponseEntity<CommonResponse<OrderResultResponse>> {
-        val ordersResult = orderUseCase.getOrderResult(member, orderId)
+    @GetMapping("/{orderNumber}")
+    fun getOrderDetail(@AuthenticationPrincipal member: Member, @PathVariable orderNumber: String): ResponseEntity<CommonResponse<OrderResultResponse>> {
+        val ordersResult = orderUseCase.getOrderResult(member, OrderNumber(orderNumber))
         return ResponseEntity.ok(CommonResponse.ok(data = OrderResultResponse.from(ordersResult)))
     }
 

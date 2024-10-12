@@ -222,7 +222,7 @@ class OrdersControllerTest {
 
         // Mock 설정
         `when`(orderUseCase.getOrder(sampleListRequest.toCommand(testMember))).thenReturn(sampleListResponse)
-        `when`(orderUseCase.getOrderResult(testMember, 6)).thenReturn(sampleResult)
+        `when`(orderUseCase.getOrderResult(testMember, OrderNumber("ORD-20241012-000001"))).thenReturn(sampleResult)
     }
 
     @Test
@@ -324,7 +324,7 @@ class OrdersControllerTest {
     @Test
     fun `주문 상세 정보를 반환해야 한다`() {
         mockMvc.perform(
-            get("/order/v1/orders/{orderId}", 6)
+            get("/order/v1/orders/{orderNumber}", "ORD-20241012-000001")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer $testAccessToken")
                 .contentType(MediaType.APPLICATION_JSON)
         )
@@ -335,7 +335,7 @@ class OrdersControllerTest {
                     preprocessRequest(prettyPrint()),
                     preprocessResponse(prettyPrint()),
                     pathParameters(
-                        parameterWithName("orderId").description("주문 ID")
+                        parameterWithName("orderNumber").description("주문 번호")
                     ),
                     responseFields(
                         fieldWithPath("success").description("요청 성공 여부"),

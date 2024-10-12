@@ -4,7 +4,7 @@ import com.commerce.common.model.util.PaginationModel
 import java.time.LocalDate
 
 interface OrdersRepository {
-    fun findResultByIdAndMemberId(id: Long, memberId: Long): OrdersResult?
+    fun findResultByOrderNumberAndMemberId(orderNumber: OrderNumber, memberId: Long): OrdersResult?
 
     fun findByMemberIdAndOrderDateBetween(
         memberId: Long,

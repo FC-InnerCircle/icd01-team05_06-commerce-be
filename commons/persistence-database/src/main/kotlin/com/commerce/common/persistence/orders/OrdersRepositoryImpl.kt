@@ -7,9 +7,7 @@ import com.commerce.common.model.util.PaginationModel
 import com.commerce.common.persistence.util.toPaginationModel
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Repository
-import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -19,8 +17,8 @@ class OrdersRepositoryImpl(
     private val ordersJpaRepository: OrdersJpaRepository,
     private val productRepository: ProductRepository,
 ) : OrdersRepository {
-    override fun findResultByIdAndMemberId(id: Long, memberId: Long): OrdersResult? {
-        val orders = ordersJpaRepository.findByIdAndMemberId(id, memberId)?.toOrder() ?: return null
+    override fun findResultByOrderNumberAndMemberId(orderNumber: OrderNumber, memberId: Long): OrdersResult? {
+        val orders = ordersJpaRepository.findByOrderNumberAndMemberId(orderNumber.value, memberId)?.toOrder() ?: return null
         return with(orders) {
             OrdersResult(
                 id = id,

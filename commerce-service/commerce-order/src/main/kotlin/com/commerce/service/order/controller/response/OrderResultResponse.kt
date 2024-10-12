@@ -2,12 +2,14 @@ package com.commerce.service.order.controller.response
 
 import com.commerce.common.model.orders.OrderStatus
 import com.commerce.common.model.orders.OrdersResult
+import com.fasterxml.jackson.annotation.JsonFormat
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
 data class OrderResultResponse(
     val id: Long,
     val orderNumber: String,
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     val orderDate: LocalDateTime,
     val orderer: OrdererInfo, // 주문자
     val products: List<ProductInfo>,
