@@ -10,11 +10,5 @@ data class OrdersDetailInfo(
     val products: List<ProductWithQuantity>,
     val deliveryInfo: DeliveryInfo, // 배송정보
     val paymentInfo: PaymentInfo, // 결제정보
-    var orderStatus: OrderStatus // 주문 상태
-) {
-
-    // 주문상태 변경
-    fun changeOrderStatus(status: OrderStatus) {
-        orderStatus = status
-    }
-}
+    val orderStatus: OrderStatus // 주문 상태
+)

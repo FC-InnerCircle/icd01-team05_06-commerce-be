@@ -13,7 +13,7 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(name = "orders")
-data class OrdersJpaEntity(
+class OrdersJpaEntity(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 
@@ -40,7 +40,6 @@ data class OrdersJpaEntity(
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
-//    @Enumerated(EnumType.ORDINAL)
     val status: OrderStatus,
 
     @Column(name = "order_date")
@@ -60,7 +59,7 @@ fun OrdersJpaEntity.toOrder(): Orders {
         paymentInfo = this.paymentInfo.toModel(),
         discountedPrice = this.discountedPrice,
         price = this.price,
-        status = OrderStatus.valueOf(this.status.name),
+        status = this.status,
         orderDate = this.orderDate,
         orderProducts = this.orderProducts.map { it.toOrderProducts() }
     )

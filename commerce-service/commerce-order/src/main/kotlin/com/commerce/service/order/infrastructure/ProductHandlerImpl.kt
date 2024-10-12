@@ -49,7 +49,7 @@ class ProductHandlerImpl(
                 method = command.paymentInfo.method,
                 depositorName = command.paymentInfo.depositorName
             ),
-            orderStatus = OrderStatus.PENDING
+            orderStatus = OrderStatus.COMPLETED
         )
     }
 
@@ -64,8 +64,6 @@ class ProductHandlerImpl(
     // 저장된 장바구니 정보 삭제 (보류 - 비즈니스 정책 고려)
     // 주문 완료 처리
     override fun completeOrder(orderInfo: OrdersDetailInfo): OrderCreateResponse {
-        // order의 주문상태 완료로 변경
-        orderInfo.changeOrderStatus(OrderStatus.COMPLETED)
 
         // 주문 정보 저장
         // Orders, OrderProduct 저장

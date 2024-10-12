@@ -11,7 +11,7 @@ GET http://localhost:8080/order/v1/orders
 | 파라미터 | 타입 | 필수  | 설명 |
 |----------|------|-----|------|
 | dateRange | string | 아니오 | 조회 기간 (`LAST_WEEK`, `LAST_MONTH`, `LAST_3_MONTHS`, `LAST_6_MONTHS`, `CUSTOM`, 기본값: `LAST_WEEK`) |
-| status | string | 아니오 | 주문 상태 (`PENDING`, `PROCESSING`, `SHIPPED`, `DELIVERED`, `CANCELLED`, `REFUND`, `EXCHANGE`) |
+| status | string | 아니오 | 주문 상태 (`COMPLETED`, `CANCELLED`, `SHIPPING`, `DELIVERED`, `REFUNDED`) |
 | sortBy | string | 아니오 | 정렬 옵션 (`RECENT`, `ORDER_STATUS`, `ALL`, 기본값: `RECENT`) |
 | page | integer | 아니오 | 페이지 번호 (기본값: 0, 0 이상의 정수) |
 | size | integer | 아니오 | 페이지 크기 (기본값: 20, 양의 정수) |

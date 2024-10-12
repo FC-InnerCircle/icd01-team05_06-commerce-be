@@ -13,6 +13,7 @@ import com.commerce.common.util.ObjectMapperConfig
 import com.commerce.service.order.application.usecase.OrderUseCase
 import com.commerce.common.model.orders.OrderNumber
 import com.commerce.common.model.orders.OrderStatus
+import com.commerce.common.restdocs.RestDocsUtil
 import com.commerce.service.order.config.SecurityConfig
 import com.commerce.service.order.controller.request.OrderCreateRequest
 import com.commerce.service.order.controller.request.OrderListRequest
@@ -125,7 +126,7 @@ class OrdersControllerTest {
                     orderNumber = OrderNumber("ORD-20240815-000001"),
                     content = "해리 포터와 마법사의 돌 외 2권",
                     orderDate = LocalDateTime.of(2024, 8, 15, 14, 30).toString(),
-                    status = OrderStatus.SHIPPED,
+                    status = OrderStatus.SHIPPING,
                     price = 45000.0,
                     discountedPrice = 40500.0,
                     memberName = "김철수",
@@ -136,7 +137,7 @@ class OrdersControllerTest {
                     orderNumber = OrderNumber("ORD-20240815-000002"),
                     content = "코스모스: 가능한 세계들",
                     orderDate = LocalDateTime.of(2024, 8, 16, 9, 45).toString(),
-                    status = OrderStatus.PENDING,
+                    status = OrderStatus.COMPLETED,
                     price = 22000.0,
                     discountedPrice = 19800.0,
                     memberName = "이지은",
@@ -249,20 +250,7 @@ class OrdersControllerTest {
                         LAST_6_MONTHS: 최근 6개월 동안의 주문
                         CUSTOM: 사용자 지정 기간 (startDate와 endDate 파라미터 필요)
                     """.trimIndent())),
-                        parameterWithName("status").description("주문 상태").optional()
-                            .attributes(key("format").value("ENUM (PENDING, PROCESSING, SHIPPED, DELIVERED, CANCELLED, REFUND, EXCHANGE)"))
-                            .attributes(key("description").value("""
-                        PENDING: 주문 생성
-                        PROCESSING: 주문 처리중
-                        SHIPPED: 배송중
-                        DELIVERED: 배송완료
-                        CANCELLED: 주문 취소
-                        REFUND: 환불
-                        EXCHANGE: 교환
-                        (미지정 시 모든 상태의 주문 조회)
-                    """.trimIndent()
-                            )
-                            ),
+                        parameterWithName("status").description("주문 상태").optional().attributes(RestDocsUtil.format(OrderStatus.entries.joinToString(", ") { "$it : ${it.title}" })),
                         parameterWithName("sortBy").description("정렬 옵션").optional()
                             .attributes(key("format").value("ENUM (RECENT, ORDER_STATUS, ALL)"))
                             .attributes(
@@ -300,7 +288,7 @@ class OrdersControllerTest {
                         fieldWithPath("data.products[].orderDate").description("주문 일자")
                             .attributes(key("format").value("String (ISO 8601: yyyy-MM-dd'T'HH:mm:ss)")),
                         fieldWithPath("data.products[].status").description("주문 상태")
-                            .attributes(key("format").value("String (ENUM: PENDING, PROCESSING, SHIPPED, DELIVERED, CANCEL, REFUND, EXCHANGE)")),
+                            .attributes(RestDocsUtil.format(OrderStatus.entries.joinToString(", ") { "$it : ${it.title}" })),
                         fieldWithPath("data.products[].price").description("주문 원가")
                             .attributes(key("format").value("Number (Double)")),
                         fieldWithPath("data.products[].discountedPrice").description("할인 적용된 최종 가격")
