@@ -50,6 +50,7 @@ class ProductServiceTest {
         var products = productRepository.findBySearchWord(
             searchWord = null,
             categoryId = 2L,
+            homeProductType = null,
             page = 1,
             size = 20
         )

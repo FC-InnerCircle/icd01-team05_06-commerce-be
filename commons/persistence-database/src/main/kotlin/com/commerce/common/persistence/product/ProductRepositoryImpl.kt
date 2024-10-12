@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository
 import kotlin.math.ceil
 
 @Repository
-class ProductRepositoryImpl (
+class ProductRepositoryImpl(
     private val productJpaRepository: ProductJpaRepository,
     private val categoryJpaRepository: CategoryJpaRepository,
     private val entityManager: EntityManager,
@@ -38,7 +38,7 @@ class ProductRepositoryImpl (
 
     override fun findById(productId: Long): Product {
         val product = productJpaRepository.findById(productId)
-            .orElseThrow{ throw EntityNotFoundException("해당 제품이 존재하지 않습니다.") }
+            .orElseThrow { throw EntityNotFoundException("해당 제품이 존재하지 않습니다.") }
 
         val category = product.categoryId?.let { categoryId ->
             categoryJpaRepository.findById(categoryId)
@@ -49,7 +49,13 @@ class ProductRepositoryImpl (
         return product.toModel(category)
     }
 
-    override fun findBySearchWord(searchWord: String?, categoryId: Long?, page: Int, size: Int): PaginationModel<Product> {
+    override fun findBySearchWord(
+        searchWord: String?,
+        categoryId: Long?,
+        homeProductType: HomeProductType?,
+        page: Int,
+        size: Int
+    ): PaginationModel<Product> {
 
         val jpql = jpql {
             select(
@@ -58,7 +64,14 @@ class ProductRepositoryImpl (
                 entity(ProductJpaEntity::class)
             ).whereAnd(
                 searchWord?.let { path(ProductJpaEntity::title).like("%$searchWord%") },
-                categoryId?.let { path(ProductJpaEntity::categoryId).eq(categoryId) }
+                categoryId?.let { path(ProductJpaEntity::categoryId).eq(categoryId) },
+                homeProductType?.let {
+                    when (it) {
+                        HomeProductType.HOT_NEW -> path(ProductJpaEntity::isHotNew).eq(true)
+                        HomeProductType.RECOMMEND -> path(ProductJpaEntity::isRecommend).eq(true)
+                        HomeProductType.BESTSELLER -> path(ProductJpaEntity::isBestseller).eq(true)
+                    }
+                },
             )
         }
 
@@ -82,10 +95,10 @@ class ProductRepositoryImpl (
         query.firstResult = (page - 1) * size
         query.maxResults = size
 
-      val resultResult = query.resultList.map { product ->
+        val resultResult = query.resultList.map { product ->
             val category = product.categoryId?.let { categoryId ->
                 categoryJpaRepository.findById(categoryId)
-                    .map{ it.toProductModel() }
+                    .map { it.toProductModel() }
                     .orElse(null)
             }
             product.toModel(category)
