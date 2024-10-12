@@ -32,9 +32,6 @@ data class OrdersJpaEntity(
     @Embedded
     val paymentInfo: PaymentInfoEmbeddable,
 
-    @Column(name = "content")
-    val content: String,
-
     @Column(name = "discounted_price")
     val discountedPrice: BigDecimal,
 
@@ -61,7 +58,6 @@ fun OrdersJpaEntity.toOrder(): Orders {
         ordererInfo = this.ordererInfo.toModel(),
         deliveryInfo = this.deliveryInfo.toModel(),
         paymentInfo = this.paymentInfo.toModel(),
-        content = this.content,
         discountedPrice = this.discountedPrice,
         price = this.price,
         status = OrderStatus.valueOf(this.status.name),
@@ -80,7 +76,6 @@ fun Orders.toJpaEntity(): OrdersJpaEntity {
         ordererInfo = OrdererInfoEmbeddable.from(this.ordererInfo),
         deliveryInfo = DeliveryInfoEmbeddable.from(this.deliveryInfo),
         paymentInfo = PaymentInfoEmbeddable.from(this.paymentInfo),
-        content = this.content,
         discountedPrice = this.discountedPrice,
         price = this.price,
         status = this.status,

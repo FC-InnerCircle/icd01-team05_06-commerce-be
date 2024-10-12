@@ -1,6 +1,8 @@
 package com.commerce.service.order.application.service
 
 import com.commerce.common.model.orders.OrdersRepository
+import com.commerce.common.model.product.Product
+import com.commerce.common.model.product.ProductRepository
 import com.commerce.service.order.application.usecase.OrderUseCase
 import com.commerce.service.order.application.usecase.command.CreateOrderCommand
 import com.commerce.service.order.application.usecase.command.OrderListCommand
@@ -16,6 +18,7 @@ import java.time.LocalDateTime
 @Service
 class OrderService (
     private val ordersRepository: OrdersRepository,
+    private val productRepository: ProductRepository,
 
     private val productHandler: ProductHandler,
     private val shippingHandler: ShippingHandler,
@@ -70,12 +73,15 @@ class OrderService (
             command.member.id, command.orderDate, command.endDate, command.status, command.page, command.size, command.sortBy
         )
 
+        val productIds = ordersPage.data.map { it.orderProducts[0].productId }.distinct()
+        val products = productRepository.findByProductIdIn(productIds).associateBy { it.id }
+
         return OrderListResponse(
             products = ordersPage.data.map {
                 OrderSummary(
                     id = it.id,
                     orderNumber = it.orderNumber,
-                    content = it.content,
+                    content = "${products[it.orderProducts[0].productId]!!.title}${if (it.orderProducts.size > 1) " 외 ${it.orderProducts.size - 1}권" else ""}",
                     orderDate = it.orderDate.toString(),
                     status = it.status,
                     price = it.price.toDouble(),

@@ -49,10 +49,7 @@ class ProductHandlerImpl(
                 method = command.paymentInfo.method,
                 depositorName = command.paymentInfo.depositorName
             ),
-            ordersInfo = OrdersDetailInfo.OrdersInfo(
-                content = "", // 주문 내용 (임시 처리)
-                orderStatus = OrderStatus.PENDING
-            )
+            orderStatus = OrderStatus.PENDING
         )
     }
 
@@ -78,7 +75,7 @@ class ProductHandlerImpl(
         return OrderCreateResponse(
             id = orders.id,
             orderNumber = orderInfo.orderNumber.value,
-            orderStatus = orderInfo.ordersInfo.orderStatus.name,
+            orderStatus = orderInfo.orderStatus.name,
             orderDate = orders.orderDate.toString(),
             products = orderInfo.products.map { orderProduct ->
                 OrderCreateResponse.ProductSummary(

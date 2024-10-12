@@ -11,7 +11,6 @@ data class Orders(
     val ordererInfo: OrdererInfo,
     val deliveryInfo: DeliveryInfo,
     val paymentInfo: PaymentInfo,
-    val content: String,
     val discountedPrice: BigDecimal,
     val price: BigDecimal,
     val status: OrderStatus,
@@ -28,10 +27,9 @@ data class Orders(
                 ordererInfo = this.orderer,
                 deliveryInfo = this.deliveryInfo,
                 paymentInfo = this.paymentInfo,
-                content = this.ordersInfo.content,
                 discountedPrice = this.products.sumOf { it.product.discountedPrice.times(BigDecimal(it.quantity)) },
                 price = this.products.sumOf { it.product.price.times(BigDecimal(it.quantity)) },
-                status = this.ordersInfo.orderStatus,
+                status = this.orderStatus,
                 orderDate = LocalDateTime.now(),
                 orderProducts = this.products.map {
                     OrderProduct(
