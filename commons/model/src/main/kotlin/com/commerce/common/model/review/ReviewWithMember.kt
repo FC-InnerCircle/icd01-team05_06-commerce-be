@@ -10,5 +10,5 @@ data class ReviewWithMember(
     val email: String,
     val productId: Long,
     val createdAt: LocalDateTime,
-    val updatedAt: LocalDateTime,
+    val lastModifiedByUserAt: LocalDateTime,
 )

@@ -25,7 +25,8 @@ class ReviewController(
                 score = it.score,
                 email = it.email,
                 productId = it.productId,
-                updatedAt = it.updatedAt,
+                createdAt = it.createdAt,
+                lastModifiedByUserAt = it.lastModifiedByUserAt,
                 orderProductId = null
             )
         }

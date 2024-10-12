@@ -26,7 +26,7 @@ class ReviewRepositoryImpl(
                 path(MemberJpaEntity::email),
                 path(ReviewJpaEntity::productId),
                 path(ReviewJpaEntity::createdAt),
-                path(ReviewJpaEntity::updatedAt),
+                path(ReviewJpaEntity::lastModifiedByUserAt),
             ).from(
                 entity(ReviewJpaEntity::class),
                 join(MemberJpaEntity::class).on(path(MemberJpaEntity::id).equal(path(ReviewJpaEntity::memberId))),

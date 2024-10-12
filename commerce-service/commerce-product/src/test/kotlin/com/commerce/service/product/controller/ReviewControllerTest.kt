@@ -116,7 +116,7 @@ class ReviewControllerTest(
                     email = "abc@naver.com",
                     productId = 1L,
                     createdAt = LocalDateTime.now(),
-                    updatedAt = LocalDateTime.now(),
+                    lastModifiedByUserAt = LocalDateTime.now(),
                 ),
                 ReviewWithMember(
                     id = 2L,
@@ -125,7 +125,7 @@ class ReviewControllerTest(
                     email = "bbb@naver.com",
                     productId = 1L,
                     createdAt = LocalDateTime.now(),
-                    updatedAt = LocalDateTime.now(),
+                    lastModifiedByUserAt = LocalDateTime.now(),
                 ),
                 ReviewWithMember(
                     id = 3L,
@@ -134,7 +134,7 @@ class ReviewControllerTest(
                     email = "ddd@naver.com",
                     productId = 1L,
                     createdAt = LocalDateTime.now(),
-                    updatedAt = LocalDateTime.now(),
+                    lastModifiedByUserAt = LocalDateTime.now(),
                 ),
             )
         )
@@ -162,7 +162,8 @@ class ReviewControllerTest(
                             fieldWithPath("data.reviews[].score").type(JsonFieldType.NUMBER).description("작성자 상품 리뷰 평점"),
                             fieldWithPath("data.reviews[].email").type(JsonFieldType.STRING).description("리뷰 작성자 이메일"),
                             fieldWithPath("data.reviews[].productId").type(JsonFieldType.NUMBER).description("상품 ID"),
-                            fieldWithPath("data.reviews[].updatedAt").type(JsonFieldType.STRING).description("리뷰 작성일"),
+                            fieldWithPath("data.reviews[].createdAt").type(JsonFieldType.STRING).description("리뷰 작성일"),
+                            fieldWithPath("data.reviews[].lastModifiedByUserAt").type(JsonFieldType.STRING).description("리뷰 최종 수정일"),
                             fieldWithPath("data.reviews[].orderProductId").type(JsonFieldType.NUMBER).optional().description("주문 - 상품 ID"),
                             fieldWithPath("error").type(JsonFieldType.ARRAY).optional().description("오류 정보")
                         ),

@@ -21,7 +21,7 @@ class FakeReviewRepository(
                     email = member!!.email,
                     productId = it.productId,
                     createdAt = LocalDateTime.now(),
-                    updatedAt = LocalDateTime.now(),
+                    lastModifiedByUserAt = LocalDateTime.now(),
                 )
             }
     }

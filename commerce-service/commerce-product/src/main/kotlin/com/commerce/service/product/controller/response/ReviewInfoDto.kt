@@ -11,6 +11,8 @@ data class ReviewInfoDto(
     val email: String,
     val productId: Long,
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd")
-    val updatedAt: LocalDateTime,
+    val createdAt: LocalDateTime,
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd")
+    val lastModifiedByUserAt: LocalDateTime,
     val orderProductId: Long?,
 )
