@@ -10,9 +10,9 @@ data class ReviewInfoDto(
     val score: BigDecimal,
     val email: String,
     val productId: Long,
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     val createdAt: LocalDateTime,
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     val lastModifiedByUserAt: LocalDateTime,
     val orderProductId: Long?,
 )

@@ -16,9 +16,9 @@ data class ReviewByMemberResponse(
         val productAuthor: String,
         val productPublisher: String,
         val productCoverImage: String,
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
         val createdAt: LocalDateTime,
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
         val lastModifiedByUserAt: LocalDateTime,
     )
 }

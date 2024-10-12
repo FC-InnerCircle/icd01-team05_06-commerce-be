@@ -15,7 +15,7 @@ class ProductInfoDto(
     val price: BigDecimal,
     val discountedPrice: BigDecimal,
     val publisher: String,
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-mm-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     val publishDate: LocalDateTime,
     val isbn: String,
     val description: String,
