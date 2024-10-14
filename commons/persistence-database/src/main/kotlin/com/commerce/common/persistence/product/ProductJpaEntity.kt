@@ -48,7 +48,7 @@ class ProductJpaEntity(
     @Column(nullable = false)
     val isBestseller: Boolean,
     @Column(name = "deleted_at")
-    val deletedAt: LocalDateTime,
+    val deletedAt: LocalDateTime? = null,
     ) : BaseTimeEntity(){
     fun toModel(category: CategoryDetail?): Product {
      return Product(
@@ -75,7 +75,7 @@ class ProductJpaEntity(
     }
 }
 
-fun Product.toJpaEntity(categoryId: Long): ProductJpaEntity {
+fun Product.toJpaEntity(): ProductJpaEntity {
     return ProductJpaEntity(
         id = this.id,
         title = this.title,
@@ -92,10 +92,9 @@ fun Product.toJpaEntity(categoryId: Long): ProductJpaEntity {
         stockQuantity = this.stockQuantity,
         rating = this.rating,
         status = this.status,
-        categoryId = categoryId,
+        categoryId = this.category?.id,
         isHotNew = this.isHotNew,
         isRecommend = this.isRecommend,
         isBestseller = this.isBestseller,
-        deletedAt = LocalDateTime.now(),
     )
 }
