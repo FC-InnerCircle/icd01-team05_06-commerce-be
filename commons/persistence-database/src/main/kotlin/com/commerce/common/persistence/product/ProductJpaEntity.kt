@@ -5,8 +5,8 @@ import com.commerce.common.model.product.Product
 import com.commerce.common.model.product.SaleStatus
 import com.commerce.common.persistence.BaseTimeEntity
 import jakarta.persistence.*
-import org.springframework.data.jpa.domain.AbstractAuditable_.createdBy
 import java.math.BigDecimal
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Entity
@@ -39,7 +39,7 @@ class ProductJpaEntity(
     val stockQuantity: Int,
 
     @Column(name = "publish_date")
-    val publishDate: LocalDateTime,
+    val publishDate: LocalDate,
 
     @Column(nullable = false)
     val isHotNew: Boolean,

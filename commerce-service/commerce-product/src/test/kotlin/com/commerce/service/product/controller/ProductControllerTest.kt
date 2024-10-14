@@ -48,7 +48,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.web.context.WebApplicationContext
 import java.math.BigDecimal
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 @Import(ProductController::class, ObjectMapperConfig::class, JwtAuthenticationFilter::class)
 @ExtendWith(RestDocumentationExtension::class)
@@ -203,7 +203,7 @@ class ProductControllerTest(
                         price = BigDecimal("29475"),
                         discountedPrice = BigDecimal("25317"),
                         publisher = "YES24",
-                        publishDate = LocalDateTime.now(),
+                        publishDate = LocalDate.now(),
                         isbn = "1111111111",
                         description = "‘국가란 무엇인가’ 이후, ‘역사란 무엇인가’를 묻다\n\n유시민과 함께 역사의 갈피를 찾다!\n\n\n\n『거꾸로 읽는 세계사』로부터 30년, 작가 유시민 글쓰기의 새로운 시작. 헤로도토스의 『역사』, 투키디데스의 『펠로폰네소스 전쟁사』부터 유발 하라리의 『사피엔스』까지 고대로부터 최근까지 역사를 사로잡은 18권의 역사서들을 9장으로 나누어 훑으며 ‘역사’라는 화두를 전개해간다. 각 역사서의 주요 내용과 시대적인 맥락, 서사의 새로운 초점과 해석, 역사가의 생애 등을 유시민만의 언어로 요약했다.\n\n\n\n여기에 역사가의 속마음을 전달하고, 놓치지 말아야 할 부분을 체크해 주거나, 이해하지 못해도 좋다고 위로하고 격려하는 안내자 역할까지 맡았다. 역사에 대한 애정과 역사 공부의 중요성을 몸소 보여주며, 자신의 역사 공부법을 공개하는 셈이다.",
                         pages = 900,
@@ -228,7 +228,7 @@ class ProductControllerTest(
                         price = BigDecimal("31672"),
                         discountedPrice = BigDecimal("28778"),
                         publisher = "국내총판도서",
-                        publishDate = LocalDateTime.now(),
+                        publishDate = LocalDate.now(),
                         isbn = "9781610480901",
                         description = "The Challenge of Greatness:  The Legacy of Great Teachers reveals the characteristics and teaching strategies of Great Teachers.  Simultaneously the book describes a Pantheon of thirty-two great teachers, and challenges the reader to continue their legacy by becoming one.  Recognizing the uniqueness of a great teacher, the book raises the kind of issues they face, and a range of possibilities from which they find solutions.",
                         pages = 140,
@@ -338,7 +338,7 @@ class ProductControllerTest(
                 price = BigDecimal("29475"),
                 discountedPrice = BigDecimal("25317"),
                 publisher = "YES24",
-                publishDate = LocalDateTime.now(),
+                publishDate = LocalDate.now(),
                 isbn = "1111111111",
                 description = "‘국가란 무엇인가’ 이후, ‘역사란 무엇인가’를 묻다\n\n유시민과 함께 역사의 갈피를 찾다!\n\n\n\n『거꾸로 읽는 세계사』로부터 30년, 작가 유시민 글쓰기의 새로운 시작. 헤로도토스의 『역사』, 투키디데스의 『펠로폰네소스 전쟁사』부터 유발 하라리의 『사피엔스』까지 고대로부터 최근까지 역사를 사로잡은 18권의 역사서들을 9장으로 나누어 훑으며 ‘역사’라는 화두를 전개해간다. 각 역사서의 주요 내용과 시대적인 맥락, 서사의 새로운 초점과 해석, 역사가의 생애 등을 유시민만의 언어로 요약했다.\n\n\n\n여기에 역사가의 속마음을 전달하고, 놓치지 말아야 할 부분을 체크해 주거나, 이해하지 못해도 좋다고 위로하고 격려하는 안내자 역할까지 맡았다. 역사에 대한 애정과 역사 공부의 중요성을 몸소 보여주며, 자신의 역사 공부법을 공개하는 셈이다.",
                 pages = 900,

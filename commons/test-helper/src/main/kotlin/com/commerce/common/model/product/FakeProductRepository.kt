@@ -4,7 +4,7 @@ import com.commerce.common.model.category.CategoryDetail
 import com.commerce.common.model.util.PaginationInfo
 import com.commerce.common.model.util.PaginationModel
 import java.math.BigDecimal
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 class FakeProductRepository : ProductRepository {
 
@@ -63,7 +63,7 @@ class FakeProductRepository : ProductRepository {
             price = BigDecimal("10000"),
             discountedPrice = BigDecimal("1000"),
             publisher = "퍼블리셔",
-            publishDate = LocalDateTime.now(),
+            publishDate = LocalDate.now(),
             isbn = "1111",
             description = "설명",
             pages = 300,
@@ -91,7 +91,7 @@ class FakeProductRepository : ProductRepository {
             price = BigDecimal("10000"),
             discountedPrice = BigDecimal("1000"),
             publisher = "퍼블리셔",
-            publishDate = LocalDateTime.now(),
+            publishDate = LocalDate.now(),
             isbn = "1111",
             description = "설명",
             pages = 300,

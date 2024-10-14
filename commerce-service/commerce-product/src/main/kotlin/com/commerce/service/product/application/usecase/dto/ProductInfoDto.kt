@@ -6,7 +6,7 @@ import com.commerce.common.model.product.SaleStatus
 import com.fasterxml.jackson.annotation.JsonFormat
 import java.math.BigDecimal
 import java.math.RoundingMode
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 class ProductInfoDto(
     val id : Long?,
@@ -16,7 +16,7 @@ class ProductInfoDto(
     val discountedPrice: BigDecimal,
     val publisher: String,
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    val publishDate: LocalDateTime,
+    val publishDate: LocalDate,
     val isbn: String,
     val description: String,
     val pages: Int,

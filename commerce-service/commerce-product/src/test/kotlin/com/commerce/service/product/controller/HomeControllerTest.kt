@@ -39,7 +39,7 @@ import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 import java.math.BigDecimal
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 @Import(HomeController::class, ObjectMapperConfig::class, JwtAuthenticationFilter::class)
 @ExtendWith(RestDocumentationExtension::class)
@@ -105,7 +105,7 @@ class HomeControllerTest(
                     price = BigDecimal("13000"),
                     discountedPrice = BigDecimal("12300"),
                     publisher = "출판사",
-                    publishDate = LocalDateTime.now(),
+                    publishDate = LocalDate.now(),
                     isbn = "9791164384440",
                     description = "설명~~~~~길다길어",
                     pages = 123,

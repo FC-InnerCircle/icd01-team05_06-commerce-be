@@ -2,7 +2,7 @@ package com.commerce.common.model.product
 
 import com.commerce.common.model.category.CategoryDetail
 import java.math.BigDecimal
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 class Product(
     val id: Long? = 0,
@@ -11,7 +11,7 @@ class Product(
     val price: BigDecimal,
     val discountedPrice: BigDecimal,
     val publisher: String,
-    val publishDate: LocalDateTime,
+    val publishDate: LocalDate,
     val isbn: String,
     val description: String,
     val pages: Int,

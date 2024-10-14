@@ -9,7 +9,7 @@ import org.assertj.core.api.AssertionsForClassTypes.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 class OrderProductServiceTest {
 
@@ -61,7 +61,7 @@ class OrderProductServiceTest {
         price = price,
         discountedPrice = discountedPrice,
         publisher = "퍼블리셔",
-        publishDate = LocalDateTime.now(),
+        publishDate = LocalDate.now(),
         isbn = "1111",
         description = "설명",
         pages = 300,
