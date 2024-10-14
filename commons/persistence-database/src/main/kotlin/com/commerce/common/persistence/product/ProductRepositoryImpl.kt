@@ -26,7 +26,7 @@ class ProductRepositoryImpl(
     override fun findByProductIdIn(ids: List<Long>): List<Product> {
         val productJpaEntities = productJpaRepository.findByIdIn(ids)
 
-        val categoryIds = productJpaEntities.mapNotNull { it.categoryId }.toList()
+        val categoryIds = productJpaEntities.mapNotNull { it.categoryId }.distinct().toList()
         val categories = categoryJpaRepository.findByIdIn(categoryIds).associateBy(CategoryJpaEntity::id, CategoryJpaEntity::toProductModel)
 
         return productJpaEntities
@@ -77,7 +77,7 @@ class ProductRepositoryImpl(
             )
         }
 
-        val categoryIds = pageResult.content.mapNotNull { it!!.categoryId }.toList()
+        val categoryIds = pageResult.content.mapNotNull { it!!.categoryId }.distinct().toList()
         val categories = categoryJpaRepository.findByIdIn(categoryIds).associateBy(CategoryJpaEntity::id, CategoryJpaEntity::toProductModel)
 
         return pageResult.toPaginationModel({ product ->
