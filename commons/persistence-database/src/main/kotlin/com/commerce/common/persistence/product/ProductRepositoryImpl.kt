@@ -3,17 +3,17 @@ package com.commerce.common.persistence.product
 import com.commerce.common.model.product.HomeProductType
 import com.commerce.common.model.product.Product
 import com.commerce.common.model.product.ProductRepository
-import com.commerce.common.model.util.PaginationInfo
 import com.commerce.common.model.util.PaginationModel
 import com.commerce.common.persistence.category.CategoryJpaEntity
 import com.commerce.common.persistence.category.CategoryJpaRepository
+import com.commerce.common.persistence.util.getOneBasedPageRequest
+import com.commerce.common.persistence.util.toPaginationModel
 import com.linecorp.kotlinjdsl.dsl.jpql.jpql
 import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
 import com.linecorp.kotlinjdsl.support.spring.data.jpa.extension.createQuery
 import jakarta.persistence.EntityManager
 import jakarta.persistence.EntityNotFoundException
 import org.springframework.stereotype.Repository
-import kotlin.math.ceil
 
 @Repository
 class ProductRepositoryImpl(
@@ -58,7 +58,8 @@ class ProductRepositoryImpl(
         size: Int
     ): PaginationModel<Product> {
 
-        val jpql = jpql {
+        val pageable = getOneBasedPageRequest(page, size)
+        val pageResult = productJpaRepository.findPage(pageable) {
             select(
                 entity(ProductJpaEntity::class),
             ).from(
@@ -76,50 +77,13 @@ class ProductRepositoryImpl(
             )
         }
 
-        val countJpql = jpql {
-            select(
-                count(entity(ProductJpaEntity::class))
-            ).from(
-                entity(ProductJpaEntity::class)
-            ).whereAnd(
-                searchWord?.let { path(ProductJpaEntity::title).like("%$searchWord%") },
-                categoryId?.let { path(ProductJpaEntity::categoryId).eq(categoryId) }
-            )
-        }
-
-        val totalCount = entityManager.createQuery(countJpql, jpqlRenderContext).singleResult
-        val totalPage = ceil(totalCount.toDouble() / size).toInt()
-
-        val query = entityManager.createQuery(jpql, jpqlRenderContext)
-
-        // 페이징 처리
-        query.firstResult = (page - 1) * size
-        query.maxResults = size
-
-        val resultList = query.resultList
-
-        val categoryIds = resultList.mapNotNull { it.categoryId }.toList()
+        val categoryIds = pageResult.content.mapNotNull { it!!.categoryId }.toList()
         val categories = categoryJpaRepository.findByIdIn(categoryIds).associateBy(CategoryJpaEntity::id, CategoryJpaEntity::toProductModel)
 
-        val resultResult = resultList.map { product ->
-            val category = product.categoryId?.let { categoryId -> categories[categoryId] }
+        return pageResult.toPaginationModel({ product ->
+            val category = product!!.categoryId?.let { categoryId -> categories[categoryId] }
             product.toModel(category)
-        }
-            .toList()
-
-        val paginationInfo = PaginationInfo(
-            currentPage = page,
-            totalCount = totalCount,
-            totalPage = totalPage,
-            pageSize = size,
-            hasNextPage = page < totalPage,
-            hasPreviousPage = page > 1,
-        )
-
-        return PaginationModel(
-            data = resultResult,
-            pagination = paginationInfo,
-        )
+        })
     }
 
     override fun findByHomeProductType(homeProductType: HomeProductType): List<Product> {
