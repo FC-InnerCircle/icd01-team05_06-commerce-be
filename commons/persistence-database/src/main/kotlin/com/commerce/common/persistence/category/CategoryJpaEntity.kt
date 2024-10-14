@@ -13,7 +13,7 @@ class CategoryJpaEntity (
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "parent_id")
     val parent: CategoryJpaEntity? = null,
 
