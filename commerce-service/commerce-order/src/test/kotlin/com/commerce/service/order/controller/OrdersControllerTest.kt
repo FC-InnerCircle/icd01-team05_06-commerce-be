@@ -150,7 +150,7 @@ class OrdersControllerTest {
                 )
             ),
             paginationInfo = PaginationInfo(
-                currentPage = 0,
+                currentPage = 1,
                 totalPage = 1,
                 pageSize = 20,
                 totalCount = 2L,
@@ -265,12 +265,12 @@ class OrdersControllerTest {
                         ORDER_STATUS: 주문 상태별로 정렬 후, 각 상태 내에서 생성 일시로 정렬
                         ALL: 특별한 정렬 기준 없음 (데이터베이스 기본 순서)
                     """.trimIndent())),
-                        parameterWithName("page").description("페이지 번호 (0부터 시작)").optional()
-                            .attributes(key("format").value("NUMBER (0 이상의 정수)"))
-                            .attributes(key("description").value("조회하고자 하는 페이지 번호. 0부터 시작하며, 음수 입력 시 에러 발생")),
+                        parameterWithName("page").description("페이지 번호 (1부터 시작)").optional()
+                            .attributes(key("format").value("NUMBER (양의 정수)"))
+                            .attributes(key("description").value("조회하고자 하는 페이지 번호")),
                         parameterWithName("size").description("페이지 크기").optional()
                             .attributes(key("format").value("NUMBER (양의 정수)"))
-                            .attributes(key("description").value("한 페이지에 표시할 주문의 수. 1 이상의 정수여야 하며, 기본값은 20")),
+                            .attributes(key("description").value("한 페이지에 표시할 주문의 수")),
                         parameterWithName("orderStartDate").description("사용자 지정 조회 시작일 (dateRange가 CUSTOM일 때 필수)").optional()
                             .attributes(key("format").value("yyyy-MM-dd"))
                             .attributes(key("description").value("dateRange가 CUSTOM일 때 조회 시작 일자")),
