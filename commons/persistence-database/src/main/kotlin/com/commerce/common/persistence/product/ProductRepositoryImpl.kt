@@ -24,13 +24,14 @@ class ProductRepositoryImpl(
 ) : ProductRepository {
 
     override fun findByProductIdIn(ids: List<Long>): List<Product> {
-        return productJpaRepository.findByIdIn(ids)
+        val productJpaEntities = productJpaRepository.findByIdIn(ids)
+
+        val categoryIds = productJpaEntities.mapNotNull { it.categoryId }.toList()
+        val categories = categoryJpaRepository.findByIdIn(categoryIds).associateBy(CategoryJpaEntity::id, CategoryJpaEntity::toProductModel)
+
+        return productJpaEntities
             .map { product ->
-                val category = product.categoryId?.let { categoryId ->
-                    categoryJpaRepository.findById(categoryId)
-                        .map { it.toProductModel() }
-                        .orElse(null)
-                }
+                val category = product.categoryId?.let { categoryId -> categories[categoryId] }
                 product.toModel(category)
             }
             .toList()
@@ -95,12 +96,13 @@ class ProductRepositoryImpl(
         query.firstResult = (page - 1) * size
         query.maxResults = size
 
-        val resultResult = query.resultList.map { product ->
-            val category = product.categoryId?.let { categoryId ->
-                categoryJpaRepository.findById(categoryId)
-                    .map { it.toProductModel() }
-                    .orElse(null)
-            }
+        val resultList = query.resultList
+
+        val categoryIds = resultList.mapNotNull { it.categoryId }.toList()
+        val categories = categoryJpaRepository.findByIdIn(categoryIds).associateBy(CategoryJpaEntity::id, CategoryJpaEntity::toProductModel)
+
+        val resultResult = resultList.map { product ->
+            val category = product.categoryId?.let { categoryId -> categories[categoryId] }
             product.toModel(category)
         }
             .toList()
