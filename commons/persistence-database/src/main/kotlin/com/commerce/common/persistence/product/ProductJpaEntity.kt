@@ -28,7 +28,7 @@ class ProductJpaEntity(
     val previewLink: String,
     val price: BigDecimal,
     val title: String,
-    val categoryId: Long? = null,
+    var categoryId: Long? = null,
     val publisher: String,
     val rating: Double,
 
@@ -42,11 +42,11 @@ class ProductJpaEntity(
     val publishDate: LocalDate,
 
     @Column(nullable = false)
-    val isHotNew: Boolean,
+    var isHotNew: Boolean,
     @Column(nullable = false)
-    val isRecommend: Boolean,
+    var isRecommend: Boolean,
     @Column(nullable = false)
-    val isBestseller: Boolean,
+    var isBestseller: Boolean,
     @Column(name = "deleted_at")
     val deletedAt: LocalDateTime? = null,
     ) : BaseTimeEntity(){

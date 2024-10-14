@@ -47,6 +47,7 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception::class)
     fun handleGeneralException(ex: Exception): ResponseEntity<CommonResponse<Unit>> {
+        ex.printStackTrace()
         val errorResponse = ErrorResponse(ErrorCode.INTERNAL_SERVER_ERROR.code, ErrorCode.INTERNAL_SERVER_ERROR.message)
         return ResponseEntity
             .status(HttpStatus.INTERNAL_SERVER_ERROR)
