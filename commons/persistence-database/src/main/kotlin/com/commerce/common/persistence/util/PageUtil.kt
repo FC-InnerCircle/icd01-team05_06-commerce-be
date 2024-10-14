@@ -3,6 +3,8 @@ package com.commerce.common.persistence.util
 import com.commerce.common.model.util.PaginationInfo
 import com.commerce.common.model.util.PaginationModel
 import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Sort
 
 // 확장 함수 정의, transform을 추가하여 데이터 변환 가능하도록
 fun <T, R> Page<T>.toPaginationModel(transform: (T) -> R): PaginationModel<R> {
@@ -18,3 +20,5 @@ fun <T, R> Page<T>.toPaginationModel(transform: (T) -> R): PaginationModel<R> {
         )
     )
 }
+
+fun getOneBasedPageRequest(page: Int, size: Int, sort: Sort = Sort.unsorted()) = PageRequest.of(page - 1, size, sort)

@@ -118,7 +118,7 @@ class OrdersControllerTest {
             dateRange = OrderListRequest.DateRange.LAST_6_MONTHS,
             status = null,
             sortBy = OrderSortOption.RECENT,
-            page = 0,
+            page = 1,
             size = 20,
             orderStartDate = null,
             orderEndDate = null

@@ -14,11 +14,11 @@ data class OrderListRequest(
     val dateRange: DateRange = DateRange.LAST_WEEK,
     val status: OrderStatus? = null,
     val sortBy: OrderSortOption = OrderSortOption.RECENT,
-    @field:Min(value = 0, message = "페이지 번호는 0 이상이어야 합니다")
-    val page: Int = 0,
+    @field:Min(value = 1, message = "페이지 번호는 1 이상이어야 합니다")
+    val page: Int,
     @field:Min(value = 1, message = "페이지 크기는 1 이상이어야 합니다")
     @field:Max(value = 100, message = "페이지 크기는 100 이하여야 합니다")
-    val size: Int = 20,
+    val size: Int,
     @DateTimeFormat(pattern = "yyyy-MM-dd") // 쿼리 파라미터 파싱
     var orderStartDate: LocalDate? = null,
     @DateTimeFormat(pattern = "yyyy-MM-dd") // 쿼리 파라미터 파싱

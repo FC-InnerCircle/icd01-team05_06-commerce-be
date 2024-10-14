@@ -4,8 +4,8 @@ import com.commerce.common.model.orderProduct.OrderProductWithInfo
 import com.commerce.common.model.orders.*
 import com.commerce.common.model.product.ProductRepository
 import com.commerce.common.model.util.PaginationModel
+import com.commerce.common.persistence.util.getOneBasedPageRequest
 import com.commerce.common.persistence.util.toPaginationModel
-import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Repository
 import java.time.LocalDate
@@ -55,7 +55,7 @@ class OrdersRepositoryImpl(
             OrderSortOption.ORDER_STATUS -> Sort.by("status", "orderDate")
             OrderSortOption.ALL -> Sort.unsorted()
         }
-        val pageable = PageRequest.of(page, size, sort)
+        val pageable = getOneBasedPageRequest(page, size, sort)
 
         val pageResult = if (status != null) {
             ordersJpaRepository.findByMemberIdAndOrderDateBetweenAndStatus(
