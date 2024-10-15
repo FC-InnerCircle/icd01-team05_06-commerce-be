@@ -218,7 +218,7 @@ class ReviewControllerTest(
     @Test
     fun getReviewsByMember() {
         val memberId = 1L
-        given(reviewUseCase.getReviewsByMemberId(memberId))
+        given(reviewUseCase.getMemberReviews(memberId))
             .willReturn(
                 listOf(
                     ReviewWithProduct(
@@ -248,16 +248,14 @@ class ReviewControllerTest(
                 )
             )
 
-        mockMvc.perform(get("/product/v1/reviews/member/{memberId}", memberId))
+        mockMvc.perform(get("/product/v1/reviews/me")
+            .header(HttpHeaders.AUTHORIZATION, "Bearer $testAccessToken"))
             .andExpect(status().isOk)
             .andDo(
                 document(
-                    "reviews/v1/reviews/member",
+                    "reviews/v1/reviews/me",
                     preprocessRequest(prettyPrint()),
                     preprocessResponse(prettyPrint()),
-                    pathParameters(
-                        parameterWithName("memberId").description("사용자 ID"),
-                    ),
                     responseFields(
                         fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("요청 성공 여부"),
                         fieldWithPath("data").type(JsonFieldType.OBJECT).description("응답 데이터"),

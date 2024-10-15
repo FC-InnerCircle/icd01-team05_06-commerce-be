@@ -45,6 +45,7 @@ class SecurityConfig {
             }
             .authorizeHttpRequests {
                 it
+                    .requestMatchers("/product/v1/reviews/me").authenticated()
                     .requestMatchers(
                         AntPathRequestMatcher("/actuator/**", HttpMethod.GET.name()),
                         AntPathRequestMatcher("/docs/**", HttpMethod.GET.name()),

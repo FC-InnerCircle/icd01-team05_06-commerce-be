@@ -41,9 +41,9 @@ class ReviewController(
         return CommonResponse.ok(ReviewCreateResponse.of(reviewId))
     }
 
-    @GetMapping("/member/{memberId}")
-    fun getReviewsByMember(@PathVariable memberId: Long): CommonResponse<ReviewByMemberResponse> {
-        val reviews = reviewUseCase.getReviewsByMemberId(memberId).map {
+    @GetMapping("/me")
+    fun getReviewsByMember(@AuthenticationPrincipal member: Member): CommonResponse<ReviewByMemberResponse> {
+        val reviews = reviewUseCase.getMemberReviews(member.id).map {
             ReviewByMemberResponse.ReviewByMemberDto(
                 reviewId = it.id,
                 content = it.content,

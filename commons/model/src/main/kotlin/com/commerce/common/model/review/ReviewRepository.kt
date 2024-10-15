@@ -6,5 +6,5 @@ interface ReviewRepository {
 
     fun save(review: Review): Review
 
-    fun findByMemberId(memberId: Long): List<ReviewWithProduct>
+    fun findByMemberIdOrderByCreatedAtDesc(memberId: Long): List<ReviewWithProduct>
 }

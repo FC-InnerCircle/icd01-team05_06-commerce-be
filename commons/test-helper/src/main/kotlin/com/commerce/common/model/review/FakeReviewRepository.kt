@@ -31,7 +31,7 @@ class FakeReviewRepository(
         return data.last()
     }
 
-    override fun findByMemberId(memberId: Long): List<ReviewWithProduct> {
+    override fun findByMemberIdOrderByCreatedAtDesc(memberId: Long): List<ReviewWithProduct> {
         return data.filter { it.memberId == memberId }
             .map {
                 ReviewWithProduct(

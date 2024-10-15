@@ -47,7 +47,7 @@ class ReviewRepositoryImpl(
         return reviewJpaRepository.save(ReviewJpaEntity.from(review)).toModel()
     }
 
-    override fun findByMemberId(memberId: Long): List<ReviewWithProduct> {
+    override fun findByMemberIdOrderByCreatedAtDesc(memberId: Long): List<ReviewWithProduct> {
         val jpql = jpql {
             selectNew<ReviewWithProduct>(
                 path(ReviewJpaEntity::id),
@@ -65,6 +65,8 @@ class ReviewRepositoryImpl(
                 join(ProductJpaEntity::class).on(path(ProductJpaEntity::id).equal(path(ReviewJpaEntity::productId))),
             ).where(
                 path(ReviewJpaEntity::memberId).eq(memberId)
+            ).orderBy(
+                path(ReviewJpaEntity::createdAt).desc()
             )
         }
 

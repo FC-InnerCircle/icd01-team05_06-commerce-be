@@ -39,7 +39,7 @@ class ReviewService(
         return reviewRepository.save(review).id
     }
 
-    override fun getReviewsByMemberId(memberId: Long): List<ReviewWithProduct> {
-        return reviewRepository.findByMemberId(memberId)
+    override fun getMemberReviews(memberId: Long): List<ReviewWithProduct> {
+        return reviewRepository.findByMemberIdOrderByCreatedAtDesc(memberId)
     }
 }

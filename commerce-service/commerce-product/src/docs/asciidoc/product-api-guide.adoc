@@ -73,15 +73,13 @@ include::{snippets}/reviews/v1/add/request-body.adoc[]
 include::{snippets}/reviews/v1/add/response-fields.adoc[]
 include::{snippets}/reviews/v1/add/response-body.adoc[]
 
-[[사용자별상품리뷰조회]]
-== 사용자별 상품 리뷰 조회
+[[본인이작성한상품리뷰조회]]
+== 본인이 작성한 상품 리뷰 조회
 === Http
-include::{snippets}/reviews/v1/reviews/member/http-request.adoc[]
-=== Request
-include::{snippets}/reviews/v1/reviews/member/path-parameters.adoc[]
+include::{snippets}/reviews/v1/reviews/me/http-request.adoc[]
 === Response
-include::{snippets}/reviews/v1/reviews/member/response-fields.adoc[]
-include::{snippets}/reviews/v1/reviews/member/response-body.adoc[]
+include::{snippets}/reviews/v1/reviews/me/response-fields.adoc[]
+include::{snippets}/reviews/v1/reviews/me/response-body.adoc[]
 
 [[주문전상품조회]]
 == 주문 전 상품 조회
