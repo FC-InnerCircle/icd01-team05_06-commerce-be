@@ -19,7 +19,7 @@ class ReviewService(
 
     @Transactional(readOnly = true)
     override fun getProductReviews(productId: Long): List<ReviewWithMember> {
-        return reviewRepository.findByProductId(productId)
+        return reviewRepository.findByProductIdOrderByCreatedAtDesc(productId)
     }
 
     @Transactional

@@ -10,7 +10,7 @@ class FakeReviewRepository(
     var autoIncrementId = 1L
     var data: MutableList<Review> = mutableListOf()
 
-    override fun findByProductId(productId: Long): List<ReviewWithMember> {
+    override fun findByProductIdOrderByCreatedAtDesc(productId: Long): List<ReviewWithMember> {
         return data.filter { it.productId == productId }
             .map {
                 val member = memberRepository.findById(it.memberId)

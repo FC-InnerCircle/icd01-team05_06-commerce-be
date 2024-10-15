@@ -93,7 +93,7 @@ class ReviewServiceTest {
         )
         reviewService.addReviewToProduct(addReviewCommand)
 
-        val reviewsByProduct = reviewRepository.findByProductId(1L)
+        val reviewsByProduct = reviewRepository.findByProductIdOrderByCreatedAtDesc(1L)
 
         assertThat(reviewsByProduct).hasSize(1)
 
