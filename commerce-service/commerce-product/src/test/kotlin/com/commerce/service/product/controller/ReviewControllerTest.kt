@@ -174,11 +174,11 @@ class ReviewControllerTest(
     @Test
     fun addReviewToProduct() {
         given(reviewUseCase.addReviewToProduct(
+            testMember,
             AddReviewCommand(
                 productId = 1L,
                 content = "재미있어요!",
                 score = BigDecimal(5),
-                email = "commerce@example.com",
             )
         )).willReturn(1L)
 

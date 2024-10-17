@@ -8,10 +8,9 @@ data class ReviewCreateRequest(
     val content: String,
     val score: BigDecimal,
 ) {
-    fun toCommand(email: String): AddReviewCommand {
+    fun toCommand(): AddReviewCommand {
         return AddReviewCommand(
             productId = productId,
-            email = email,
             content = content,
             score = score,
         )

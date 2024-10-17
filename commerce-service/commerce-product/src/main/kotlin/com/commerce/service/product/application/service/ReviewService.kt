@@ -1,6 +1,6 @@
 package com.commerce.service.product.application.service
 
-import com.commerce.common.model.member.MemberRepository
+import com.commerce.common.model.member.Member
 import com.commerce.common.model.review.Review
 import com.commerce.common.model.review.ReviewRepository
 import com.commerce.common.model.review.ReviewWithMember
@@ -14,8 +14,7 @@ import java.time.LocalDateTime
 @Service
 class ReviewService(
     private val reviewRepository: ReviewRepository,
-    private val memberRepository: MemberRepository,
-) : ReviewUseCase{
+) : ReviewUseCase {
 
     @Transactional(readOnly = true)
     override fun getProductReviews(productId: Long): List<ReviewWithMember> {
@@ -23,10 +22,7 @@ class ReviewService(
     }
 
     @Transactional
-    override fun addReviewToProduct(addReviewCommand: AddReviewCommand): Long {
-
-        val member = memberRepository.findByEmail(addReviewCommand.email)
-            ?: throw IllegalArgumentException("해당 아이디(${addReviewCommand.email})를 가진 유저가 존재하지 않습니다.")
+    override fun addReviewToProduct(member: Member, addReviewCommand: AddReviewCommand): Long {
 
         val review = Review.byProduct(
             productId = addReviewCommand.productId,

@@ -37,7 +37,7 @@ class ReviewController(
 
     @PostMapping
     fun addReviewToProduct(@AuthenticationPrincipal member: Member, @RequestBody reviewCreateRequest: ReviewCreateRequest): CommonResponse<ReviewCreateResponse> {
-        val reviewId = reviewUseCase.addReviewToProduct(reviewCreateRequest.toCommand(member.email))
+        val reviewId = reviewUseCase.addReviewToProduct(member, reviewCreateRequest.toCommand())
         return CommonResponse.ok(ReviewCreateResponse.of(reviewId))
     }
 

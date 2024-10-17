@@ -19,7 +19,7 @@ class ReviewServiceTest {
     private lateinit var reviewRepository: ReviewRepository
     private lateinit var memberRepository: MemberRepository
     private val reviewService by lazy {
-        ReviewService(reviewRepository, memberRepository)
+        ReviewService(reviewRepository)
     }
 
     @BeforeEach
@@ -87,11 +87,10 @@ class ReviewServiceTest {
 
         var addReviewCommand = AddReviewCommand(
             productId = 1L,
-            email = "abc@naver.com",
             content = "재미있는 책이에요",
             score = BigDecimal(5),
         )
-        reviewService.addReviewToProduct(addReviewCommand)
+        reviewService.addReviewToProduct(newMember, addReviewCommand)
 
         val reviewsByProduct = reviewRepository.findByProductIdOrderByCreatedAtDesc(1L)
 
