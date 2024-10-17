@@ -25,7 +25,7 @@ class OrderController(
     @GetMapping
     fun getOrder(@Validated request: OrderListRequest,  @AuthenticationPrincipal member: Member): ResponseEntity<CommonResponse<OrderListResponse>> {
         val response = orderUseCase.getOrder(request.toCommand(member))
-        return ResponseEntity.ok(CommonResponse.ok(data = response))
+        return ResponseEntity.ok(CommonResponse.ok(data = OrderListResponse.from(response)))
     }
 
     // 주문 상세 조회 API
@@ -39,6 +39,6 @@ class OrderController(
     @PostMapping
     fun createOrder(@Validated @RequestBody request: OrderCreateRequest, @AuthenticationPrincipal member: Member): ResponseEntity<CommonResponse<OrderCreateResponse>> {
         val response = orderUseCase.order(request.toCommand(member))
-        return ResponseEntity.ok(CommonResponse.ok(data = response))
+        return ResponseEntity.ok(CommonResponse.ok(data = OrderCreateResponse.from(response)))
     }
 }

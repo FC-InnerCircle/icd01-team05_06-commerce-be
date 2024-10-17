@@ -11,6 +11,9 @@ import com.commerce.service.order.application.usecase.command.OrderListCommand
 import com.commerce.service.order.application.usecase.component.PaymentHandler
 import com.commerce.service.order.application.usecase.component.ProductHandler
 import com.commerce.service.order.application.usecase.component.ShippingHandler
+import com.commerce.service.order.application.usecase.dto.CreateOrderDto
+import com.commerce.service.order.application.usecase.dto.OrderListDto
+import com.commerce.service.order.application.usecase.dto.OrderSummaryDto
 import com.commerce.service.order.application.usecase.exception.OrderNotFoundException
 import com.commerce.service.order.controller.response.OrderCreateResponse
 import com.commerce.service.order.controller.response.OrderListResponse
@@ -39,7 +42,7 @@ class OrderService(
      * 5. 주문 완료 처리 (ProductHandler)
      */
     @Transactional
-    override fun order(command: CreateOrderCommand): OrderCreateResponse {
+    override fun order(command: CreateOrderCommand): CreateOrderDto {
 
         // 1. 상품 및 재고 확인 (다수의 상품을 한번에 확인)
         val products = productHandler.getProducts(command.products)
@@ -74,7 +77,7 @@ class OrderService(
         return productHandler.completeOrder(order)
     }
 
-    override fun getOrder(command: OrderListCommand) : OrderListResponse {
+    override fun getOrder(command: OrderListCommand) : OrderListDto {
         val ordersPage = ordersRepository.findByMemberIdAndOrderDateBetween(
             command.member.id, command.orderDate, command.endDate, command.status, command.page, command.size, command.sortBy
         )
@@ -82,9 +85,9 @@ class OrderService(
         val productIds = ordersPage.data.map { it.orderProducts[0].productId }.distinct()
         val products = productRepository.findByProductIdIn(productIds).associateBy { it.id }
 
-        return OrderListResponse(
+        return OrderListDto(
             products = ordersPage.data.map {
-                OrderSummary(
+                OrderSummaryDto(
                     id = it.id,
                     orderNumber = it.orderNumber,
                     content = "${products[it.orderProducts[0].productId]!!.title}${if (it.orderProducts.size > 1) " 외 ${it.orderProducts.size - 1}권" else ""}",

@@ -1,4 +1,4 @@
-package com.commerce.service.order.infrastructure
+package com.commerce.service.order.application.infrastructure
 
 import com.commerce.service.order.application.usecase.component.ShippingHandler
 import com.commerce.common.model.orders.OrdersDetailInfo

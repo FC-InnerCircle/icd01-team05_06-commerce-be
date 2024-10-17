@@ -15,6 +15,10 @@ import com.commerce.common.model.util.PaginationInfo
 import com.commerce.common.restdocs.RestDocsUtil
 import com.commerce.common.util.ObjectMapperConfig
 import com.commerce.service.order.application.usecase.OrderUseCase
+import com.commerce.service.order.application.usecase.dto.CreateOrderDto
+import com.commerce.service.order.application.usecase.dto.OrderListDto
+import com.commerce.service.order.application.usecase.dto.OrderSummaryDto
+import com.commerce.service.order.application.usecase.dto.ProductSummaryDto
 import com.commerce.service.order.config.SecurityConfig
 import com.commerce.service.order.controller.request.OrderCreateRequest
 import com.commerce.service.order.controller.request.OrderListRequest
@@ -76,7 +80,7 @@ class OrdersControllerTest {
     private lateinit var objectMapper: ObjectMapper
 
     private lateinit var sampleListRequest: OrderListRequest
-    private lateinit var sampleListResponse: OrderListResponse
+    private lateinit var sampleListResponse: OrderListDto
     private lateinit var sampleResult: OrdersResult
 
     private val testAccessToken =
@@ -124,9 +128,9 @@ class OrdersControllerTest {
             orderEndDate = null
         )
 
-        sampleListResponse = OrderListResponse(
+        sampleListResponse = OrderListDto(
             products = listOf(
-                OrderSummary(
+                OrderSummaryDto(
                     id = 1,
                     orderNumber = OrderNumber("ORD-20240815-000001"),
                     content = "해리 포터와 마법사의 돌 외 2권",
@@ -137,7 +141,7 @@ class OrdersControllerTest {
                     memberName = "김철수",
                     recipient = "김영희"
                 ),
-                OrderSummary(
+                OrderSummaryDto(
                     id = 2,
                     orderNumber = OrderNumber("ORD-20240815-000002"),
                     content = "코스모스: 가능한 세계들",
@@ -409,20 +413,20 @@ class OrdersControllerTest {
             )
         )
 
-       val response = OrderCreateResponse(
+       val response = CreateOrderDto(
            id = 1,
            orderNumber = "ORD-20240815-001",
            orderStatus = "PENDING",
            orderDate = LocalDateTime.now().toString(),
            products = listOf(
-               OrderCreateResponse.ProductSummary(
+               ProductSummaryDto(
                    id = 1,
                    name = "Kotlin in Action",
                    quantity = 2,
                    price = BigDecimal(20000),
                    discountedPrice = BigDecimal(19000),
                ),
-               OrderCreateResponse.ProductSummary(
+               ProductSummaryDto(
                    id = 3,
                    name = "Spring Boot in Practice",
                    quantity = 1,
