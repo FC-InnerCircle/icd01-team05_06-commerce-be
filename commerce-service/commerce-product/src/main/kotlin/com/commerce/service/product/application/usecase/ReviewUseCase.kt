@@ -7,6 +7,6 @@ import com.commerce.service.product.application.usecase.command.AddReviewCommand
 
 interface ReviewUseCase {
     fun getProductReviews(productId: Long): List<ReviewWithMember>
-    fun addReviewToProduct(member: Member, addReviewCommand: AddReviewCommand): Long
+    fun addReviewToProduct(member: Member?, addReviewCommand: AddReviewCommand?): Long
     fun getMemberReviews(memberId: Long): List<ReviewWithProduct>
 }

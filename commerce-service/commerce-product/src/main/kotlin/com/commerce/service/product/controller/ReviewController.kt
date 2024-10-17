@@ -41,6 +41,12 @@ class ReviewController(
         return CommonResponse.ok(ReviewCreateResponse.of(reviewId))
     }
 
+    @GetMapping("/test")
+    fun test(): CommonResponse<ReviewCreateResponse> {
+        val reviewId = reviewUseCase.addReviewToProduct(null, null)
+        return CommonResponse.ok(ReviewCreateResponse.of(reviewId))
+    }
+
     @GetMapping("/me")
     fun getReviewsByMember(@AuthenticationPrincipal member: Member): CommonResponse<ReviewByMemberResponse> {
         val reviews = reviewUseCase.getMemberReviews(member.id).map {
