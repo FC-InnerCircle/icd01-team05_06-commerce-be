@@ -4,6 +4,7 @@ import com.commerce.common.model.orders.*
 import com.commerce.common.model.orders.Orders.Companion.createOrder
 import com.commerce.common.model.product.ProductRepository
 import com.commerce.common.model.product.ProductWithQuantity
+import com.commerce.common.model.shopping_cart.ShoppingCartRepository
 import com.commerce.service.order.application.usecase.command.CreateOrderCommand
 import com.commerce.service.order.application.usecase.component.ProductHandler
 import com.commerce.service.order.application.usecase.exception.InsufficientStockException
@@ -15,6 +16,7 @@ class ProductHandlerImpl(
     private val productRepository: ProductRepository,
     private val ordersRepository: OrdersRepository,
     private val orderNumberRepository: OrderNumberRepository,
+    private val shoppingCartRepository: ShoppingCartRepository
 ) : ProductHandler {
 
     // 상품 정보 조회
@@ -61,9 +63,12 @@ class ProductHandlerImpl(
         }
     }
 
-    // 저장된 장바구니 정보 삭제 (보류 - 비즈니스 정책 고려)
     // 주문 완료 처리
     override fun completeOrder(orderInfo: OrdersDetailInfo): OrderCreateResponse {
+
+        // 저장된 장바구니 정보 삭제
+        val productIds = orderInfo.products.map { orderProduct -> orderProduct.product.id!! }
+        shoppingCartRepository.deleteByMemberIdAndProductIdIn(orderInfo.memberId, productIds)
 
         // 주문 정보 저장
         // Orders, OrderProduct 저장

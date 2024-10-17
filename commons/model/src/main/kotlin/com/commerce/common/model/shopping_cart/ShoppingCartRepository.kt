@@ -10,5 +10,7 @@ interface ShoppingCartRepository {
 
     fun deleteById(shoppingCartId: Long)
 
+    fun deleteByMemberIdAndProductIdIn(memberId: Long, productIds: List<Long>)
+
     fun findProducts(id: Long): List<ShoppingCartProduct>
 }

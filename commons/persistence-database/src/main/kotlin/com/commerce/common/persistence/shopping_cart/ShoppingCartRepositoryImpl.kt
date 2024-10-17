@@ -33,6 +33,10 @@ class ShoppingCartRepositoryImpl(
         shoppingCartJpaRepository.deleteById(shoppingCartId)
     }
 
+    override fun deleteByMemberIdAndProductIdIn(memberId: Long, productIds: List<Long>) {
+        shoppingCartJpaRepository.deleteByMemberIdAndProductIdIn(memberId, productIds)
+    }
+
     override fun findProducts(id: Long): List<ShoppingCartProduct> {
         val jpql = jpql {
             selectNew<ShoppingCartProduct>(

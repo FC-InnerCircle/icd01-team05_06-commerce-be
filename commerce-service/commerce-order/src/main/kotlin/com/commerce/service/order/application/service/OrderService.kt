@@ -18,6 +18,7 @@ import com.commerce.service.order.controller.response.OrderSummary
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class OrderService(
@@ -37,6 +38,7 @@ class OrderService(
      * 4. 배송 처리 (ShippingHandler)
      * 5. 주문 완료 처리 (ProductHandler)
      */
+    @Transactional
     override fun order(command: CreateOrderCommand): OrderCreateResponse {
 
         // 1. 상품 및 재고 확인 (다수의 상품을 한번에 확인)

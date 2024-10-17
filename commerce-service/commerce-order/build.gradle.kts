@@ -21,6 +21,8 @@ dependencies {
     implementation(project(":commons:redis-client"))
     testImplementation(project(":commons:test-helper"))
 
+    compileOnly("org.springframework:spring-tx")
+
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 
