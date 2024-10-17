@@ -16,7 +16,6 @@ const val PERSISTENCE_PACKAGE = "com.commerce.common.persistence"
 )
 class ArchitectureTest {
 
-    // TODO: 레이어 의존성 수정
     @ArchTest
     fun `레이어 의존성 테스트`(importedClasses: JavaClasses) {
         val rule = layeredArchitecture()

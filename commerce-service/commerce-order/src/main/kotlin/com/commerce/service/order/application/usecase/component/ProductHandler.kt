@@ -3,6 +3,7 @@ package com.commerce.service.order.application.usecase.component
 import com.commerce.common.model.orders.OrdersDetailInfo
 import com.commerce.common.model.product.ProductWithQuantity
 import com.commerce.service.order.application.usecase.command.CreateOrderCommand
+import com.commerce.service.order.application.usecase.dto.CreateOrderDto
 import com.commerce.service.order.controller.response.OrderCreateResponse
 
 /**
@@ -17,6 +18,6 @@ interface ProductHandler {
     fun getProducts(productInfos: List<CreateOrderCommand.ProductInfo>): List<ProductWithQuantity>
     fun createOrder(command: CreateOrderCommand, productInfos: List<ProductWithQuantity>): OrdersDetailInfo
     fun updateStock(orderInfo: OrdersDetailInfo)
-    fun completeOrder(orderInfo: OrdersDetailInfo): OrderCreateResponse
+    fun completeOrder(orderInfo: OrdersDetailInfo): CreateOrderDto
     fun checkAvailableProducts(productInfos: List<ProductWithQuantity>)
 }

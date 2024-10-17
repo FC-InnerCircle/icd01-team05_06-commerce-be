@@ -1,4 +1,4 @@
-package com.commerce.service.order.infrastructure
+package com.commerce.service.order.application.infrastructure
 
 import com.commerce.common.model.orders.*
 import com.commerce.common.model.orders.Orders.Companion.createOrder
@@ -7,6 +7,8 @@ import com.commerce.common.model.product.ProductWithQuantity
 import com.commerce.common.model.shopping_cart.ShoppingCartRepository
 import com.commerce.service.order.application.usecase.command.CreateOrderCommand
 import com.commerce.service.order.application.usecase.component.ProductHandler
+import com.commerce.service.order.application.usecase.dto.CreateOrderDto
+import com.commerce.service.order.application.usecase.dto.ProductSummaryDto
 import com.commerce.service.order.application.usecase.exception.InsufficientStockException
 import com.commerce.service.order.controller.response.OrderCreateResponse
 import org.springframework.stereotype.Component
@@ -64,7 +66,7 @@ class ProductHandlerImpl(
     }
 
     // 주문 완료 처리
-    override fun completeOrder(orderInfo: OrdersDetailInfo): OrderCreateResponse {
+    override fun completeOrder(orderInfo: OrdersDetailInfo): CreateOrderDto {
 
         // 저장된 장바구니 정보 삭제
         val productIds = orderInfo.products.map { orderProduct -> orderProduct.product.id!! }
@@ -75,13 +77,13 @@ class ProductHandlerImpl(
         val orders = ordersRepository.save(orderInfo.createOrder())
 
         // 주문 완료 응답 생성
-        return OrderCreateResponse(
+        return CreateOrderDto(
             id = orders.id,
             orderNumber = orderInfo.orderNumber.value,
             orderStatus = orderInfo.orderStatus.name,
             orderDate = orders.orderDate.toString(),
             products = orderInfo.products.map { orderProduct ->
-                OrderCreateResponse.ProductSummary(
+                ProductSummaryDto(
                     id = orderProduct.product.id ?: -1,
                     name = orderProduct.product.title,
                     quantity = orderProduct.quantity,
@@ -90,7 +92,6 @@ class ProductHandlerImpl(
                 )
             }
         )
-
     }
 
     // 재고 확인(다수의 상품을 한번에 확인)
