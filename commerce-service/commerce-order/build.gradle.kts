@@ -31,6 +31,9 @@ dependencies {
 
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
 
+    // ArchUnit
+    testImplementation("com.tngtech.archunit:archunit-junit5:1.3.0")
+
     runtimeOnly("com.mysql:mysql-connector-j") // MySQL
 }
 
