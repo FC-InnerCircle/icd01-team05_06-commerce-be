@@ -1,0 +1,10 @@
+FROM amazoncorretto:21-alpine
+LABEL authors="psh10066@gmail.com"
+EXPOSE 8080
+
+RUN apk add --no-cache openssh-client
+RUN ssh -i INNER-CIRCLE.pem -o StrictHostKeyChecking=no -N -L 6379:inner-circle-redis.b7t8ml.ng.0001.apn2.cache.amazonaws.com:6379 ec2-user@3.37.89.127 &
+
+ARG JAR_FILE
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java", "-jar", "/app.jar"]

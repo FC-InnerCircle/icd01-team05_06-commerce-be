@@ -56,9 +56,11 @@ tasks {
 
 docker {
     val dockerImageName = project.findProperty("dockerImageName") as String?
+    val profile = project.findProperty("profile") as String?
 
     name = dockerImageName ?: "${project.name}:${version}"
-    setDockerfile(file("../../Dockerfile"))
+    setDockerfile(file(if (profile == "local") "../../Dockerfile-local" else "../../Dockerfile"))
+    files("../../INNER-CIRCLE.pem")
     files(tasks.bootJar.get().outputs.files)
     buildArgs(mapOf(
         "JAR_FILE" to tasks.bootJar.get().outputs.files.singleFile.name

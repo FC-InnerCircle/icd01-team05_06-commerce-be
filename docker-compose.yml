@@ -6,6 +6,26 @@ services:
       - commerce_network
     ports:
       - "8080:8080"
+    environment:
+      - SPRING_DATA_REDIS_HOST=localhost
+  commerce-product:
+    container_name: commerce-product
+    image: commerce-product:0.0.1-SNAPSHOT
+    networks:
+      - commerce_network
+    ports:
+      - "8081:8080"
+  commerce-order:
+    container_name: commerce-order
+    image: commerce-order:0.0.1-SNAPSHOT
+    networks:
+      - commerce_network
+    ports:
+      - "8082:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - JASYPT_ENCRYPTOR_PASSWORD=y8s7Yt2pXsA9Lg3bWqV0zP5mNkE4iB1r
+      - SPRING_DATA_REDIS_HOST=localhost
 
 networks:
   commerce_network:
