@@ -34,7 +34,7 @@ include::{snippets}/categories/response-fields.adoc[]
 include::{snippets}/categories/response-body.adoc[]
 
 [[상품조회]]
-== 상품 조회
+== 상품 목록 조회
 === Http
 include::{snippets}/products/http-request.adoc[]
 === Request
@@ -68,7 +68,7 @@ include::{snippets}/reviews/v1/reviews/response-body.adoc[]
 === Http
 include::{snippets}/reviews/v1/add/http-request.adoc[]
 === Request
-include::{snippets}/reviews/v1/add/request-body.adoc[]
+include::{snippets}/reviews/v1/add/request-fields.adoc[]
 === Response
 include::{snippets}/reviews/v1/add/response-fields.adoc[]
 include::{snippets}/reviews/v1/add/response-body.adoc[]
