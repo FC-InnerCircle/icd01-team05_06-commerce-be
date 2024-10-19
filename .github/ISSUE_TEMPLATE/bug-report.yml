@@ -1,0 +1,58 @@
+name: 버그 제보
+description: 운영 시 발생하는 버그를 제보합니다.
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        제보해 주셔서 감사합니다!
+  - type: input
+    id: contact
+    attributes:
+      label: 👤 간단한 작성자 정보를 알려주세요.
+      description: ex. 5조 백엔드 홍길동
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: ✨ 실행 환경 정보
+      description: |
+        문제가 발생한 환경에 대해 알려주세요.
+        예) Mac OS, IntelliJ IDEA, JDK 21
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 🔍️ 발견한 버그는 무엇인가요?
+      description: |
+        어떤 문제가 발생했는지 구체적으로 설명해 주세요.
+        이미지나 영상을 첨부하면 더 이해하기 쉬워요!
+    validations:
+      required: true
+  - type: textarea
+    id: expected-normal-behavior
+    attributes:
+      label: 🔖 기대되는 정상 동작은 무엇인가요?
+      description: 정상적으로 어떻게 동작해야 하는지 설명해 주세요.
+    validations:
+      required: true
+  - type: textarea
+    id: how-to-reproduce-the-bug
+    attributes:
+      label: 🛠 버그 재현 방법
+      description: |
+        1. **어떤 화면**에서 문제가 발생했나요?
+        2. **어떤 작업**을 수행할 때 문제가 발생하나요?
+        3. **특정 조건**이 필요한가요? (로그인, 특정 데이터 등)
+    validations:
+      required: true
+  - type: textarea
+    id: etc
+    attributes:
+      label: 📝 추가로 하고 싶은 말이 있나요?
+      description: 기타 전달하고 싶은 내용을 자유롭게 적어주세요.
+    validations:
+      required: false
