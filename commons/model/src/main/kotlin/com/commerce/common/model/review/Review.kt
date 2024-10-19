@@ -5,12 +5,18 @@ import java.time.LocalDateTime
 
 class Review(
     val id: Long = 0,
-    val content: String,
-    val score: BigDecimal,
+    var content: String,
+    var score: BigDecimal,
     val memberId: Long,
     val productId: Long,
-    val lastModifiedByUserAt: LocalDateTime,
+    var lastModifiedByUserAt: LocalDateTime,
 ) {
+    fun update(score: BigDecimal, content: String) {
+        this.score = score
+        this.content = content
+        this.lastModifiedByUserAt = LocalDateTime.now()
+    }
+
     companion object {
         fun byProduct(
             productId: Long,

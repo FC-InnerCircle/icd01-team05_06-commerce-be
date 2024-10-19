@@ -73,6 +73,28 @@ include::{snippets}/reviews/v1/add/request-fields.adoc[]
 include::{snippets}/reviews/v1/add/response-fields.adoc[]
 include::{snippets}/reviews/v1/add/response-body.adoc[]
 
+[[상품리뷰수정]]
+== 상품 리뷰 수정
+=== Http
+include::{snippets}/reviews/v1/update/http-request.adoc[]
+=== Path Variable
+include::{snippets}/reviews/v1/update/path-parameters.adoc[]
+=== Request
+include::{snippets}/reviews/v1/update/request-fields.adoc[]
+=== Response
+include::{snippets}/reviews/v1/update/response-fields.adoc[]
+include::{snippets}/reviews/v1/update/response-body.adoc[]
+
+[[상품리뷰삭제]]
+== 상품 리뷰 삭제
+=== Http
+include::{snippets}/reviews/v1/delete/http-request.adoc[]
+=== Path Variable
+include::{snippets}/reviews/v1/delete/path-parameters.adoc[]
+=== Response
+include::{snippets}/reviews/v1/delete/response-fields.adoc[]
+include::{snippets}/reviews/v1/delete/response-body.adoc[]
+
 [[본인이작성한상품리뷰조회]]
 == 본인이 작성한 상품 리뷰 조회
 === Http

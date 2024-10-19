@@ -1,5 +1,6 @@
 package com.commerce.common.persistence.review
 
+import com.commerce.common.model.member.Member
 import com.commerce.common.model.review.Review
 import com.commerce.common.model.review.ReviewRepository
 import com.commerce.common.model.review.ReviewWithMember
@@ -11,13 +12,18 @@ import com.linecorp.kotlinjdsl.render.jpql.JpqlRenderContext
 import com.linecorp.kotlinjdsl.support.spring.data.jpa.extension.createQuery
 import jakarta.persistence.EntityManager
 import org.springframework.stereotype.Repository
+import org.springframework.transaction.annotation.Transactional
 
 @Repository
 class ReviewRepositoryImpl(
     private val reviewJpaRepository: ReviewJpaRepository,
     private val entityManager: EntityManager,
     private val jpqlRenderContext: JpqlRenderContext,
-) : ReviewRepository{
+) : ReviewRepository {
+
+    override fun findByIdAndMember(id: Long, member: Member): Review? {
+        return reviewJpaRepository.findByIdAndMemberId(id, member.id)?.toModel()
+    }
 
     override fun findByProductIdOrderByCreatedAtDesc(productId: Long): List<ReviewWithMember> {
         val jpql = jpql {
@@ -72,5 +78,10 @@ class ReviewRepositoryImpl(
 
         val query = entityManager.createQuery(jpql, jpqlRenderContext)
         return query.resultList
+    }
+
+    @Transactional
+    override fun deleteByIdAndMember(id: Long, member: Member) {
+        reviewJpaRepository.deleteByIdAndMemberId(id, member.id)
     }
 }

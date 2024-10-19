@@ -14,6 +14,7 @@ import com.commerce.service.product.config.SecurityConfig
 import com.commerce.service.product.application.usecase.ReviewUseCase
 import com.commerce.service.product.application.usecase.command.AddReviewCommand
 import com.commerce.service.product.controller.request.ReviewCreateRequest
+import com.commerce.service.product.controller.request.ReviewUpdateRequest
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -29,8 +30,7 @@ import org.springframework.restdocs.RestDocumentationContextProvider
 import org.springframework.restdocs.RestDocumentationExtension
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*
 import org.springframework.restdocs.operation.preprocess.Preprocessors.*
 import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation.*
@@ -209,6 +209,67 @@ class ReviewControllerTest(
                         fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("요청 성공 여부"),
                         fieldWithPath("data").type(JsonFieldType.OBJECT).description("데이터"),
                         fieldWithPath("data.reviewId").type(JsonFieldType.NUMBER).description("생성된 리뷰 ID"),
+                        fieldWithPath("error").type(JsonFieldType.ARRAY).optional().description("오류 정보"),
+                    )
+                )
+            )
+    }
+
+    @Test
+    fun updateReview() {
+        val request = ReviewUpdateRequest(
+            content = "재미있어요!",
+            score = BigDecimal(5),
+        )
+
+        mockMvc.perform(
+            patch("/product/v1/reviews/{reviewId}", 2)
+                .contentType(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer $testAccessToken")
+                .content(objectMapper.writeValueAsString(request))
+        )
+            .andExpect(status().isOk)
+            .andDo(
+                document(
+                    "reviews/v1/update",
+                    preprocessRequest(prettyPrint()),
+                    preprocessResponse(prettyPrint()),
+                    pathParameters(
+                        parameterWithName("reviewId").description("리뷰 ID"),
+                    ),
+                    requestFields(
+                        fieldWithPath("content").type(JsonFieldType.STRING).description("리뷰 내용"),
+                        fieldWithPath("score").type(JsonFieldType.NUMBER).description("리뷰 평점"),
+                    ),
+                    responseFields(
+                        fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("요청 성공 여부"),
+                        fieldWithPath("data").type(JsonFieldType.OBJECT).description("데이터"),
+                        fieldWithPath("data.reviewId").type(JsonFieldType.NUMBER).description("리뷰 ID"),
+                        fieldWithPath("error").type(JsonFieldType.ARRAY).optional().description("오류 정보"),
+                    )
+                )
+            )
+    }
+
+    @Test
+    fun deleteReview() {
+        mockMvc.perform(
+            delete("/product/v1/reviews/{reviewId}", 2)
+                .contentType(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer $testAccessToken")
+        )
+            .andExpect(status().isOk)
+            .andDo(
+                document(
+                    "reviews/v1/delete",
+                    preprocessRequest(prettyPrint()),
+                    preprocessResponse(prettyPrint()),
+                    pathParameters(
+                        parameterWithName("reviewId").description("리뷰 ID"),
+                    ),
+                    responseFields(
+                        fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("요청 성공 여부"),
+                        fieldWithPath("data").type(JsonFieldType.OBJECT).optional().description("데이터"),
                         fieldWithPath("error").type(JsonFieldType.ARRAY).optional().description("오류 정보"),
                     )
                 )

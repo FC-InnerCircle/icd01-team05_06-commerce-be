@@ -4,6 +4,7 @@ import com.commerce.common.model.member.Member
 import com.commerce.common.response.CommonResponse
 import com.commerce.service.product.application.usecase.ReviewUseCase
 import com.commerce.service.product.controller.request.ReviewCreateRequest
+import com.commerce.service.product.controller.request.ReviewUpdateRequest
 import com.commerce.service.product.controller.response.ReviewByMemberResponse
 import com.commerce.service.product.controller.response.ReviewCreateResponse
 import com.commerce.service.product.controller.response.ReviewInfoDto
@@ -39,6 +40,22 @@ class ReviewController(
     fun addReviewToProduct(@AuthenticationPrincipal member: Member, @RequestBody reviewCreateRequest: ReviewCreateRequest): CommonResponse<ReviewCreateResponse> {
         val reviewId = reviewUseCase.addReviewToProduct(member, reviewCreateRequest.toCommand())
         return CommonResponse.ok(ReviewCreateResponse.of(reviewId))
+    }
+
+    @PatchMapping("/{reviewId}")
+    fun updateReview(
+        @PathVariable reviewId: Long,
+        @AuthenticationPrincipal member: Member,
+        @RequestBody request: ReviewUpdateRequest
+    ): CommonResponse<ReviewCreateResponse> {
+        reviewUseCase.updateReview(member, reviewId, request.toCommand())
+        return CommonResponse.ok(ReviewCreateResponse.of(reviewId))
+    }
+
+    @DeleteMapping("/{reviewId}")
+    fun deleteReview(@PathVariable reviewId: Long, @AuthenticationPrincipal member: Member): CommonResponse<Void> {
+        reviewUseCase.deleteReview(member, reviewId)
+        return CommonResponse.ok()
     }
 
     @GetMapping("/me")

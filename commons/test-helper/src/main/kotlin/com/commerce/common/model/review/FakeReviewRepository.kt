@@ -1,5 +1,6 @@
 package com.commerce.common.model.review
 
+import com.commerce.common.model.member.Member
 import com.commerce.common.model.member.MemberRepository
 import java.time.LocalDateTime
 
@@ -9,6 +10,10 @@ class FakeReviewRepository(
 
     var autoIncrementId = 1L
     var data: MutableList<Review> = mutableListOf()
+
+    override fun findByIdAndMember(id: Long, member: Member): Review? {
+        return data.find { it.id == id && it.memberId == member.id }
+    }
 
     override fun findByProductIdOrderByCreatedAtDesc(productId: Long): List<ReviewWithMember> {
         return data.filter { it.productId == productId }
@@ -47,5 +52,9 @@ class FakeReviewRepository(
                     lastModifiedByUserAt = LocalDateTime.now()
                 )
             }
+    }
+
+    override fun deleteByIdAndMember(id: Long, member: Member) {
+        data = data.filter { it.id != id || it.memberId != member.id }.toMutableList()
     }
 }

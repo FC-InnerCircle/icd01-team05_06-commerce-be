@@ -5,8 +5,12 @@ import com.commerce.common.model.review.Review
 import com.commerce.common.model.review.ReviewRepository
 import com.commerce.common.model.review.ReviewWithMember
 import com.commerce.common.model.review.ReviewWithProduct
+import com.commerce.common.response.CustomException
+import com.commerce.common.response.ErrorCode
 import com.commerce.service.product.application.usecase.ReviewUseCase
 import com.commerce.service.product.application.usecase.command.AddReviewCommand
+import com.commerce.service.product.application.usecase.command.UpdateReviewCommand
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
@@ -33,6 +37,21 @@ class ReviewService(
         )
 
         return reviewRepository.save(review).id
+    }
+
+    override fun updateReview(member: Member, reviewId: Long, command: UpdateReviewCommand) {
+        val review = reviewRepository.findByIdAndMember(reviewId, member)
+            ?: throw CustomException(HttpStatus.BAD_REQUEST, ErrorCode.REVIEW_NOT_FOUND)
+
+        review.update(
+            score = command.score,
+            content = command.content
+        )
+        reviewRepository.save(review)
+    }
+
+    override fun deleteReview(member: Member, reviewId: Long) {
+        reviewRepository.deleteByIdAndMember(reviewId, member)
     }
 
     override fun getMemberReviews(memberId: Long): List<ReviewWithProduct> {
