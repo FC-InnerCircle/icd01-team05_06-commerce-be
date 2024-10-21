@@ -51,6 +51,8 @@ class ProductServiceTest {
             searchWord = null,
             categoryId = 2L,
             homeProductType = null,
+            minPrice = null,
+            maxPrice = null,
             page = 1,
             size = 20
         )

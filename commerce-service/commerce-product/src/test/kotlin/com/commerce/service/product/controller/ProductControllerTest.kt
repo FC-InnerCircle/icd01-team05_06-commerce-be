@@ -191,7 +191,7 @@ class ProductControllerTest(
 
     @Test
     fun getProducts() {
-        val query = SelectQuery(2, "국내도서", HomeProductType.HOT_NEW,1, 20)
+        val query = SelectQuery(2, "국내도서", HomeProductType.HOT_NEW, BigDecimal("15000"), BigDecimal("20000"),1, 20)
 
         given(productUseCase.getProducts(query)).willReturn(
             ProductPaginationInfoDto(
@@ -261,6 +261,8 @@ class ProductControllerTest(
         val queryParams = LinkedMultiValueMap<String, String>()
         queryParams["productCategoryId"] = "2"
         queryParams["searchWord"] = "국내도서"
+        queryParams["minPrice"] = "15000"
+        queryParams["maxPrice"] = "20000"
         queryParams["page"] = "1"
         queryParams["size"] = "20"
         queryParams["homeProductType"] = HomeProductType.HOT_NEW.name
@@ -279,6 +281,8 @@ class ProductControllerTest(
                         parameterWithName("productCategoryId").description("카테고리 Id").optional(),
                         parameterWithName("searchWord").description("검색어").optional(),
                         parameterWithName("homeProductType").description("상품 타입(추천 도서 : RECOMMEND / 베스트 셀러 : BESTSELLER / 화제의 신간 : HOT_NEW)").optional(),
+                        parameterWithName("minPrice").description("최소 금액").optional(),
+                        parameterWithName("maxPrice").description("최대 금액").optional(),
                         parameterWithName("page").description("페이지"),
                         parameterWithName("size").description("사이즈"),
                     ),

@@ -32,6 +32,8 @@ class ProductService(
             searchWord = query.searchWord,
             categoryId = query.categoryId,
             homeProductType = query.homeProductType,
+            minPrice = query.minPrice,
+            maxPrice = query.maxPrice,
             page = query.page,
             size = query.size,
         )

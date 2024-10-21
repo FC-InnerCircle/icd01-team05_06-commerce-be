@@ -14,6 +14,7 @@ import com.linecorp.kotlinjdsl.support.spring.data.jpa.extension.createQuery
 import jakarta.persistence.EntityManager
 import jakarta.persistence.EntityNotFoundException
 import org.springframework.stereotype.Repository
+import java.math.BigDecimal
 
 @Repository
 class ProductRepositoryImpl(
@@ -54,6 +55,8 @@ class ProductRepositoryImpl(
         searchWord: String?,
         categoryId: Long?,
         homeProductType: HomeProductType?,
+        minPrice: BigDecimal?,
+        maxPrice: BigDecimal?,
         page: Int,
         size: Int
     ): PaginationModel<Product> {
@@ -67,6 +70,8 @@ class ProductRepositoryImpl(
             ).whereAnd(
                 searchWord?.let { path(ProductJpaEntity::title).like("%$searchWord%") },
                 categoryId?.let { path(ProductJpaEntity::categoryId).eq(categoryId) },
+                minPrice?.let { path(ProductJpaEntity::discountedPrice).greaterThanOrEqualTo(minPrice) },
+                maxPrice?.let { path(ProductJpaEntity::discountedPrice).lessThanOrEqualTo(maxPrice) },
                 homeProductType?.let {
                     when (it) {
                         HomeProductType.HOT_NEW -> path(ProductJpaEntity::isHotNew).eq(true)

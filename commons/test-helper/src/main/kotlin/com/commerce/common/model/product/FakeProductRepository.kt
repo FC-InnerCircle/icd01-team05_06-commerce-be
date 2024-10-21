@@ -5,16 +5,23 @@ import com.commerce.common.model.util.PaginationInfo
 import com.commerce.common.model.util.PaginationModel
 import java.math.BigDecimal
 import java.time.LocalDate
+import kotlin.math.min
 
 class FakeProductRepository : ProductRepository {
 
     var autoIncrementId = 1L
     var data: MutableList<Product> = mutableListOf()
 
-    override fun findBySearchWord(searchWord: String?, categoryId: Long?, homeProductType: HomeProductType?, page: Int, size: Int): PaginationModel<Product> {
+    override fun findBySearchWord(searchWord: String?, categoryId: Long?, homeProductType: HomeProductType?, minPrice: BigDecimal?, maxPrice: BigDecimal?, page: Int, size: Int): PaginationModel<Product> {
         initData()
         val resultList = data.filter { product ->
             categoryId?.let { it == product.category?.id } ?: true
+        }.filter { product ->
+            searchWord?.let { product.title.contains(it) } ?: true
+        }.filter { product ->
+            minPrice?.let { product.discountedPrice >= it } ?: true
+        }.filter { product ->
+            maxPrice?.let { product.discountedPrice <= it } ?: true
         }.filter { product ->
             searchWord?.let { product.title.contains(it) } ?: true
         }.filter { product ->

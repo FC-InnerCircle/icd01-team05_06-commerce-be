@@ -1,6 +1,7 @@
 package com.commerce.common.model.product
 
 import com.commerce.common.model.util.PaginationModel
+import java.math.BigDecimal
 
 
 interface ProductRepository {
@@ -9,7 +10,7 @@ interface ProductRepository {
 
     fun findByProductIdIn(ids: List<Long>): List<Product>
 
-    fun findBySearchWord(searchWord: String?, categoryId: Long?, homeProductType: HomeProductType?, page: Int, size: Int): PaginationModel<Product>
+    fun findBySearchWord(searchWord: String?, categoryId: Long?, homeProductType: HomeProductType?, minPrice: BigDecimal?, maxPrice: BigDecimal?, page: Int, size: Int): PaginationModel<Product>
 
     fun findByHomeProductType(homeProductType: HomeProductType): List<Product>
 
