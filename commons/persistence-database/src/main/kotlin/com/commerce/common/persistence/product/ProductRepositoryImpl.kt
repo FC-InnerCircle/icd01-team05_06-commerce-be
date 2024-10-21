@@ -3,9 +3,11 @@ package com.commerce.common.persistence.product
 import com.commerce.common.model.product.HomeProductType
 import com.commerce.common.model.product.Product
 import com.commerce.common.model.product.ProductRepository
+import com.commerce.common.model.product.ProductWithTag
 import com.commerce.common.model.util.PaginationModel
 import com.commerce.common.persistence.category.CategoryJpaEntity
 import com.commerce.common.persistence.category.CategoryJpaRepository
+import com.commerce.common.persistence.product_tag.ProductTagJpaRepository
 import com.commerce.common.persistence.util.getOneBasedPageRequest
 import com.commerce.common.persistence.util.toPaginationModel
 import com.linecorp.kotlinjdsl.dsl.jpql.jpql
@@ -20,6 +22,7 @@ import java.math.BigDecimal
 class ProductRepositoryImpl(
     private val productJpaRepository: ProductJpaRepository,
     private val categoryJpaRepository: CategoryJpaRepository,
+    private val productTagJpaRepository: ProductTagJpaRepository,
     private val entityManager: EntityManager,
     private val jpqlRenderContext: JpqlRenderContext,
 ) : ProductRepository {
@@ -51,6 +54,21 @@ class ProductRepositoryImpl(
         return product.toModel(category)
     }
 
+    override fun findByIdWithTags(productId: Long): ProductWithTag {
+        val product = productJpaRepository.findById(productId)
+            .orElseThrow { throw EntityNotFoundException("해당 제품이 존재하지 않습니다.") }
+
+        val category = product.categoryId?.let { categoryId ->
+            categoryJpaRepository.findById(categoryId)
+                .map { it.toProductModel() }
+                .orElse(null)
+        }
+
+        val tags = productTagJpaRepository.findByProductId(productId).map { it.name }
+
+        return ProductWithTag(product.toModel(category), tags)
+    }
+
     override fun findBySearchWord(
         searchWord: String?,
         categoryId: Long?,
@@ -59,7 +77,7 @@ class ProductRepositoryImpl(
         maxPrice: BigDecimal?,
         page: Int,
         size: Int
-    ): PaginationModel<Product> {
+    ): PaginationModel<ProductWithTag> {
 
         val pageable = getOneBasedPageRequest(page, size)
         val pageResult = productJpaRepository.findPage(pageable) {
@@ -83,11 +101,15 @@ class ProductRepositoryImpl(
         }
 
         val categoryIds = pageResult.content.mapNotNull { it!!.categoryId }.distinct().toList()
-        val categories = categoryJpaRepository.findByIdIn(categoryIds).associateBy(CategoryJpaEntity::id, CategoryJpaEntity::toProductModel)
+        val categories = categoryJpaRepository.findByIdIn(categoryIds)
+            .associateBy(CategoryJpaEntity::id, CategoryJpaEntity::toProductModel)
+
+        val productIds = pageResult.content.mapNotNull { it!!.id }.distinct().toList()
+        val productTags = productTagJpaRepository.findByProductIdIn(productIds).groupBy({ it.productId }) { it.name }
 
         return pageResult.toPaginationModel({ product ->
             val category = product!!.categoryId?.let { categoryId -> categories[categoryId] }
-            product.toModel(category)
+            ProductWithTag(product.toModel(category), productTags[product.id]!!)
         })
     }
 

@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional
 class ProductService(
     private val productRepository: ProductRepository,
     private val categoryRepository: CategoryRepository,
-) : ProductUseCase{
+) : ProductUseCase {
 
     @Transactional(readOnly = true)
     override fun getProductCategories(): ProductCategoryInfoDto {
@@ -46,7 +46,7 @@ class ProductService(
 
     @Transactional(readOnly = true)
     override fun getProductDetail(productId: Long): ProductInfoDto {
-        val product = productRepository.findById(productId);
+        val product = productRepository.findByIdWithTags(productId);
 
         return ProductInfoDto.from(product)
     }

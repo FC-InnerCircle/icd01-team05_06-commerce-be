@@ -59,15 +59,15 @@ class ProductServiceTest {
 
         // then
         assertThat(products.data).hasSize(1)
-        assertThat(products.data[0].title).isEqualTo("제목")
-        assertThat(products.data[0].author).isEqualTo("작가")
-        assertThat(products.data[0].price).isEqualTo(BigDecimal("10000"))
-        assertThat(products.data[0].discountedPrice).isEqualTo(BigDecimal("1000"))
-        assertThat(products.data[0].publisher).isEqualTo("퍼블리셔")
-        assertThat(products.data[0].isbn).isEqualTo("1111")
-        assertThat(products.data[0].status).isEqualTo(SaleStatus.ON_SALE)
-        assertThat(products.data[0].category?.id).isEqualTo(2L)
-        assertThat(products.data[0].category?.name).isEqualTo("국내도서")
+        assertThat(products.data[0].product.title).isEqualTo("제목")
+        assertThat(products.data[0].product.author).isEqualTo("작가")
+        assertThat(products.data[0].product.price).isEqualTo(BigDecimal("10000"))
+        assertThat(products.data[0].product.discountedPrice).isEqualTo(BigDecimal("1000"))
+        assertThat(products.data[0].product.publisher).isEqualTo("퍼블리셔")
+        assertThat(products.data[0].product.isbn).isEqualTo("1111")
+        assertThat(products.data[0].product.status).isEqualTo(SaleStatus.ON_SALE)
+        assertThat(products.data[0].product.category?.id).isEqualTo(2L)
+        assertThat(products.data[0].product.category?.name).isEqualTo("국내도서")
     }
 
     @Test

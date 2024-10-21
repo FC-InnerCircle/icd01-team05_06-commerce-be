@@ -1,7 +1,7 @@
 package com.commerce.service.product.application.usecase.dto
 
 import com.commerce.common.model.category.CategoryDetail
-import com.commerce.common.model.product.Product
+import com.commerce.common.model.product.ProductWithTag
 import com.commerce.common.model.product.SaleStatus
 import com.fasterxml.jackson.annotation.JsonFormat
 import java.math.BigDecimal
@@ -25,27 +25,29 @@ class ProductInfoDto(
     val stockQuantity: Int,
     val rating: Double,
     val status: SaleStatus,
+    val tags: List<String>,
     val category: CategoryDetail?,
 ) {
     companion object {
-        fun from(product: Product): ProductInfoDto {
+        fun from(model: ProductWithTag): ProductInfoDto {
             return ProductInfoDto(
-                id = product.id,
-                title = product.title,
-                author = product.author,
-                price = product.price.setScale(0, RoundingMode.DOWN),
-                discountedPrice = product.discountedPrice.setScale(0, RoundingMode.DOWN),
-                publisher = product.publisher,
-                publishDate = product.publishDate,
-                isbn = product.isbn,
-                description = product.description,
-                pages = product.pages,
-                coverImage = product.coverImage,
-                previewLink = product.previewLink,
-                stockQuantity = product.stockQuantity,
-                rating = product.rating,
-                status = product.status,
-                category = product.category,
+                id = model.product.id,
+                title = model.product.title,
+                author = model.product.author,
+                price = model.product.price.setScale(0, RoundingMode.DOWN),
+                discountedPrice = model.product.discountedPrice.setScale(0, RoundingMode.DOWN),
+                publisher = model.product.publisher,
+                publishDate = model.product.publishDate,
+                isbn = model.product.isbn,
+                description = model.product.description,
+                pages = model.product.pages,
+                coverImage = model.product.coverImage,
+                previewLink = model.product.previewLink,
+                stockQuantity = model.product.stockQuantity,
+                rating = model.product.rating,
+                status = model.product.status,
+                tags = model.tags,
+                category = model.product.category,
             )
         }
     }

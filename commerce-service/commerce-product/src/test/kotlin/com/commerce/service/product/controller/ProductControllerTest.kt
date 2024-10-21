@@ -212,6 +212,7 @@ class ProductControllerTest(
                         stockQuantity = 90,
                         rating = 3.9,
                         status = SaleStatus.ON_SALE,
+                        tags = listOf("tag1", "tag2"),
                         category = CategoryDetail(
                             id = 2,
                             name = "외국도서",
@@ -237,6 +238,7 @@ class ProductControllerTest(
                         stockQuantity = 31,
                         rating = 4.1,
                         status = SaleStatus.ON_SALE,
+                        tags = listOf("tag3", "tag4"),
                         category = CategoryDetail(
                             id = 2,
                             name = "외국도서",
@@ -314,6 +316,7 @@ class ProductControllerTest(
                         fieldWithPath("data.products[].stockQuantity").type(JsonFieldType.NUMBER).description("남은 수량"),
                         fieldWithPath("data.products[].rating").type(JsonFieldType.NUMBER).description("별점"),
                         fieldWithPath("data.products[].status").type(JsonFieldType.STRING).description("상태"),
+                        fieldWithPath("data.products[].tags").type(JsonFieldType.ARRAY).description("태그 목록"),
 
                         fieldWithPath("data.products[].category").type(JsonFieldType.OBJECT).description("카테고리"),
                         fieldWithPath("data.products[].category.id").type(JsonFieldType.NUMBER).description("카테고리 id"),
@@ -351,6 +354,7 @@ class ProductControllerTest(
                 stockQuantity = 90,
                 rating = 3.9,
                 status = SaleStatus.ON_SALE,
+                tags = listOf("tag5", "tag6"),
                 category = CategoryDetail(
                     id = 2,
                     name = "외국도서",
@@ -390,6 +394,7 @@ class ProductControllerTest(
                         fieldWithPath("data.stockQuantity").type(JsonFieldType.NUMBER).description("남은 수량"),
                         fieldWithPath("data.rating").type(JsonFieldType.NUMBER).description("별점"),
                         fieldWithPath("data.status").type(JsonFieldType.STRING).description("상태"),
+                        fieldWithPath("data.tags").type(JsonFieldType.ARRAY).description("태그 목록"),
 
                         fieldWithPath("data.category").type(JsonFieldType.OBJECT).description("카테고리"),
                         fieldWithPath("data.category.id").type(JsonFieldType.NUMBER).description("카테고리 id"),

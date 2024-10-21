@@ -5,14 +5,13 @@ import com.commerce.common.model.util.PaginationInfo
 import com.commerce.common.model.util.PaginationModel
 import java.math.BigDecimal
 import java.time.LocalDate
-import kotlin.math.min
 
 class FakeProductRepository : ProductRepository {
 
     var autoIncrementId = 1L
     var data: MutableList<Product> = mutableListOf()
 
-    override fun findBySearchWord(searchWord: String?, categoryId: Long?, homeProductType: HomeProductType?, minPrice: BigDecimal?, maxPrice: BigDecimal?, page: Int, size: Int): PaginationModel<Product> {
+    override fun findBySearchWord(searchWord: String?, categoryId: Long?, homeProductType: HomeProductType?, minPrice: BigDecimal?, maxPrice: BigDecimal?, page: Int, size: Int): PaginationModel<ProductWithTag> {
         initData()
         val resultList = data.filter { product ->
             categoryId?.let { it == product.category?.id } ?: true
@@ -43,7 +42,7 @@ class FakeProductRepository : ProductRepository {
         )
 
         return PaginationModel(
-            data = resultList,
+            data = resultList.map { ProductWithTag(it, emptyList()) },
             pagination = pagination
         )
     }
@@ -60,6 +59,10 @@ class FakeProductRepository : ProductRepository {
             throw IllegalArgumentException("제품이 존재하지 않습니다.")
         }
         return data
+    }
+
+    override fun findByIdWithTags(productId: Long): ProductWithTag {
+        TODO("Not yet implemented")
     }
 
     fun initData() {
