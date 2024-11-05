@@ -1,5 +1,8 @@
 services:
   commerce-auth:
+    depends_on:
+      - mysql
+      - redis
     container_name: commerce-auth
     image: commerce-auth:0.0.1-SNAPSHOT
     networks:
@@ -7,15 +10,36 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - SPRING_DATA_REDIS_HOST=localhost
+      - TZ=Asia/Seoul
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/commerce_db
+      - SPRING_DATASOURCE_USERNAME=commerce_user
+      - SPRING_DATASOURCE_PASSWORD=user_password
+      - SPRING_DATA_REDIS_HOST=redis
+      - SPRING_DATA_REDIS_PORT=6379
+    restart: on-failure
+
   commerce-product:
+    depends_on:
+      - mysql
+      - redis
     container_name: commerce-product
     image: commerce-product:0.0.1-SNAPSHOT
     networks:
       - commerce_network
     ports:
       - "8081:8080"
+    environment:
+      - TZ=Asia/Seoul
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/commerce_db
+      - SPRING_DATASOURCE_USERNAME=commerce_user
+      - SPRING_DATASOURCE_PASSWORD=user_password
+      - SPRING_DATA_REDIS_HOST=redis
+      - SPRING_DATA_REDIS_PORT=6379
+
   commerce-order:
+    depends_on:
+      - mysql
+      - redis
     container_name: commerce-order
     image: commerce-order:0.0.1-SNAPSHOT
     networks:
@@ -23,9 +47,42 @@ services:
     ports:
       - "8082:8080"
     environment:
+      - TZ=Asia/Seoul
       - SPRING_PROFILES_ACTIVE=dev
       - JASYPT_ENCRYPTOR_PASSWORD=y8s7Yt2pXsA9Lg3bWqV0zP5mNkE4iB1r
-      - SPRING_DATA_REDIS_HOST=localhost
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/commerce_db
+      - SPRING_DATASOURCE_USERNAME=commerce_user
+      - SPRING_DATASOURCE_PASSWORD=user_password
+      - SPRING_DATA_REDIS_HOST=redis
+      - SPRING_DATA_REDIS_PORT=6379
+
+  mysql:
+    container_name: commerce-mysql
+    image: mysql:8.0
+    networks:
+      - commerce_network
+    environment:
+      TZ: Asia/Seoul
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: commerce_db
+      MYSQL_USER: commerce_user
+      MYSQL_PASSWORD: user_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    command:
+      - --character-set-server=utf8
+      - --collation-server=utf8_general_ci
+
+  redis:
+    container_name: commerce-redis
+    image: redis:7
+    networks:
+      - commerce_network
+    ports:
+      - "6379:6379"
 
 networks:
   commerce_network:
