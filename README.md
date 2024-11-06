@@ -53,15 +53,24 @@ RestDocs
 
 ## 로컬 실행 방법
 
-1. docker daemon 실행
-2. 터미널에서 아래 명령어 입력하여 docker container 실행
+```
+실제 프로젝트 운영 시에는 AWS API Gateway를 통해
+3개의 Application을 하나의 URL로 구성하도록 사용했습니다.
+또한 AWS RDS MySQL과 AWS ElastiCache Redis를 사용했습니다. 
+
+로컬에서도 동일한 동작을 테스트할 수 있도록 docker-compose로
+Application 3개를 띄우고 nginx로 Application들을 포워딩합니다.
+또한 docker-compose로 MySQL과 Redis를 띄워서 실행하도록 구성했습니다. 
+```
+
+1. IDE 내 Gradle Build 시 JDK 21 설정
+2. Docker Daemon 실행 (Docker Desktop 등)
+3. 터미널에서 아래 명령어 입력하여 Application Build 및 Docker Container 실행
     ```bash
     make
     ```
-3. 아래 URL로 API 요청
-    - 인증 Application : http://localhost:8080/
-    - 상품 Application : http://localhost:8081/
-    - 주문 Application : http://localhost:8082/
+4. 아래 URL로 API 요청
+    - http://localhost:8080/
 
 - 종료 시 아래 명령어 실행
     ```
