@@ -47,9 +47,9 @@ RestDocs
 - 전체 Application 공통 : https://76ztyqn6fe.execute-api.ap-northeast-2.amazonaws.com/
 
 ## API 문서
-- 인증 Application : https://fc-innercircle.github.io/icd01-team05_06-commerce-be/auth-api-guide.html
-- 상품 Application : https://fc-innercircle.github.io/icd01-team05_06-commerce-be/product-api-guide.html
-- 주문 Application : https://fc-innercircle.github.io/icd01-team05_06-commerce-be/order-api-guide.html
+- 인증 Application : https://fc-innercircle-icd1.github.io/icd01-team05_06-commerce-be/auth-api-guide.html
+- 상품 Application : https://fc-innercircle-icd1.github.io/icd01-team05_06-commerce-be/product-api-guide.html
+- 주문 Application : https://fc-innercircle-icd1.github.io/icd01-team05_06-commerce-be/order-api-guide.html
 
 ## 로컬 실행 방법
 
