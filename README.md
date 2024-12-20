@@ -63,7 +63,7 @@ Application 3개를 띄우고 nginx로 Application들을 포워딩합니다.
 또한 docker-compose로 MySQL과 Redis를 띄워서 실행하도록 구성했습니다. 
 ```
 
-1. IDE 내 Gradle Build 시 JDK 21 설정
+1. 로컬 컴퓨터에 JDK 21 설치
 2. Docker Daemon 실행 (Docker Desktop 등)
 3. 터미널에서 아래 명령어 입력하여 Application Build 및 Docker Container 실행
     ```bash
